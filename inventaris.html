@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track IN - Inventaris</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- ================= NAVBAR ================= -->
+
+        <header class="topbar">
+
+            <div class="brand">
+                TRACK <span>IN</span>
+            </div>
+
+            <nav class="nav">
+
+                <a href="#">Dasbor</a>
+
+                <a href="#">Akun</a>
+
+                <a href="#">Catatan</a>
+
+                <a href="#" class="active">
+                    Inventaris
+                </a>
+
+                <a href="#">Keuangan</a>
+
+            </nav>
+
+            <div class="profile">
+
+                <strong>yusuf</strong>
+
+                <div class="avatar">
+                    Y
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <main class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <section class="page-heading">
+
+                <div class="heading-left">
+
+                    <div class="heading-icon">
+                        ▣
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Inventaris
+                        </h1>
+
+                        <p>
+                            Catat barang yang dibeli dan digunakan bersama
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="btn primary"
+                    id="openAdd"
+                >
+                    ＋ Tambah Barang
+                </button>
+
+            </section>
+
+
+            <!-- ================= STATISTICS ================= -->
+
+            <section class="stats-grid">
+
+                <article class="stat-card">
+
+                    <span>
+                        Total Barang
+                    </span>
+
+                    <strong id="totalItems">
+                        0 Barang
+                    </strong>
+
+                    <small>
+                        Semua barang terdaftar
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <span>
+                        Barang Bersama
+                    </span>
+
+                    <strong id="sharedItems">
+                        0 Barang
+                    </strong>
+
+                    <small>
+                        Digunakan bersama
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <span>
+                        Barang Pribadi
+                    </span>
+
+                    <strong id="privateItems">
+                        0 Barang
+                    </strong>
+
+                    <small>
+                        Milik perorangan
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <span>
+                        Patungan
+                    </span>
+
+                    <strong id="groupItems">
+                        0 Barang
+                    </strong>
+
+                    <small>
+                        Bagi hasil biaya
+                    </small>
+
+                </article>
+
+            </section>
+
+
+            <!-- ================= TOOLBAR ================= -->
+
+            <section class="toolbar">
+
+                <div class="search-box">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Cari barang..."
+                    >
+
+                </div>
+
+
+                <div
+                    class="filters"
+                    id="filters"
+                >
+
+                    <button
+                        class="filter active"
+                        data-filter="Semua"
+                    >
+                        Semua
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="Barang Bersama"
+                    >
+                        Barang Bersama
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="Barang Pribadi"
+                    >
+                        Barang Pribadi
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="Patungan"
+                    >
+                        Patungan
+                    </button>
+
+
+                    <select id="sortSelect">
+
+                        <option value="newest">
+                            Terbaru
+                        </option>
+
+                        <option value="priceHigh">
+                            Harga Tertinggi
+                        </option>
+
+                        <option value="priceLow">
+                            Harga Terendah
+                        </option>
+
+                        <option value="name">
+                            Nama A-Z
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= INVENTORY ================= -->
+
+            <section
+                class="inventory-grid"
+                id="inventoryGrid"
+            >
+            </section>
+
+
+            <!-- EMPTY -->
+
+            <div
+                class="empty-state"
+                id="emptyState"
+                hidden
+            >
+
+                <div>
+                    ⌕
+                </div>
+
+                <h3>
+                    Barang tidak ditemukan
+                </h3>
+
+                <p>
+                    Coba ubah kata pencarian atau filter.
+                </p>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= MODAL ================= -->
+
+    <div
+        class="modal-backdrop"
+        id="modal"
+    >
+
+        <div class="modal">
+
+            <button
+                class="modal-close"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+
+            <h2 id="modalTitle">
+                Tambah Barang
+            </h2>
+
+            <p class="modal-subtitle">
+                Masukkan informasi barang inventaris.
+            </p>
+
+
+            <form id="itemForm">
+
+                <input
+                    type="hidden"
+                    id="itemId"
+                >
+
+
+                <div class="form-grid">
+
+
+                    <label>
+
+                        Nama Barang
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Contoh: Rice Cooker"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Kategori
+
+                        <select id="category">
+
+                            <option>
+                                Barang Bersama
+                            </option>
+
+                            <option>
+                                Barang Pribadi
+                            </option>
+
+                            <option>
+                                Patungan
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label>
+
+                        Harga
+
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder="450000"
+                            min="0"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Pemilik
+
+                        <input
+                            type="text"
+                            id="owner"
+                            placeholder="Yusuf"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Tanggal Beli
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        Ikon
+
+                        <input
+                            type="text"
+                            id="icon"
+                            placeholder="▣"
+                            maxlength="2"
+                        >
+
+                    </label>
+
+
+                </div>
+
+
+                <label>
+
+                    Deskripsi
+
+                    <textarea
+                        id="description"
+                        rows="3"
+                        placeholder="Deskripsi singkat barang..."
+                    ></textarea>
+
+                </label>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="btn ghost"
+                        id="cancelModal"
+                    >
+                        Batal
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn primary"
+                    >
+                        Simpan Barang
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
