@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Keuangan - Track IN</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="keuangan.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+
+        <div class="nav-left">
+
+            <div class="logo">
+                <span>Track</span> IN
+            </div>
+
+            <nav>
+                <a href="#">Dasbor</a>
+                <a href="#">Akun</a>
+                <a href="#">Catatan</a>
+                <a href="#">Inventaris</a>
+                <a href="#" class="active">Keuangan</a>
+            </nav>
+
+        </div>
+
+        <div class="profile">
+
+            <div class="profile-name">
+                <strong>yusuf</strong>
+            </div>
+
+            <div class="avatar">
+                Y
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="main">
+
+        <!-- PAGE HEADER -->
+        <section class="page-header">
+
+            <div class="page-title">
+
+                <div class="page-icon">
+                    <span>▣</span>
+                </div>
+
+                <div>
+                    <h1>Keuangan</h1>
+                    <p>Kelola pengeluaran dan pembayaran bersama.</p>
+                </div>
+
+            </div>
+
+            <button class="btn-primary" onclick="openModal()">
+                <span>＋</span>
+                Tambah Pengeluaran
+            </button>
+
+        </section>
+
+
+        <!-- ================= STAT CARDS ================= -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Total Pengeluaran</span>
+                    <div class="stat-icon green">↗</div>
+                </div>
+
+                <h2 id="totalExpense">Rp850.000</h2>
+
+                <p>Akumulasi seluruh pengeluaran</p>
+
+                <div class="stat-progress">
+                    <span style="width:72%"></span>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Pengeluaran Bulan Ini</span>
+                    <div class="stat-icon blue">◷</div>
+                </div>
+
+                <h2 id="monthlyExpense">Rp850.000</h2>
+
+                <p>Periode Agustus 2026</p>
+
+                <div class="stat-progress">
+                    <span style="width:84%"></span>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Tagihan Belum Dibayar</span>
+                    <div class="stat-icon orange">!</div>
+                </div>
+
+                <h2 id="unpaidExpense">Rp500.000</h2>
+
+                <p>Segera lakukan pembayaran</p>
+
+                <div class="stat-progress warning">
+                    <span style="width:50%"></span>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <span>Sudah Dibayar</span>
+                    <div class="stat-icon purple">✓</div>
+                </div>
+
+                <h2 id="paidExpense">Rp1.000.000</h2>
+
+                <p>Pembayaran berhasil diverifikasi</p>
+
+                <div class="stat-progress purple-progress">
+                    <span style="width:90%"></span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONTENT ================= -->
+        <section class="content-grid">
+
+
+            <!-- ================= SIDEBAR ================= -->
+            <aside class="sidebar">
+
+
+                <!-- TAGIHAN TERDEKAT -->
+                <div class="panel bill-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <span class="small-label">TAGIHAN TERDEKAT</span>
+                            <h3>Kost September</h3>
+                            <p>Jatuh tempo: 5 September 2026</p>
+                        </div>
+
+                        <button class="more-btn">•••</button>
+                    </div>
+
+
+                    <div class="bill-total">
+
+                        <span>Total Tagihan</span>
+
+                        <strong>Rp1.500.000</strong>
+
+                    </div>
+
+
+                    <div class="members">
+
+                        <div class="member">
+                            <div class="member-info">
+                                <span class="member-dot yusuf"></span>
+                                <span>Yusuf</span>
+                            </div>
+
+                            <div>
+                                <span class="member-price">Rp500.000</span>
+                                <span class="status paid">✓ Lunas</span>
+                            </div>
+                        </div>
+
+
+                        <div class="member">
+                            <div class="member-info">
+                                <span class="member-dot bejo"></span>
+                                <span>Bejo</span>
+                            </div>
+
+                            <div>
+                                <span class="member-price">Rp500.000</span>
+                                <span class="status paid">✓ Lunas</span>
+                            </div>
+                        </div>
+
+
+                        <div class="member">
+                            <div class="member-info">
+                                <span class="member-dot tejo"></span>
+                                <span>Tejo</span>
+                            </div>
+
+                            <div>
+                                <span class="member-price">Rp500.000</span>
+                                <span class="status unpaid">Belum Bayar</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <button class="detail-btn">
+                        Lihat Detail
+                    </button>
+
+                </div>
+
+
+                <!-- REMINDER -->
+                <div class="reminder-card">
+
+                    <div class="reminder-icon">
+                        ♧
+                    </div>
+
+                    <div>
+                        <strong>Kost jatuh tempo 3 hari lagi</strong>
+
+                        <p>
+                            Pembayaran kost bulan September sebesar
+                            Rp500.000 akan jatuh tempo pada 5 September 2026.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- MINI SUMMARY -->
+                <div class="panel mini-summary">
+
+                    <div class="panel-title">
+                        <h3>Ringkasan Bulan Ini</h3>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Transportasi</span>
+                        <strong>Rp150.000</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Makanan</span>
+                        <strong>Rp320.000</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Tagihan</span>
+                        <strong>Rp380.000</strong>
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- ================= RIGHT CONTENT ================= -->
+            <section class="expense-section">
+
+
+                <!-- TOOLBAR -->
+                <div class="toolbar">
+
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Cari pengeluaran..."
+                            oninput="searchExpense()"
+                        >
+
+                    </div>
+
+
+                    <select id="paymentFilter" onchange="filterPayment()">
+                        <option value="all">Dibayar oleh</option>
+                        <option value="Yusuf">Yusuf</option>
+                        <option value="Bagus">Bagus</option>
+                        <option value="Andi">Andi</option>
+                        <option value="Tejo">Tejo</option>
+                    </select>
+
+                </div>
+
+
+                <!-- FILTER -->
+                <div class="filters">
+
+                    <button class="filter active" data-filter="all">
+                        Semua
+                    </button>
+
+                    <button class="filter" data-filter="Kost">
+                        Kost
+                    </button>
+
+                    <button class="filter" data-filter="Listrik">
+                        Listrik
+                    </button>
+
+                    <button class="filter" data-filter="Air">
+                        Air
+                    </button>
+
+                    <button class="filter" data-filter="Wifi">
+                        Wifi
+                    </button>
+
+                    <button class="filter" data-filter="Kebutuhan Kost">
+                        Kebutuhan Kost
+                    </button>
+
+                    <button class="filter" data-filter="Lainnya">
+                        Lainnya
+                    </button>
+
+                </div>
+
+
+                <!-- TITLE -->
+                <div class="section-title">
+
+                    <div>
+                        <h2>Daftar Pengeluaran</h2>
+                        <p id="expenseCount">3 transaksi ditemukan</p>
+                    </div>
+
+                    <button class="sort-btn" onclick="sortExpenses()">
+                        ↕ Urutkan
+                    </button>
+
+                </div>
+
+
+                <!-- EXPENSE LIST -->
+                <div id="expenseList">
+
+
+                    <!-- WIFI -->
+                    <article
+                        class="expense-card"
+                        data-category="Wifi"
+                        data-person="Yusuf"
+                    >
+
+                        <div class="expense-head">
+
+                            <div class="expense-title">
+
+                                <div class="expense-icon">
+                                    ▣
+                                </div>
+
+                                <div>
+                                    <span class="category">Wifi</span>
+                                    <h3>WiFi</h3>
+                                </div>
+
+                            </div>
+
+                            <button class="card-menu">•••</button>
+
+                        </div>
+
+
+                        <div class="expense-body">
+
+                            <div class="expense-meta">
+
+                                <span>Harga</span>
+
+                                <strong>Rp300.000</strong>
+
+                            </div>
+
+
+                            <div class="expense-bottom">
+
+                                <span>
+                                    ♙ Oleh: <strong>Yusuf</strong>
+                                </span>
+
+                                <span>
+                                    ▣ 5 September 2026
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- LISTRIK -->
+                    <article
+                        class="expense-card"
+                        data-category="Listrik"
+                        data-person="Bagus"
+                    >
+
+                        <div class="expense-head">
+
+                            <div class="expense-title">
+
+                                <div class="expense-icon">
+                                    ▣
+                                </div>
+
+                                <div>
+                                    <span class="category">Listrik</span>
+                                    <h3>Listrik</h3>
+                                </div>
+
+                            </div>
+
+                            <button class="card-menu">•••</button>
+
+                        </div>
+
+
+                        <div class="expense-body">
+
+                            <div class="expense-meta">
+
+                                <span>Harga</span>
+
+                                <strong>Rp150.000</strong>
+
+                            </div>
+
+
+                            <div class="expense-bottom">
+
+                                <span>
+                                    ♙ Oleh: <strong>Bagus</strong>
+                                </span>
+
+                                <span>
+                                    ▣ 3 September 2026
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- GAS -->
+                    <article
+                        class="expense-card"
+                        data-category="Lainnya"
+                        data-person="Andi"
+                    >
+
+                        <div class="expense-head">
+
+                            <div class="expense-title">
+
+                                <div class="expense-icon">
+                                    ▣
+                                </div>
+
+                                <div>
+                                    <span class="category">Lainnya</span>
+                                    <h3>Gas</h3>
+                                </div>
+
+                            </div>
+
+                            <button class="card-menu">•••</button>
+
+                        </div>
+
+
+                        <div class="expense-body">
+
+                            <div class="expense-meta">
+
+                                <span>Harga</span>
+
+                                <strong>Rp40.000</strong>
+
+                            </div>
+
+
+                            <div class="expense-bottom">
+
+                                <span>
+                                    ♙ Oleh: <strong>Andi</strong>
+                                </span>
+
+                                <span>
+                                    ▣ 1 September 2026
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- EMPTY STATE -->
+                <div id="emptyState" class="empty-state">
+
+                    <div>⌕</div>
+
+                    <h3>Pengeluaran tidak ditemukan</h3>
+
+                    <p>
+                        Coba gunakan kata pencarian atau kategori lain.
+                    </p>
+
+                </div>
+
+
+                <!-- AKTIVITAS -->
+                <div class="activity-panel">
+
+                    <div class="activity-header">
+
+                        <div>
+                            <h2>Aktivitas Terbaru</h2>
+                            <p>Riwayat perubahan keuangan</p>
+                        </div>
+
+                        <button>Lihat Semua</button>
+
+                    </div>
+
+
+                    <div class="activity-list">
+
+                        <div class="activity-item">
+
+                            <div class="activity-avatar">
+                                Y
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Yusuf</strong>
+                                    menambahkan pengeluaran
+                                    <b>Galon Rp20.000</b>
+                                </p>
+
+                                <span>Hari ini · 10:32</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-avatar">
+                                B
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Bagus</strong>
+                                    membayar
+                                    <b>WiFi Rp100.000</b>
+                                </p>
+
+                                <span>Kemarin · 19:21</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-avatar">
+                                A
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Andi</strong>
+                                    menambahkan
+                                    <b>Gas Rp40.000</b>
+                                </p>
+
+                                <span>30 Agustus 2026</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal-overlay" id="modal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Tambah Pengeluaran</h2>
+                <p>Masukkan informasi pengeluaran baru.</p>
+            </div>
+
+            <button onclick="closeModal()">×</button>
+
+        </div>
+
+
+        <form id="expenseForm">
+
+            <div class="form-group">
+
+                <label>Nama Pengeluaran</label>
+
+                <input
+                    type="text"
+                    id="expenseName"
+                    placeholder="Contoh: WiFi"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Kategori</label>
+
+                    <select id="expenseCategory">
+
+                        <option value="Kost">Kost</option>
+                        <option value="Listrik">Listrik</option>
+                        <option value="Air">Air</option>
+                        <option value="Wifi">Wifi</option>
+                        <option value="Kebutuhan Kost">
+                            Kebutuhan Kost
+                        </option>
+                        <option value="Lainnya">Lainnya</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Nominal</label>
+
+                    <input
+                        type="number"
+                        id="expensePrice"
+                        placeholder="150000"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Dibayar Oleh</label>
+
+                    <select id="expensePerson">
+
+                        <option>Yusuf</option>
+                        <option>Bagus</option>
+                        <option>Hafidz</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Tanggal</label>
+
+                    <input
+                        type="date"
+                        id="expenseDate"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Catatan</label>
+
+                <textarea
+                    id="expenseNote"
+                    placeholder="Tambahkan catatan..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn-cancel"
+                    onclick="closeModal()"
+                >
+                    Batal
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    Simpan Pengeluaran
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="keuangan.js"></script>
+
+</body>
+</html>
