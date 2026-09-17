@@ -32,17 +32,17 @@
 
             <nav class="nav">
 
-                <a href="#">Dasbor</a>
+                <a href="dashboard.html">Dasbor</a>
 
-                <a href="#">Akun</a>
+                <a href="akun.html">Akun</a>
 
-                <a href="#">Catatan</a>
+                <a href="catatan.html">Catatan</a>
 
-                <a href="#" class="active">
+                <a href="inventaris.html" class="active">
                     Inventaris
                 </a>
 
-                <a href="#">Keuangan</a>
+                <a href="keuangan.html">Keuangan</a>
 
             </nav>
 
@@ -71,7 +71,7 @@
                 <div class="heading-left">
 
                     <div class="heading-icon">
-                        ▣
+                        📦
                     </div>
 
                     <div>
@@ -289,110 +289,119 @@
 
     <!-- ================= MODAL ================= -->
 
-    <div
-        class="modal-backdrop"
-        id="modal"
-    >
+   <!-- ================= MODAL TAMBAH BARANG ================= -->
 
-        <div class="modal">
+<div class="modal-backdrop" id="modal">
+
+    <div class="modal">
+
+        <!-- HEADER MODAL -->
+        <div class="modal-header">
+
+            <div class="modal-title-wrap">
+
+                <div class="modal-title-icon">
+
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+
+                </div>
+
+                <h2 id="modalTitle">
+                    Tambah Barang
+                </h2>
+
+            </div>
+
 
             <button
+                type="button"
                 class="modal-close"
                 id="closeModal"
+                aria-label="Tutup"
             >
                 ×
             </button>
 
-
-            <h2 id="modalTitle">
-                Tambah Barang
-            </h2>
-
-            <p class="modal-subtitle">
-                Masukkan informasi barang inventaris.
-            </p>
+        </div>
 
 
-            <form id="itemForm">
+        <!-- FORM -->
+        <form id="itemForm">
 
-                <input
-                    type="hidden"
-                    id="itemId"
-                >
-
-
-                <div class="form-grid">
+            <input
+                type="hidden"
+                id="itemId"
+            >
 
 
-                    <label>
+            <div class="modal-body">
 
+                <!-- ================= NAMA BARANG ================= -->
+
+                <div class="form-field full">
+
+                    <label for="name">
                         Nama Barang
-
-                        <input
-                            type="text"
-                            id="name"
-                            placeholder="Contoh: Rice Cooker"
-                            required
-                        >
-
                     </label>
 
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Contoh: Sapu ijuk, Sabun Cuci"
+                        required
+                    >
 
-                    <label>
-
-                        Kategori
-
-                        <select id="category">
-
-                            <option>
-                                Barang Bersama
-                            </option>
-
-                            <option>
-                                Barang Pribadi
-                            </option>
-
-                            <option>
-                                Patungan
-                            </option>
-
-                        </select>
-
-                    </label>
+                </div>
 
 
-                    <label>
+                <!-- ================= HARGA ================= -->
 
+                <div class="form-field">
+
+                    <label for="price">
                         Harga
+                    </label>
+
+                    <div class="price-wrapper">
+
+                        <span class="currency">
+                            Rp
+                        </span>
 
                         <input
                             type="number"
                             id="price"
-                            placeholder="450000"
                             min="0"
                             required
                         >
 
+                    </div>
+
+                </div>
+
+
+                <!-- ================= TANGGAL ================= -->
+
+                <div class="form-field">
+
+                    <label for="date">
+                        Tanggal Pembelian
                     </label>
 
-
-                    <label>
-
-                        Pemilik
-
-                        <input
-                            type="text"
-                            id="owner"
-                            placeholder="Yusuf"
-                            required
-                        >
-
-                    </label>
-
-
-                    <label>
-
-                        Tanggal Beli
+                    <div class="date-wrapper">
 
                         <input
                             type="date"
@@ -400,68 +409,258 @@
                             required
                         >
 
-                    </label>
-
-
-                    <label>
-
-                        Ikon
-
-                        <input
-                            type="text"
-                            id="icon"
-                            placeholder="▣"
-                            maxlength="2"
+                        <svg
+                            class="field-icon"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
                         >
+                            <rect
+                                x="3"
+                                y="4"
+                                width="18"
+                                height="18"
+                                rx="2"
+                                ry="2"
+                            ></rect>
 
-                    </label>
+                            <line
+                                x1="16"
+                                y1="2"
+                                x2="16"
+                                y2="6"
+                            ></line>
 
+                            <line
+                                x1="8"
+                                y1="2"
+                                x2="8"
+                                y2="6"
+                            ></line>
+
+                            <line
+                                x1="3"
+                                y1="10"
+                                x2="21"
+                                y2="10"
+                            ></line>
+                        </svg>
+
+                    </div>
 
                 </div>
 
 
-                <label>
+                <!-- ================= DIBELI OLEH ================= -->
 
-                    Deskripsi
+                <div class="form-field">
+
+                    <label for="owner">
+                        Dibeli Oleh
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select id="owner" required>
+
+                            <option value="Yusuf">
+                                Yusuf
+                            </option>
+
+                            <option value="Bagus">
+                                Bagus
+                            </option>
+
+                            <option value="Hafidz">
+                                Hafidz
+                            </option>
+
+                        </select>
+
+                        <svg
+                            class="select-arrow"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polyline
+                                points="6 9 12 15 18 9"
+                            ></polyline>
+                        </svg>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= KATEGORI ================= -->
+
+                <div class="form-field">
+
+                    <label for="itemCategory">
+                        Kategori
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select id="itemCategory">
+
+                            <option value="Kebutuhan Kost">
+                                Kebutuhan Kost
+                            </option>
+
+                            <option value="Elektronik">
+                                Elektronik
+                            </option>
+
+                            <option value="Peralatan">
+                                Peralatan
+                            </option>
+
+                            <option value="Kebersihan">
+                                Kebersihan
+                            </option>
+
+                            <option value="Lainnya">
+                                Lainnya
+                            </option>
+
+                        </select>
+
+                        <svg
+                            class="select-arrow"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polyline
+                                points="6 9 12 15 18 9"
+                            ></polyline>
+                        </svg>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= STATUS KEPEMILIKAN ================= -->
+
+                <div class="form-field full">
+
+                    <label for="ownership">
+                        Status Kepemilikan
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select id="ownership">
+
+                            <option value="Barang Bersama">
+                                Barang Bersama
+                            </option>
+
+                            <option value="Barang Pribadi">
+                                Barang Pribadi
+                            </option>
+
+                            <option value="Patungan">
+                                Patungan
+                            </option>
+
+                        </select>
+
+                        <svg
+                            class="select-arrow"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polyline
+                                points="6 9 12 15 18 9"
+                            ></polyline>
+                        </svg>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CATATAN ================= -->
+
+                <div class="form-field full">
+
+                    <label for="description">
+                        Catatan (Opsional)
+                    </label>
 
                     <textarea
                         id="description"
-                        rows="3"
-                        placeholder="Deskripsi singkat barang..."
+                        placeholder="Tulis detail atau keterangan tambahan mengenai barang ini..."
                     ></textarea>
-
-                </label>
-
-
-                <div class="form-actions">
-
-                    <button
-                        type="button"
-                        class="btn ghost"
-                        id="cancelModal"
-                    >
-                        Batal
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn primary"
-                    >
-                        Simpan Barang
-                    </button>
 
                 </div>
 
-            </form>
 
-        </div>
+                <!-- IKON CARD
+                     Disembunyikan dari tampilan modal,
+                     tetapi tetap dipertahankan untuk sistem card.
+                -->
+
+                <input
+                    type="hidden"
+                    id="icon"
+                    value="▣"
+                >
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="modal-btn cancel"
+                    id="cancelModal"
+                >
+                    Batal
+                </button>
+
+                <button
+                    type="submit"
+                    class="modal-btn save"
+                >
+                    Simpan Barang
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
-
-    <!-- TOAST -->
-
-    <div
+</div>
         class="toast"
         id="toast"
     ></div>
