@@ -19,7 +19,7 @@ const initialItems = [
         price: 300000,
         owner: "Bagus",
         date: "2026-08-15",
-        icon: "♨",
+        icon: "",
         description:
             "Kipas ruang tengah, harap matikan jika keluar."
     },
@@ -325,7 +325,7 @@ function createCard(item) {
                 <div class="item-icon">
 
                     ${escapeHtml(
-                        item.icon || "▣"
+                        item.icon || ""
                     )}
 
                 </div>
@@ -540,12 +540,6 @@ function showModal(item = null) {
         item?.name || "";
 
 
-    $("#category")
-        .value =
-        item?.category ||
-        "Barang Bersama";
-
-
     $("#price")
         .value =
         item?.price || "";
@@ -553,7 +547,7 @@ function showModal(item = null) {
 
     $("#owner")
         .value =
-        item?.owner || "";
+        item?.owner || "Yusuf";
 
 
     $("#date")
@@ -572,6 +566,31 @@ function showModal(item = null) {
     $("#description")
         .value =
         item?.description || "";
+
+
+    /*
+       Kategori baru.
+       Kalau data lama belum punya itemCategory,
+       gunakan Kebutuhan Kost.
+    */
+
+    $("#itemCategory")
+        .value =
+        item?.itemCategory ||
+        "Kebutuhan Kost";
+
+
+    /*
+       Status kepemilikan.
+       Data lama menggunakan category
+       sebagai status kepemilikan.
+    */
+
+    $("#ownership")
+        .value =
+        item?.ownership ||
+        item?.category ||
+        "Barang Bersama";
 
 }
 
@@ -780,49 +799,67 @@ $("#itemForm").onsubmit = event => {
     const idValue =
         $("#itemId").value.trim();
 
-    const data = {
+const data = {
 
-        id:
-            idValue
-                ? Number(idValue)
-                : Date.now(),
+    id:
+        idValue
+            ? Number(idValue)
+            : Date.now(),
 
-        name:
-            $("#name")
+    name:
+        $("#name")
+            .value
+            .trim(),
+
+    /*
+       Status lama tetap disimpan
+       sebagai category agar filter
+       dan statistik yang sudah ada
+       tetap berjalan.
+    */
+
+    category:
+        $("#ownership")
+            .value,
+
+    /*
+       Kategori barang baru.
+    */
+
+    itemCategory:
+        $("#itemCategory")
+            .value,
+
+    /*
+       Status kepemilikan eksplisit.
+    */
+
+    ownership:
+        $("#ownership")
+            .value,
+
+    price:
+        Number(
+            $("#price")
                 .value
-                .trim(),
+        ) || 0,
 
-        category:
-            $("#category")
-                .value,
+    owner:
+        $("#owner")
+            .value
+            .trim(),
 
-        price:
-            Number(
-                $("#price")
-                    .value
-            ) || 0,
+    date:
+        $("#date")
+            .value,
 
-        owner:
-            $("#owner")
-                .value
-                .trim(),
 
-        date:
-            $("#date")
-                .value,
+    description:
+        $("#description")
+            .value
+            .trim()
 
-        icon:
-            $("#icon")
-                .value
-                .trim() ||
-            "▣",
-
-        description:
-            $("#description")
-                .value
-                .trim()
-
-    };
+};
 
 
     /* ================= VALIDASI ================= */
