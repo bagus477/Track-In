@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Track IN - Pengaturan Akun</title>
+
+    <link rel="stylesheet" href="akun.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- =====================================================
+             TOP NAVBAR
+        ====================================================== -->
+        <header class="topbar">
+
+            <nav class="main-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    Dasbor
+                </a>
+
+                <a href="akun.html" class="nav-item active">
+                    Akun
+                </a>
+
+                <a href="catatan.html" class="nav-item">
+                    Catatan
+                </a>
+
+                <a href="inventaris.html" class="nav-item">
+                    Inventaris
+                </a>
+
+                <a href="keuangan.html" class="nav-item">
+                    Keuangan
+                </a>
+
+            </nav>
+
+            <div class="top-profile">
+
+                <span class="top-name">
+                    yusuf
+                </span>
+
+                <button
+                    class="top-avatar"
+                    id="profileMenuButton"
+                    aria-label="Menu profil"
+                >
+                    <div class="avatar-small">
+                        <div class="avatar-hair"></div>
+                        <div class="avatar-face"></div>
+                        <div class="avatar-body"></div>
+                    </div>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+        ====================================================== -->
+        <main class="account-page">
+
+            <!-- =================================================
+                 LEFT SIDEBAR
+            ================================================== -->
+            <aside class="account-sidebar">
+
+                <!-- Profile -->
+                <div class="profile-area">
+
+                    <div class="profile-avatar">
+
+                        <div class="avatar-hair large"></div>
+
+                        <div class="avatar-face large"></div>
+
+                        <div class="avatar-body large"></div>
+
+                    </div>
+
+                    <h1 class="profile-name">
+                        Yusuf
+                    </h1>
+
+                    <p class="profile-username">
+                        Yusuf
+                    </p>
+
+                </div>
+
+
+                <!-- Security Information -->
+                <div class="security-notice">
+
+                    <div class="notice-icon">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+
+                    <div class="notice-text">
+
+                        <strong>
+                            Kelola Informasi Akun
+                        </strong>
+
+                        <span>
+                            Pastikan Informasi Akun selalu
+                            diperbarui dan aman.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sidebar-divider"></div>
+
+
+                <!-- Sidebar Menu -->
+                <nav class="account-menu">
+
+                    <button
+                        class="account-menu-item active"
+                        data-section="informasi"
+                    >
+
+                        <span class="menu-icon">
+                            <i data-lucide="user-round"></i>
+                        </span>
+
+                        <span>
+                            Informasi Akun
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="account-menu-item"
+                        data-section="keamanan"
+                    >
+
+                        <span class="menu-icon">
+                            <i data-lucide="shield"></i>
+                        </span>
+
+                        <span>
+                            Keamanan
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="account-menu-item"
+                        data-section="notifikasi"
+                    >
+
+                        <span class="menu-icon">
+                            <i data-lucide="bell"></i>
+                        </span>
+
+                        <span>
+                            Notifikasi
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="account-menu-item"
+                        data-section="bahasa"
+                    >
+
+                        <span class="menu-icon">
+                            <i data-lucide="globe"></i>
+                        </span>
+
+                        <span>
+                            Bahasa
+                        </span>
+
+                    </button>
+
+                </nav>
+
+
+                <div class="sidebar-divider bottom"></div>
+
+
+                <!-- Logout -->
+                <button
+                    class="logout-button"
+                    id="logoutButton"
+                >
+
+                    <span class="logout-icon">
+                        <i data-lucide="log-out"></i>
+                    </span>
+
+                    <span class="logout-text">
+
+                        <strong>
+                            Keluar
+                        </strong>
+
+                        <small>
+                            Keluar dari akun ini
+                        </small>
+
+                    </span>
+
+                </button>
+
+            </aside>
+
+
+            <!-- =================================================
+                 RIGHT CONTENT
+            ================================================== -->
+            <section class="account-content">
+
+                <!-- PAGE HEADER -->
+                <div class="page-heading">
+
+                    <h2>
+                        Pengaturan Akun
+                    </h2>
+
+                    <p>
+                        Kelola preferensi dan informasi anda
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     INFORMASI AKUN
+                ================================================== -->
+                <section
+                    class="settings-card"
+                    id="informasiSection"
+                >
+
+                    <div class="card-title">
+
+                        <span class="title-icon turquoise">
+                            <i data-lucide="user-round"></i>
+                        </span>
+
+                        <h3>
+                            Informasi Akun
+                        </h3>
+
+                    </div>
+
+
+                    <div class="information-list">
+
+                        <!-- USERNAME -->
+                        <div class="information-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="user-round"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Username
+                                </strong>
+
+                                <small>
+                                    Nama pengguna kamu
+                                </small>
+
+                            </div>
+
+                            <div class="row-value">
+
+                                <input
+                                    type="text"
+                                    value="yusuf"
+                                    class="account-input"
+                                    data-field="username"
+                                    disabled
+                                >
+
+                            </div>
+
+                            <button
+                                class="edit-button"
+                                data-edit="username"
+                                aria-label="Edit username"
+                            >
+
+                                <i data-lucide="square-pen"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- NAMA -->
+                        <div class="information-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="user"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Nama Lengkap
+                                </strong>
+
+                                <small>
+                                    Nama Lengkap Kamu
+                                </small>
+
+                            </div>
+
+                            <div class="row-value">
+
+                                <input
+                                    type="text"
+                                    value="Yusuf"
+                                    class="account-input"
+                                    data-field="nama"
+                                    disabled
+                                >
+
+                            </div>
+
+                            <button
+                                class="edit-button"
+                                data-edit="nama"
+                                aria-label="Edit nama"
+                            >
+
+                                <i data-lucide="square-pen"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+                        <div class="information-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="mail"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Email
+                                </strong>
+
+                                <small>
+                                    Alamat Email Aktif
+                                </small>
+
+                            </div>
+
+                            <div class="row-value">
+
+                                <input
+                                    type="email"
+                                    value="yusuf@gmail.com"
+                                    class="account-input"
+                                    data-field="email"
+                                    disabled
+                                >
+
+                            </div>
+
+                            <button
+                                class="edit-button"
+                                data-edit="email"
+                                aria-label="Edit email"
+                            >
+
+                                <i data-lucide="square-pen"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- TELEPON -->
+                        <div class="information-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="phone"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Nomor Telepon
+                                </strong>
+
+                                <small>
+                                    Nomor Telepon Yang Terdaftar
+                                </small>
+
+                            </div>
+
+                            <div class="row-value">
+
+                                <input
+                                    type="tel"
+                                    value="081234567890"
+                                    class="account-input"
+                                    data-field="telepon"
+                                    disabled
+                                >
+
+                            </div>
+
+                            <button
+                                class="edit-button"
+                                data-edit="telepon"
+                                aria-label="Edit nomor telepon"
+                            >
+
+                                <i data-lucide="square-pen"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- GANTI AKUN -->
+                        <div class="information-row switch-account-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="repeat-2"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Ganti Akun
+                                </strong>
+
+                                <small>
+                                    Berpindah ke Akun Yang Lain
+                                </small>
+
+                            </div>
+
+                            <div class="switch-area">
+
+                                <button
+                                    class="switch-account-button"
+                                    id="switchAccountButton"
+                                >
+
+                                    <span>
+                                        Ganti Akun
+                                    </span>
+
+                                    <i data-lucide="arrow-right"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SAVE -->
+                    <div class="card-footer">
+
+                        <button
+                            class="save-button"
+                            id="saveButton"
+                        >
+
+                            <i data-lucide="save"></i>
+
+                            <span>
+                                Simpan Perubahan
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     KEAMANAN
+                ================================================== -->
+                <section
+                    class="settings-card security-card"
+                    id="keamananSection"
+                >
+
+                    <div class="card-title">
+
+                        <span class="title-icon turquoise">
+                            <i data-lucide="shield-check"></i>
+                        </span>
+
+                        <h3>
+                            Keamanan
+                        </h3>
+
+                    </div>
+
+
+                    <div class="information-list">
+
+                        <!-- PASSWORD -->
+                        <div class="information-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="lock-keyhole"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Password
+                                </strong>
+
+                                <small>
+                                    Kata Sandi untuk Masuk ke Akun
+                                </small>
+
+                            </div>
+
+                            <div class="security-value">
+                                **********
+                            </div>
+
+                            <button
+                                class="outline-button"
+                                id="changePasswordButton"
+                            >
+
+                                <i data-lucide="key-round"></i>
+
+                                <span>
+                                    Ubah Password
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- EMAIL VERIFICATION -->
+                        <div class="information-row">
+
+                            <div class="row-icon email-status-icon">
+                                <i data-lucide="mail-check"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Verifikasi Email
+                                </strong>
+
+                                <small>
+                                    Kata Sandi untuk Masuk ke Akun
+                                </small>
+
+                            </div>
+
+                            <div class="verified-area">
+
+                                <span class="verified-badge">
+
+                                    <i data-lucide="check"></i>
+
+                                    Terverifikasi
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LAST LOGIN -->
+                        <div class="information-row last-login-row">
+
+                            <div class="row-icon">
+                                <i data-lucide="clock-3"></i>
+                            </div>
+
+                            <div class="row-label">
+
+                                <strong>
+                                    Login Terakhir
+                                </strong>
+
+                                <small>
+                                    Waktu Terakhir Kamu Login
+                                </small>
+
+                            </div>
+
+                            <div class="last-login">
+                                29 Agustus 2026, 15.38 WIB
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     LAINNYA
+                ================================================== -->
+                <section
+                    class="settings-card other-card"
+                    id="lainnyaSection"
+                >
+
+                    <div class="card-title">
+
+                        <span class="title-icon turquoise">
+                            <i data-lucide="settings"></i>
+                        </span>
+
+                        <h3>
+                            Lainnya
+                        </h3>
+
+                    </div>
+
+
+                    <div class="information-row delete-row">
+
+                        <div class="row-icon delete-icon">
+                            <i data-lucide="trash-2"></i>
+                        </div>
+
+                        <div class="row-label">
+
+                            <strong>
+                                Hapus Akun
+                            </strong>
+
+                            <small>
+                                Hapus Akun Secara Permanen
+                            </small>
+
+                        </div>
+
+                        <div class="delete-area">
+
+                            <button
+                                class="delete-button"
+                                id="deleteAccountButton"
+                            >
+
+                                <i data-lucide="trash-2"></i>
+
+                                <span>
+                                    Hapus Akun
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     EXTRA SECTION - NOTIFIKASI
+                ================================================== -->
+                <section
+                    class="settings-card hidden-section"
+                    id="notifikasiSection"
+                >
+
+                    <div class="card-title">
+
+                        <span class="title-icon turquoise">
+                            <i data-lucide="bell"></i>
+                        </span>
+
+                        <h3>
+                            Notifikasi
+                        </h3>
+
+                    </div>
+
+                    <div class="preference-list">
+
+                        <div class="preference-item">
+
+                            <div>
+                                <strong>
+                                    Notifikasi Aktivitas
+                                </strong>
+
+                                <small>
+                                    Dapatkan pemberitahuan mengenai aktivitas akun.
+                                </small>
+                            </div>
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="preference-item">
+
+                            <div>
+                                <strong>
+                                    Pengingat Inventaris
+                                </strong>
+
+                                <small>
+                                    Tampilkan pengingat ketika terdapat perubahan inventaris.
+                                </small>
+                            </div>
+
+                            <label class="toggle">
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     LANGUAGE
+                ================================================== -->
+                <section
+                    class="settings-card hidden-section"
+                    id="bahasaSection"
+                >
+
+                    <div class="card-title">
+
+                        <span class="title-icon turquoise">
+                            <i data-lucide="globe"></i>
+                        </span>
+
+                        <h3>
+                            Bahasa
+                        </h3>
+
+                    </div>
+
+                    <div class="language-content">
+
+                        <label>
+                            Bahasa Sistem
+                        </label>
+
+                        <select id="languageSelect">
+
+                            <option value="id">
+                                Bahasa Indonesia
+                            </option>
+
+                            <option value="en">
+                                English
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         PASSWORD MODAL
+    ========================================================== -->
+    <div
+        class="modal-overlay"
+        id="passwordModal"
+    >
+
+        <div class="modal">
+
+            <button
+                class="modal-close"
+                data-close-modal="passwordModal"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+            <div class="modal-icon turquoise-modal">
+                <i data-lucide="lock-keyhole"></i>
+            </div>
+
+            <h3>
+                Ubah Password
+            </h3>
+
+            <p class="modal-description">
+                Gunakan password yang kuat dan mudah kamu ingat.
+            </p>
+
+
+            <form id="passwordForm">
+
+                <div class="form-group">
+
+                    <label>
+                        Password Saat Ini
+                    </label>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            id="oldPassword"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="oldPassword"
+                        >
+                            <i data-lucide="eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password Baru
+                    </label>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="newPassword"
+                        >
+                            <i data-lucide="eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Konfirmasi Password
+                    </label>
+
+                    <div class="password-input">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="confirmPassword"
+                        >
+                            <i data-lucide="eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-button"
+                        data-close-modal="passwordModal"
+                    >
+                        Batal
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="modal-primary-button"
+                    >
+                        Simpan Password
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         DELETE MODAL
+    ========================================================== -->
+    <div
+        class="modal-overlay"
+        id="deleteModal"
+    >
+
+        <div class="modal delete-modal">
+
+            <button
+                class="modal-close"
+                data-close-modal="deleteModal"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+            <div class="modal-icon danger-modal">
+                <i data-lucide="trash-2"></i>
+            </div>
+
+            <h3>
+                Hapus Akun?
+            </h3>
+
+            <p class="modal-description">
+                Tindakan ini akan menghapus akun dan data
+                terkait secara permanen. Tindakan ini tidak
+                dapat dibatalkan.
+            </p>
+
+
+            <div class="warning-box">
+
+                <i data-lucide="triangle-alert"></i>
+
+                <span>
+                    Pastikan kamu benar-benar ingin menghapus
+                    akun ini.
+                </span>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="cancel-button"
+                    data-close-modal="deleteModal"
+                >
+                    Batal
+                </button>
+
+                <button
+                    class="danger-confirm-button"
+                    id="confirmDeleteButton"
+                >
+                    Hapus Akun
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SWITCH ACCOUNT MODAL
+    ========================================================== -->
+    <div
+        class="modal-overlay"
+        id="switchModal"
+    >
+
+        <div class="modal">
+
+            <button
+                class="modal-close"
+                data-close-modal="switchModal"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+            <div class="modal-icon turquoise-modal">
+                <i data-lucide="repeat-2"></i>
+            </div>
+
+            <h3>
+                Ganti Akun
+            </h3>
+
+            <p class="modal-description">
+                Pilih akun yang ingin digunakan.
+            </p>
+
+
+            <div class="account-list">
+
+                <button class="account-option active">
+
+                    <span class="option-avatar">
+                        Y
+                    </span>
+
+                    <span class="option-info">
+
+                        <strong>
+                            Yusuf
+                        </strong>
+
+                        <small>
+                            yusuf@gmail.com
+                        </small>
+
+                    </span>
+
+                    <i data-lucide="check"></i>
+
+                </button>
+
+
+                <button class="account-option">
+
+                    <span class="option-avatar second">
+                        A
+                    </span>
+
+                    <span class="option-info">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <small>
+                            admin@gmail.com
+                        </small>
+
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="add-account-button"
+                id="addAccountButton"
+            >
+
+                <i data-lucide="plus"></i>
+
+                Tambah Akun
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+    <div
+        class="toast"
+        id="toast"
+    >
+
+        <span class="toast-icon">
+            <i data-lucide="check-circle-2"></i>
+        </span>
+
+        <span id="toastMessage">
+            Perubahan berhasil disimpan.
+        </span>
+
+    </div>
+
+
+    <script src="akun.js"></script>
+
+</body>
+
+</html>
