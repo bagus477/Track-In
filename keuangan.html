@@ -27,11 +27,11 @@
             </div>
 
             <nav>
-                <a href="#">Dasbor</a>
-                <a href="#">Akun</a>
-                <a href="#">Catatan</a>
-                <a href="#">Inventaris</a>
-                <a href="#" class="active">Keuangan</a>
+                <a href="dashboard.html">Dasbor</a>
+                <a href="akun.html">Akun</a>
+                <a href="catatan.html">Catatan</a>
+                <a href="inventaris.html">Inventaris</a>
+                <a href="keuangan.html" class="active">Keuangan</a>
             </nav>
 
         </div>
@@ -60,7 +60,7 @@
             <div class="page-title">
 
                 <div class="page-icon">
-                    <span>▣</span>
+                    <span>💵</span>
                 </div>
 
                 <div>
@@ -299,8 +299,7 @@
                         <option value="all">Dibayar oleh</option>
                         <option value="Yusuf">Yusuf</option>
                         <option value="Bagus">Bagus</option>
-                        <option value="Andi">Andi</option>
-                        <option value="Tejo">Tejo</option>
+                        <option value="Hafidz">Hafidz</option>
                     </select>
 
                 </div>
@@ -404,7 +403,7 @@
                                 </span>
 
                                 <span>
-                                    ▣ 5 September 2026
+                                    🗓️ 5 September 2026
                                 </span>
 
                             </div>
@@ -459,7 +458,7 @@
                                 </span>
 
                                 <span>
-                                    ▣ 3 September 2026
+                                    🗓️ 3 September 2026
                                 </span>
 
                             </div>
@@ -514,7 +513,7 @@
                                 </span>
 
                                 <span>
-                                    ▣ 1 September 2026
+                                    🗓️ 1 September 2026
                                 </span>
 
                             </div>
@@ -636,139 +635,207 @@
 
 <div class="modal-overlay" id="modal">
 
-    <div class="modal">
+    <div class="expense-modal">
 
+        <!-- HEADER -->
         <div class="modal-header">
 
-            <div>
+            <div class="modal-title">
+                <span class="modal-icon">💰</span>
                 <h2>Tambah Pengeluaran</h2>
-                <p>Masukkan informasi pengeluaran baru.</p>
             </div>
 
-            <button onclick="closeModal()">×</button>
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
 
         </div>
 
 
-        <form id="expenseForm">
+        <!-- BODY -->
+        <div class="modal-body">
 
-            <div class="form-group">
+            <form id="expenseForm">
 
-                <label>Nama Pengeluaran</label>
+                <!-- NAMA PENGELUARAN -->
+                <div class="form-group full">
 
-                <input
-                    type="text"
-                    id="expenseName"
-                    placeholder="Contoh: WiFi"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-row">
-
-                <div class="form-group">
-
-                    <label>Kategori</label>
-
-                    <select id="expenseCategory">
-
-                        <option value="Kost">Kost</option>
-                        <option value="Listrik">Listrik</option>
-                        <option value="Air">Air</option>
-                        <option value="Wifi">Wifi</option>
-                        <option value="Kebutuhan Kost">
-                            Kebutuhan Kost
-                        </option>
-                        <option value="Lainnya">Lainnya</option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Nominal</label>
+                    <label for="expenseName">
+                        Nama Pengeluaran
+                    </label>
 
                     <input
-                        type="number"
-                        id="expensePrice"
-                        placeholder="150000"
-                        min="0"
+                        type="text"
+                        id="expenseName"
+                        placeholder="Contoh: Bayar Listrik"
                         required
                     >
 
                 </div>
 
-            </div>
+
+                <!-- NOMINAL + TANGGAL -->
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="expensePrice">
+                            Nominal
+                        </label>
+
+                        <div class="price-input">
+
+                            <span>Rp</span>
+
+                            <input
+                                type="number"
+                                id="expensePrice"
+                                placeholder="0"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
 
 
-            <div class="form-row">
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label for="expenseDate">
+                            Tanggal
+                        </label>
 
-                    <label>Dibayar Oleh</label>
+                        <div class="date-input">
 
-                    <select id="expensePerson">
+                            <input
+                                type="date"
+                                id="expenseDate"
+                                required
+                            >
 
-                        <option>Yusuf</option>
-                        <option>Bagus</option>
-                        <option>Hafidz</option>
+                            <span class="calendar-icon">
+                                
+                            </span>
 
-                    </select>
+                        </div>
+
+                    </div>
 
                 </div>
 
 
-                <div class="form-group">
+                <!-- DIBAYAR OLEH + KATEGORI -->
+                <div class="form-row">
 
-                    <label>Tanggal</label>
+                    <div class="form-group">
 
-                    <input
-                        type="date"
-                        id="expenseDate"
-                        required
-                    >
+                        <label for="expensePerson">
+                            Dibayar Oleh
+                        </label>
+
+                        <select id="expensePerson">
+
+                            <option value="Yusuf">
+                                Yusuf
+                            </option>
+
+                            <option value="Bagus">
+                                Bagus
+                            </option>
+
+                            <option value="Hafidz">
+                                Hafidz
+                            </option>
+
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="expenseCategory">
+                            Kategori
+                        </label>
+
+                        <select id="expenseCategory">
+
+                            <option value="Wifi">
+                                WiFi
+                            </option>
+
+                            <option value="Kost">
+                                Kost
+                            </option>
+
+                            <option value="Listrik">
+                                Listrik
+                            </option>
+
+                            <option value="Air">
+                                Air
+                            </option>
+
+                            <option value="Kebutuhan Kost">
+                                Kebutuhan Kost
+                            </option>
+
+                            <option value="Lainnya">
+                                Lainnya
+                            </option>
+
+                        </select>
+
+                    </div>
 
                 </div>
 
-            </div>
+
+                <!-- CATATAN -->
+                <div class="form-group full">
+
+                    <label for="expenseNote">
+                        Catatan (Opsional)
+                    </label>
+
+                    <textarea
+                        id="expenseNote"
+                        placeholder="Tulis keterangan tambahan di sini..."
+                    ></textarea>
+
+                </div>
+
+            </form>
+
+        </div>
 
 
-            <div class="form-group">
+        <!-- FOOTER -->
+        <div class="modal-footer">
 
-                <label>Catatan</label>
+            <button
+                type="button"
+                class="btn-cancel"
+                onclick="closeModal()"
+            >
+                Batal
+            </button>
 
-                <textarea
-                    id="expenseNote"
-                    placeholder="Tambahkan catatan..."
-                ></textarea>
+            <button
+                type="submit"
+                form="expenseForm"
+                class="btn-save"
+            >
+                Simpan Pengeluaran
+            </button>
 
-            </div>
-
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    class="btn-cancel"
-                    onclick="closeModal()"
-                >
-                    Batal
-                </button>
-
-                <button
-                    type="submit"
-                    class="btn-primary"
-                >
-                    Simpan Pengeluaran
-                </button>
-
-            </div>
-
-        </form>
+        </div>
 
     </div>
 
