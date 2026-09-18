@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catatan</title>
+    <link rel="stylesheet" href="catatan.css">
+</head>
+<body>
+
+<header class="topbar">
+    <nav class="navbar">
+        <a href="dashboard.html">Dasbor</a>
+        <a href="akun.html">Akun</a>
+        <a href="#" class="active">Catatan</a>
+        <a href="inventaris.html">Inventaris</a>
+        <a href="keuangan.html">Keuangan</a>
+    </nav>
+
+    <div class="user-profile">
+        <span>yusuf</span>
+        <div class="avatar">
+            <img src="https://i.pravatar.cc/80?img=12" alt="Yusuf">
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <!-- HEADER HALAMAN -->
+    <section class="page-header">
+        <div class="title-wrapper">
+            <div class="catatan-logo">
+                <div class="paper"></div>
+                <div class="pencil"></div>
+            </div>
+            <div>
+                <h1>Catatan</h1>
+                <p>simpan catatan penting keuanganmu</p>
+            </div>
+        </div>
+
+        <button class="btn-add" id="openModal">
+            <span>+</span>
+            Tambah catatan
+        </button>
+    </section>
+
+    <!-- PANEL CATATAN -->
+    <section class="notes-panel">
+        <div class="toolbar">
+            <!-- SEARCH -->
+            <div class="search-box">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Cari catatan...">
+            </div>
+
+            <!-- FILTER -->
+            <div class="filters">
+                <button class="filter-button" id="categoryButton">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="4" y="4" width="4" height="4" rx="1"></rect>
+                        <rect x="10" y="4" width="4" height="4" rx="1"></rect>
+                        <rect x="16" y="4" width="4" height="4" rx="1"></rect>
+                        <rect x="4" y="10" width="4" height="4" rx="1"></rect>
+                        <rect x="10" y="10" width="4" height="4" rx="1"></rect>
+                        <rect x="16" y="10" width="4" height="4" rx="1"></rect>
+                        <rect x="4" y="16" width="4" height="4" rx="1"></rect>
+                        <rect x="10" y="16" width="4" height="4" rx="1"></rect>
+                        <rect x="16" y="16" width="4" height="4" rx="1"></rect>
+                    </svg>
+                    <span id="categoryText">Semua Kategori</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+
+                <div class="dropdown" id="categoryMenu">
+                    <button data-category="Semua Kategori">Semua Kategori</button>
+                    <button data-category="Keuangan">Keuangan</button>
+                    <button data-category="Penting">Penting</button>
+                    <button data-category="Pribadi">Pribadi</button>
+                </div>
+
+                <!-- SORT -->
+                <button class="filter-button" id="sortButton">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"/>
+                        <path d="M16 2V6"/><path d="M8 2V6"/><path d="M3 10H21"/>
+                    </svg>
+                    <span id="sortText">Terbaru</span>
+                    <svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+
+                <div class="dropdown sort-dropdown" id="sortMenu">
+                    <button data-sort="newest">Terbaru</button>
+                    <button data-sort="oldest">Terlama</button>
+                    <button data-sort="az">A - Z</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- GRID CATATAN -->
+        <div class="notes-grid" id="notesGrid"></div>
+
+        <div class="empty-state" id="emptyState">
+            <div>📝</div>
+            <h3>Catatan tidak ditemukan</h3>
+            <p>Coba ubah kata pencarian atau kategori.</p>
+        </div>
+    </section>
+</main>
+
+<!-- MODAL TAMBAH / EDIT CATATAN (Gambar Kedua) -->
+<div class="modal-overlay" id="noteModal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div class="modal-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <h2 id="modalHeaderTitle">Tambah Catatan</h2>
+            </div>
+            <button class="btn-close-modal" id="closeModal">&times;</button>
+        </div>
+
+        <form id="noteForm">
+            <input type="hidden" id="noteId">
+
+            <div class="form-group">
+                <label for="noteTitle">Judul Catatan</label>
+                <input type="text" id="noteTitle" placeholder="Contoh: Bayar Kost" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group flex-1">
+                    <label for="noteCategory">Kategori</label>
+                    <div class="select-wrapper">
+                        <select id="noteCategory">
+                            <option value="Penting">Penting</option>
+                            <option value="Keuangan">Keuangan</option>
+                            <option value="Pribadi">Pribadi</option>
+                        </select>
+                        <svg class="select-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                    </div>
+                </div>
+
+                <div class="form-group flex-1">
+                    <label for="noteDate">Tanggal</label>
+                    <div class="date-wrapper">
+                        <input type="date" id="noteDate" required>
+                        <svg class="calendar-icon" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="noteBody">Isi Catatan (Opsional)</label>
+                <textarea id="noteBody" rows="4" placeholder="Tulis catatan penting keuanganmu di sini..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" id="btnCancel">Batal</button>
+                <button type="submit" class="btn-submit">Simpan Catatan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="catatan.js"></script>
+</body>
+</html>
