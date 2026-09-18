@@ -1,81 +1,123 @@
-"use strict";
+/* ============================================================
+   TRACK IN — DASHBOARD.JS
+   Pengaturan Card Dashboard + Modal Tambah Card
+============================================================ */
 
 
 /* ============================================================
-   DATA
+   DATA DUMMY
 ============================================================ */
 
 const inventoryData = [
     {
+        name: "Rice Cooker",
+        user: "Yusuf",
+        date: "12 Agustus",
+        price: "Rp450.000"
+    },
+    {
         name: "Kipas Angin",
-        owner: "Bagus",
-        date: "15 Agst",
+        user: "Bagus",
+        date: "15 Agustus",
         price: "Rp300.000"
     },
     {
         name: "Galon",
-        owner: "Andi",
-        date: "18 Agst",
+        user: "Andi",
+        date: "18 Agustus",
         price: "Rp20.000"
     }
 ];
 
-
 const activityData = [
     {
-        initial: "Y",
         name: "Yusuf",
-        text: "menambahkan barang baru",
-        time: "12 Agst",
-        type: "green"
+        initial: "Y",
+        text: "menambahkan 'Galon'",
+        amount: "Rp20.000",
+        time: "Hari ini"
     },
     {
-        initial: "B",
         name: "Bagus",
-        text: "menambahkan pengeluaran",
-        time: "15 Agst",
-        type: "blue"
+        initial: "B",
+        text: "menambahkan 'Kipas Angin'",
+        amount: "Rp300.000",
+        time: "Kemarin"
     },
     {
-        initial: "A",
         name: "Andi",
-        text: "menambahkan inventaris",
-        time: "18 Agst",
-        type: "yellow"
+        initial: "A",
+        text: "membayar 'WiFi'",
+        amount: "Rp100.000",
+        time: "2 hari lalu"
     }
 ];
 
 
 /* ============================================================
-   ELEMENTS
+   STORAGE
 ============================================================ */
 
-const inventoryList =
-    document.getElementById("inventoryList");
+const CARD_STORAGE_KEY = "trackin_dashboard_cards_v4";
 
-const activityList =
-    document.getElementById("activityList");
 
-const toast =
-    document.getElementById("toast");
+/*
+ * Card yang bisa diatur dari modal
+ */
+const DEFAULT_CARD_SETTINGS = {
+    bill: true,
+    inventory: true,
+    activity: true,
+    expense: true,
+    category: true
+};
 
-const cardModal =
-    document.getElementById("cardModal");
 
-const openCardModalButton =
-    document.getElementById("openCardModal");
+/* ============================================================
+   DOM ELEMENT
+============================================================ */
 
-const openWidgetModalButton =
-    document.getElementById("openWidgetModal");
+const inventoryList = document.getElementById("inventoryList");
+const activityList = document.getElementById("activityList");
+const toast = document.getElementById("toast");
 
-const closeCardModalButton =
-    document.getElementById("closeCardModal");
 
-const cancelCardModalButton =
-    document.getElementById("cancelCardModal");
+/* ============================================================
+   MODAL TAMBAH CARD
+============================================================ */
 
-const saveCardModalButton =
-    document.getElementById("saveCardModal");
+const addCardModal = document.getElementById("addCardModal");
+const addCardBtn = document.getElementById("addCardBtn");
+const addWidgetButton = document.getElementById("addWidgetButton");
+
+const closeAddCardModal =
+    document.getElementById("closeAddCardModal");
+
+const cancelAddCard =
+    document.getElementById("cancelAddCard");
+
+const saveAddCard =
+    document.getElementById("saveAddCard");
+
+const widgetOptions =
+    document.querySelectorAll(".widget-option");
+
+
+/* ============================================================
+   DATE NAVIGATION
+============================================================ */
+
+const dateText =
+    document.getElementById("dateText");
+
+const previousDateBtn =
+    document.getElementById("previousDate");
+
+const nextDateBtn =
+    document.getElementById("nextDate");
+
+const datePickerInput =
+    document.getElementById("datePickerInput");
 
 
 /* ============================================================
@@ -90,31 +132,23 @@ function renderInventory() {
 
     inventoryData.forEach(item => {
 
-        const element =
-            document.createElement("div");
+        const div = document.createElement("div");
 
-        element.className = "inventory-item";
+        div.className = "inventory-item";
 
-        element.innerHTML = `
+        div.innerHTML = `
             <div>
-                <span class="inventory-name">
-                    ${item.name}
-                </span>
-
-                <span class="inventory-meta">
-                    ${item.owner} • ${item.date}
-                </span>
+                <strong>${item.name}</strong>
+                <small>
+                    ${item.user} &bull; ${item.date}
+                </small>
             </div>
 
-            <span class="inventory-price">
-                ${item.price}
-            </span>
+            <strong>${item.price}</strong>
         `;
 
-        inventoryList.appendChild(element);
-
+        inventoryList.appendChild(div);
     });
-
 }
 
 
@@ -130,32 +164,30 @@ function renderActivity() {
 
     activityData.forEach(item => {
 
-        const element =
-            document.createElement("div");
+        const div = document.createElement("div");
 
-        element.className = "activity-item";
+        div.className = "activity-item";
 
-        element.innerHTML = `
-            <div class="activity-avatar ${item.type}">
+        div.innerHTML = `
+            <div class="act-avatar ${item.initial}">
                 ${item.initial}
             </div>
 
-            <div class="activity-text">
+            <div class="act-text">
 
-                <strong>${item.name}</strong>
-                ${item.text}
+                <div>
+                    <strong>${item.name}</strong>
+                    ${item.text}
+                    <b>${item.amount}</b>
+                </div>
 
-                <span class="activity-time">
-                    ${item.time}
-                </span>
+                <small>${item.time}</small>
 
             </div>
         `;
 
-        activityList.appendChild(element);
-
+        activityList.appendChild(div);
     });
-
 }
 
 
@@ -163,80 +195,438 @@ function renderActivity() {
    TOAST
 ============================================================ */
 
-let toastTimer = null;
-
+let toastTimer;
 
 function showToast(message) {
 
     if (!toast) return;
 
+    clearTimeout(toastTimer);
+
     toast.textContent = message;
 
     toast.classList.add("show");
-
-    clearTimeout(toastTimer);
 
     toastTimer = setTimeout(() => {
 
         toast.classList.remove("show");
 
-    }, 2500);
-
+    }, 2200);
 }
 
 
 /* ============================================================
-   NAVIGATION
+   CARD SETTINGS
 ============================================================ */
 
-const navItems =
-    document.querySelectorAll(".nav-item");
+/*
+ * Mengambil pengaturan card dari localStorage.
+ *
+ * Jika belum pernah disimpan:
+ * semua card tambahan ditampilkan.
+ *
+ * Jika data lama tidak lengkap:
+ * otomatis digabung dengan DEFAULT_CARD_SETTINGS.
+ */
+
+function getCardSettings() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(CARD_STORAGE_KEY);
+
+        if (!saved) {
+
+            return {
+                ...DEFAULT_CARD_SETTINGS
+            };
+        }
+
+        const parsed = JSON.parse(saved);
+
+        return {
+            ...DEFAULT_CARD_SETTINGS,
+            ...parsed
+        };
+
+    } catch (error) {
+
+        console.warn(
+            "Pengaturan card tidak dapat dibaca.",
+            error
+        );
+
+        return {
+            ...DEFAULT_CARD_SETTINGS
+        };
+    }
+}
 
 
-navItems.forEach(item => {
+/*
+ * Menyimpan pengaturan card.
+ */
 
-    item.addEventListener("click", event => {
+function saveCardSettings(settings) {
 
-        event.preventDefault();
+    try {
 
-        navItems.forEach(nav => {
+        localStorage.setItem(
+            CARD_STORAGE_KEY,
+            JSON.stringify(settings)
+        );
 
-            nav.classList.remove("active");
+    } catch (error) {
 
-        });
+        console.warn(
+            "Pengaturan card gagal disimpan.",
+            error
+        );
+    }
+}
 
-        item.classList.add("active");
 
-        const page =
-            item.dataset.page;
+/* ============================================================
+   APPLY CARD SETTINGS
+============================================================ */
 
-        if (page !== "dashboard") {
+/*
+ * Fungsi utama fitur:
+ *
+ * true  -> card muncul
+ * false -> card hilang
+ */
 
-            showToast(
-                `Halaman ${item.textContent.trim()} belum tersedia.`
+function applyCardSettings(settings) {
+
+    widgetOptions.forEach(option => {
+
+        const key = option.dataset.card;
+
+        const checkbox = option.querySelector(
+            "input[type='checkbox']"
+        );
+
+        const customCheckbox = option.querySelector(
+            ".custom-checkbox"
+        );
+
+        const widgetCard = document.querySelector(
+            `[data-widget="${key}"]`
+        );
+
+        const isActive = settings[key] === true;
+
+
+        /* =========================================
+           CHECKBOX INPUT
+        ========================================= */
+
+        if (checkbox) {
+            checkbox.checked = isActive;
+        }
+
+
+        /* =========================================
+           CUSTOM CHECKBOX
+        ========================================= */
+
+        if (customCheckbox) {
+
+            customCheckbox.classList.toggle(
+                "checked",
+                isActive
             );
 
+            customCheckbox.innerHTML = isActive
+                ? "✓"
+                : "";
+        }
+
+
+        /* =========================================
+           STATUS OPTION MODAL
+        ========================================= */
+
+        option.classList.toggle(
+            "active",
+            isActive
+        );
+
+
+        /* =========================================
+           CARD DASHBOARD
+        ========================================= */
+
+        if (widgetCard) {
+
+            widgetCard.style.display =
+                isActive ? "" : "none";
         }
 
     });
+}
+
+
+
+/* ============================================================
+   OPEN MODAL
+============================================================ */
+
+function openModal() {
+
+    if (!addCardModal) return;
+
+    /*
+     * Saat modal dibuka,
+     * checkbox mengikuti card yang sedang aktif.
+     */
+    const settings = getCardSettings();
+
+    applyCardSettings(settings);
+
+    addCardModal.classList.add("show");
+
+    /*
+     * Mencegah halaman belakang ikut scroll.
+     */
+    document.body.classList.add("modal-open");
+}
+
+
+/* ============================================================
+   CLOSE MODAL
+============================================================ */
+
+function closeModal() {
+
+    if (!addCardModal) return;
+
+    addCardModal.classList.remove("show");
+
+    document.body.classList.remove("modal-open");
+
+    /*
+     * Saat Cancel,
+     * kembalikan checkbox ke kondisi terakhir yang tersimpan.
+     *
+     * Jadi perubahan yang belum disimpan tidak diterapkan.
+     */
+    applyCardSettings(getCardSettings());
+}
+
+
+/* ============================================================
+   BUTTON MODAL
+============================================================ */
+
+if (addCardBtn) {
+
+    addCardBtn.addEventListener(
+        "click",
+        openModal
+    );
+}
+
+
+if (addWidgetButton) {
+
+    addWidgetButton.addEventListener(
+        "click",
+        openModal
+    );
+}
+
+
+if (closeAddCardModal) {
+
+    closeAddCardModal.addEventListener(
+        "click",
+        closeModal
+    );
+}
+
+
+if (cancelAddCard) {
+
+    cancelAddCard.addEventListener(
+        "click",
+        closeModal
+    );
+}
+
+
+/* ============================================================
+   KLIK AREA LUAR MODAL
+============================================================ */
+
+if (addCardModal) {
+
+    addCardModal.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === addCardModal) {
+
+                closeModal();
+            }
+
+        }
+    );
+}
+
+
+/* ============================================================
+   ESCAPE UNTUK MENUTUP MODAL
+============================================================ */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            addCardModal &&
+            addCardModal.classList.contains("show")
+        ) {
+
+            closeModal();
+        }
+
+    }
+);
+
+
+widgetOptions.forEach(option => {
+
+    const checkbox = option.querySelector(
+        "input[type='checkbox']"
+    );
+
+    const customCheckbox = option.querySelector(
+        ".custom-checkbox"
+    );
+
+    if (!checkbox) return;
+
+
+    checkbox.addEventListener(
+        "change",
+        function () {
+
+            const checked = this.checked;
+
+            option.classList.toggle(
+                "active",
+                checked
+            );
+
+            if (customCheckbox) {
+
+                customCheckbox.classList.toggle(
+                    "checked",
+                    checked
+                );
+
+                customCheckbox.innerHTML =
+                    checked ? "✓" : "";
+            }
+
+        }
+    );
 
 });
 
 
 /* ============================================================
-   DATE NAVIGATION
+   SIMPAN CARD
 ============================================================ */
 
-const dateText =
-    document.getElementById("dateText");
+if (saveAddCard) {
 
-const previousDate =
-    document.getElementById("previousDate");
+    saveAddCard.addEventListener(
+        "click",
+        function () {
 
-const nextDate =
-    document.getElementById("nextDate");
+            const newSettings = {
+                ...DEFAULT_CARD_SETTINGS
+            };
+
+            /*
+             * Ambil kondisi setiap checkbox
+             */
+            widgetOptions.forEach(option => {
+
+                const key =
+                    option.dataset.card;
+
+                const checkbox =
+                    option.querySelector(
+                        "input[type='checkbox']"
+                    );
+
+                if (key) {
+
+                    newSettings[key] =
+                        checkbox
+                            ? checkbox.checked
+                            : false;
+                }
+
+            });
 
 
+            /*
+             * Simpan ke localStorage
+             */
+            saveCardSettings(
+                newSettings
+            );
+
+
+            /*
+             * Terapkan ke dashboard.
+             *
+             * Dicentang  = muncul
+             * Tidak centang = hilang
+             */
+            applyCardSettings(
+                newSettings
+            );
+
+
+            /*
+             * Tutup modal
+             */
+            addCardModal.classList.remove(
+                "show"
+            );
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+
+
+            /*
+             * Notifikasi
+             */
+            showToast(
+                "Card dashboard berhasil diperbarui"
+            );
+
+        }
+    );
+}
+
+
+/* ============================================================
+   DATE
+============================================================ */
+
+/*
+ * Tanggal awal mengikuti desain.
+ */
 let currentDate =
     new Date(2026, 7, 17);
 
@@ -257,7 +647,11 @@ const monthNames = [
 ];
 
 
-function updateDate() {
+/* ============================================================
+   UPDATE DATE DISPLAY
+============================================================ */
+
+function updateDateDisplay() {
 
     if (!dateText) return;
 
@@ -265,479 +659,141 @@ function updateDate() {
         currentDate.getDate();
 
     const month =
-        monthNames[currentDate.getMonth()];
+        monthNames[
+            currentDate.getMonth()
+        ];
 
     const year =
         currentDate.getFullYear();
 
+
+    /*
+     * Tampilkan tanggal
+     */
     dateText.textContent =
         `${day} ${month} ${year}`;
 
+
+    /*
+     * Sinkronisasi input date
+     */
+    if (datePickerInput) {
+
+        const yyyy =
+            currentDate.getFullYear();
+
+        const mm =
+            String(
+                currentDate.getMonth() + 1
+            ).padStart(2, "0");
+
+        const dd =
+            String(
+                currentDate.getDate()
+            ).padStart(2, "0");
+
+
+        datePickerInput.value =
+            `${yyyy}-${mm}-${dd}`;
+    }
+
+
+    /*
+     * Refresh data
+     */
+    renderInventory();
+    renderActivity();
 }
 
 
-if (previousDate) {
+/* ============================================================
+   TANGGAL SEBELUMNYA
+============================================================ */
 
-    previousDate.addEventListener(
+if (previousDateBtn) {
+
+    previousDateBtn.addEventListener(
         "click",
-        () => {
+        function () {
 
             currentDate.setDate(
                 currentDate.getDate() - 1
             );
 
-            updateDate();
+            updateDateDisplay();
+
+            showToast(
+                `Tanggal diubah ke ${dateText.textContent}`
+            );
 
         }
     );
-
 }
 
 
-if (nextDate) {
+/* ============================================================
+   TANGGAL BERIKUTNYA
+============================================================ */
 
-    nextDate.addEventListener(
+if (nextDateBtn) {
+
+    nextDateBtn.addEventListener(
         "click",
-        () => {
+        function () {
 
             currentDate.setDate(
                 currentDate.getDate() + 1
             );
 
-            updateDate();
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   QUICK ACTION
-============================================================ */
-
-const quickButtons =
-    document.querySelectorAll(".quick-button");
-
-
-quickButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        const action =
-            button.dataset.action;
-
-        const messages = {
-
-            barang:
-                "Menu Barang dipilih.",
-
-            pengeluaran:
-                "Menu Pengeluaran dipilih.",
-
-            catatan:
-                "Menu Catatan dipilih."
-
-        };
-
-        showToast(
-            messages[action] ||
-            "Aksi dipilih."
-        );
-
-    });
-
-});
-
-
-/* ============================================================
-   TOP NOTE
-============================================================ */
-
-const topNoteButton =
-    document.getElementById("topNoteButton");
-
-
-if (topNoteButton) {
-
-    topNoteButton.addEventListener(
-        "click",
-        () => {
+            updateDateDisplay();
 
             showToast(
-                "Fitur tambah catatan dipilih."
+                `Tanggal diubah ke ${dateText.textContent}`
             );
 
         }
     );
-
 }
 
 
 /* ============================================================
-   MODAL
-============================================================ */
-function openCardModal() {
-    return;
-}
-
-
-function closeCardModal() {
-
-    if (!cardModal) return;
-
-    cardModal.classList.remove("show");
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* Pastikan modal tertutup saat pertama kali halaman dibuka */
-
-if (cardModal) {
-
-    cardModal.classList.remove("show");
-
-}
-
-
-/* Tombol + Tambah Card */
-
-if (openCardModalButton) {
-
-    openCardModalButton.addEventListener(
-        "click",
-        openCardModal
-    );
-
-}
-
-
-/* Tombol + pada Widget Tambahan */
-
-if (openWidgetModalButton) {
-
-    openWidgetModalButton.addEventListener(
-        "click",
-        openCardModal
-    );
-
-}
-
-
-/* Tombol X */
-
-if (closeCardModalButton) {
-
-    closeCardModalButton.addEventListener(
-        "click",
-        closeCardModal
-    );
-
-}
-
-
-/* Tombol Batal */
-
-if (cancelCardModalButton) {
-
-    cancelCardModalButton.addEventListener(
-        "click",
-        closeCardModal
-    );
-
-}
-
-
-/* Klik area hitam di luar modal */
-
-if (cardModal) {
-
-    cardModal.addEventListener(
-        "click",
-        event => {
-
-            if (
-                event.target === cardModal
-            ) {
-
-                closeCardModal();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* Tombol ESC */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape" &&
-            cardModal &&
-            cardModal.classList.contains("show")
-        ) {
-
-            closeCardModal();
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   CARD OPTIONS
+   DATE PICKER
 ============================================================ */
 
-const cardOptions =
-    document.querySelectorAll(
-        ".dashboard-card-option"
-    );
+if (datePickerInput) {
 
-
-cardOptions.forEach(option => {
-
-    const checkbox =
-        option.querySelector(
-            'input[type="checkbox"]'
-        );
-
-    if (!checkbox) return;
-
-
-    function updateOption() {
-
-        option.classList.toggle(
-            "active",
-            checkbox.checked
-        );
-
-    }
-
-
-    /*
-       Klik seluruh kotak card.
-    */
-
-    option.addEventListener(
-        "click",
-        event => {
-
-            /*
-               Kalau yang diklik bukan checkbox asli,
-               kita ubah status checkbox sendiri.
-            */
-
-            if (
-                event.target !== checkbox
-            ) {
-
-                checkbox.checked =
-                    !checkbox.checked;
-
-            }
-
-            updateOption();
-
-        }
-    );
-
-
-    /*
-       Jika checkbox asli diklik.
-    */
-
-    checkbox.addEventListener(
+    datePickerInput.addEventListener(
         "change",
-        updateOption
-    );
+        function (event) {
+
+            if (!event.target.value) return;
+
+            const [
+                year,
+                month,
+                day
+            ] =
+                event.target.value
+                    .split("-")
+                    .map(Number);
 
 
-    updateOption();
-
-});
-
-
-/* ============================================================
-   SIMPAN CARD
-============================================================ */
-
-if (saveCardModalButton) {
-
-    saveCardModalButton.addEventListener(
-        "click",
-        () => {
-
-            cardOptions.forEach(option => {
-
-                const checkbox =
-                    option.querySelector(
-                        'input[type="checkbox"]'
-                    );
-
-                if (!checkbox) return;
+            currentDate =
+                new Date(
+                    year,
+                    month - 1,
+                    day
+                );
 
 
-                const cardName =
-                    option.dataset.card;
-
-
-                const widget =
-                    document.querySelector(
-                        `[data-widget="${cardName}"]`
-                    );
-
-
-                if (!widget) return;
-
-
-                if (checkbox.checked) {
-
-                    widget.style.display = "";
-
-                } else {
-
-                    widget.style.display = "none";
-
-                }
-
-            });
-
-
-            closeCardModal();
+            updateDateDisplay();
 
             showToast(
-                "Card berhasil diperbarui."
+                `Tanggal dipilih: ${dateText.textContent}`
             );
 
         }
     );
-
-}
-
-
-/* ============================================================
-   DETAIL BUTTONS
-============================================================ */
-
-const detailButtons =
-    document.querySelectorAll(
-        ".detail-link[data-message]"
-    );
-
-
-detailButtons.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            showToast(
-                button.dataset.message
-            );
-
-        }
-    );
-
-});
-
-
-const inventoryLink =
-    document.getElementById("inventoryLink");
-
-
-if (inventoryLink) {
-
-    inventoryLink.addEventListener(
-        "click",
-        () => {
-
-            showToast(
-                "Halaman inventaris dipilih."
-            );
-
-        }
-    );
-
-}
-
-
-const activityLink =
-    document.getElementById("activityLink");
-
-
-if (activityLink) {
-
-    activityLink.addEventListener(
-        "click",
-        () => {
-
-            showToast(
-                "Semua aktivitas dipilih."
-            );
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   FIRST EXPENSE
-============================================================ */
-
-const firstExpenseButton =
-    document.getElementById(
-        "firstExpenseButton"
-    );
-
-
-if (firstExpenseButton) {
-
-    firstExpenseButton.addEventListener(
-        "click",
-        () => {
-
-            showToast(
-                "Tambah data pengeluaran dipilih."
-            );
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   CHART PERIOD
-============================================================ */
-
-const chartPeriod =
-    document.getElementById(
-        "chartPeriod"
-    );
-
-
-if (chartPeriod) {
-
-    chartPeriod.addEventListener(
-        "change",
-        () => {
-
-            showToast(
-                `Periode ${chartPeriod.value} dipilih.`
-            );
-
-        }
-    );
-
 }
 
 
@@ -745,8 +801,29 @@ if (chartPeriod) {
    INITIALIZATION
 ============================================================ */
 
-renderInventory();
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-renderActivity();
+        /*
+         * Render isi card
+         */
+        renderInventory();
+        renderActivity();
 
-updateDate();
+
+        /*
+         * Tampilkan tanggal
+         */
+        updateDateDisplay();
+
+
+        /*
+         * Terapkan pengaturan card
+         */
+        applyCardSettings(
+            getCardSettings()
+        );
+
+    }
+);
