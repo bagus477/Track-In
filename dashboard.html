@@ -1,171 +1,1491 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Track IN - Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track IN - Dashboard</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="dashboard.css">
 </head>
+
+
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div>
-        <div class="brand">
-          <div class="brand-icon">T</div>
-          <div>
-            <h1>Track IN</h1>
-            <p>Kost Management System</p>
-          </div>
-        </div>
 
-        <nav class="nav">
-          <a class="nav-link active" href="#dashboard"><span>▣</span> Dasbor</a>
-          <a class="nav-link" href="#keuangan"><span>◈</span> Keuangan</a>
-          <a class="nav-link" href="#inventaris"><span>□</span> Inventaris</a>
-          <a class="nav-link" href="#catatan"><span>▤</span> Catatan</a>
-          <a class="nav-link" href="#akun"><span>○</span> Akun</a>
+<div class="app-shell">
+
+    <!-- ======================================================
+         TOPBAR
+    ======================================================= -->
+
+    <header class="topbar">
+
+        <nav class="topbar-nav">
+
+            <a
+                href="dashboard.html"
+                class="nav-item active"
+                data-page="dashboard"
+            >
+                Dasbor
+            </a>
+
+            <a
+                href="akun.html"
+                class="nav-item"
+                data-page="akun"
+            >
+                Akun
+            </a>
+
+            <a
+                href="catatan.html"
+                class="nav-item"
+                data-page="catatan"
+            >
+                Catatan
+            </a>
+
+            <a
+                href="inventaris.html"
+                class="nav-item"
+                data-page="inventaris"
+            >
+                Inventaris
+            </a>
+
+            <a
+                href="keuangan.html"
+                class="nav-item"
+                data-page="keuangan"
+            >
+                Keuangan
+            </a>
+
         </nav>
-      </div>
 
-      <div class="profile">
-        <div class="avatar">Y</div>
-        <div>
-          <strong>Yusuf</strong>
-          <small>yusuf@trackin.id</small>
-        </div>
-      </div>
-    </aside>
 
-    <main class="main" id="dashboard">
-      <header class="header">
-        <div>
-          <h2>Dasbor Utama</h2>
-          <p>Ringkasan aktivitas keuangan, inventaris, dan tagihan kost.</p>
-        </div>
-        <div class="header-actions">
-          <div class="cash"><span>TUNAI</span><strong>Rp 1.000.000</strong></div>
-          <button class="btn btn-light" id="catatanBtn">＋ Catatan</button>
-          <button class="btn btn-primary" id="addCardBtn">＋ Tambah Card</button>
-        </div>
-      </header>
+        <div class="topbar-right">
 
-      <section class="summary">
-        <div class="summary-top">
-          <div>
-            <span class="eyebrow">STATUS RINGKASAN SALDO</span>
-            <h3>Rp 1.000.000</h3>
-          </div>
-          <div class="summary-stats">
-            <div><span>ARUS KAS</span><strong>Rp 850.000</strong></div>
-            <div><span>PENGELUARAN</span><strong>Rp 850.000</strong></div>
-          </div>
-        </div>
-        <div class="summary-bottom">
-          <span>Saldo: <b>Rp 1.000.000</b></span>
-          <span>Anggaran Kos: <b>Rp 500.000</b></span>
-          <span>Proyek Lainnya: <b>Rp 0</b></span>
-        </div>
-      </section>
+            <button
+                type="button"
+                class="top-note-button"
+                id="topNoteButton"
+                onclick="window.location.href='catatan.html'"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Catatan
+            </button>
 
-      <div class="dashboard-grid">
-        <div class="left-column">
-          <section class="card widget" data-widget="trenSaldo">
-            <div class="card-head">
-              <div>
-                <h3>↗ Tren Saldo & Kebutuhan</h3>
-                <p>Grafik pergerakan saldo harian</p>
-              </div>
-              <select id="periodSelect">
-                <option>Agustus 2026</option>
-                <option>Mei 2025</option>
-              </select>
+
+            <span class="username">
+                yusuf
+            </span>
+
+
+            <div
+                class="user-avatar"
+                onclick="window.location.href='akun.html'"
+                role="button"
+                tabindex="0"
+                aria-label="Buka akun"
+            >
+                <img
+                    src="https://i.pravatar.cc/100?img=12"
+                    alt="Foto profil Yusuf"
+                >
             </div>
-            <div class="chart">
-              <div class="chart-y"><span>Rp 100rb</span><span>Rp 50rb</span><span>Rp 0</span></div>
-              <svg viewBox="0 0 500 100" preserveAspectRatio="none" aria-label="Grafik saldo">
-                <path d="M0 50 Q125 40 250 50 T500 50" fill="none" stroke="currentColor" stroke-width="3"/>
-                <circle cx="0" cy="50" r="4"/><circle cx="125" cy="45" r="4"/><circle cx="250" cy="50" r="4"/><circle cx="375" cy="50" r="4"/><circle cx="500" cy="50" r="4"/>
-              </svg>
-              <div class="chart-x"><span>1 Mei</span><span>8 Mei</span><span>15 Mei</span><span>22 Mei</span><span>31 Mei</span></div>
-            </div>
-          </section>
 
-          <section class="card widget" data-widget="strukturPengeluaran">
-            <div class="card-head"><h3>◔ Struktur Pengeluaran</h3></div>
-            <div class="empty">
-              <div class="empty-icon">▤</div>
-              <p>Tidak ada data pada rentang waktu yang dipilih.</p>
-              <button class="btn btn-primary btn-small" data-toast="Form tambah data akan dibuka.">＋ Tambah Data Pertama Anda</button>
-            </div>
-          </section>
-
-          <section class="card widget" data-widget="inventarisTerbaru" id="inventaris">
-            <div class="card-head">
-              <div>
-                <h3>□ Inventaris Terbaru</h3>
-                <p>Barang kost yang baru ditambahkan</p>
-              </div>
-              <a href="#inventaris">Lihat Inventaris →</a>
-            </div>
-            <div class="list" id="inventoryList"></div>
-          </section>
         </div>
 
-        <div class="right-column">
-          <section class="card widget" data-widget="tagihanTerdekat">
-            <div class="bill-head"><span class="badge">TAGIHAN TERDEKAT</span><span class="due">◷ 2 hari lagi</span></div>
-            <h3>Kost September</h3>
-            <div class="amount">Rp 500.000</div>
-            <p class="muted">Jatuh tempo: 5 September 2026</p>
-            <button class="btn btn-dark full" data-toast="Detail tagihan dibuka.">Lihat Detail →</button>
-          </section>
+    </header>
 
-          <section class="card widget" data-widget="pengeluaranBulanIni">
-            <div class="expense-head">
-              <div><span class="eyebrow dark">PENGELUARAN BULAN INI</span><div class="big-amount">Rp 850.000</div></div>
-              <span class="plan">Sesuai Rencana</span>
-            </div>
-            <p class="muted">Periode: Agustus 2026</p>
-            <div class="category">
-              <b>Per Kategori</b>
-              <div><span>Kost</span><strong>Rp 500.000</strong></div>
-              <div><span>WiFi</span><strong>Rp 150.000</strong></div>
-              <div><span>Listrik</span><strong>Rp 100.000</strong></div>
-            </div>
-          </section>
 
-          <section class="card widget" data-widget="aktivitasTerbaru" id="aktivitas">
-            <div class="card-head"><h3>Aktivitas Terbaru</h3><a href="#aktivitas">Lihat Semua →</a></div>
-            <div class="activity-list">
-              <div class="activity"><div class="avatar blue">Y</div><p><strong>Yusuf</strong> menambahkan 'Galon' <b>Rp20.000</b><small>Hari ini</small></p></div>
-              <div class="activity"><div class="avatar purple">B</div><p><strong>Bagus</strong> menambahkan 'Kipas Angin' <b>Rp300.000</b><small>Kemarin</small></p></div>
-              <div class="activity"><div class="avatar amber">A</div><p><strong>Andi</strong> membayar 'WiFi' <b>Rp100.000</b><small>2 hari lalu</small></p></div>
+
+    <!-- ======================================================
+         MAIN CONTENT
+    ======================================================= -->
+
+    <main
+        class="main-content"
+        id="dashboard"
+    >
+
+
+        <!-- ==================================================
+             DASHBOARD CONTROLS
+        =================================================== -->
+
+        <section class="dashboard-controls">
+
+
+            <!-- CASH -->
+
+            <div class="cash-card">
+
+                <span class="cash-label">
+                    Tunai
+                </span>
+
+                <strong id="cashValue">
+                    Rp. 1.000.000
+                </strong>
+
             </div>
-          </section>
-        </div>
-      </div>
+
+
+
+            <!-- DATE -->
+
+            <div class="date-navigation">
+
+                <button
+                    type="button"
+                    class="date-arrow"
+                    id="previousDate"
+                    aria-label="Tanggal sebelumnya"
+                >
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+
+
+                <div class="date-display-wrapper">
+
+                    <div
+                        class="date-display"
+                        id="dateText"
+                    >
+                        17 Agustus 2026
+                    </div>
+
+
+                    <input
+                        type="date"
+                        id="datePickerInput"
+                        class="hidden-date-input"
+                        aria-label="Pilih tanggal"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="date-arrow"
+                    id="nextDate"
+                    aria-label="Tanggal berikutnya"
+                >
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+
+            </div>
+
+
+
+            <!-- ADD CARD -->
+
+            <button
+                type="button"
+                class="add-card-button"
+                id="addCardBtn"
+            >
+                <i class="bi bi-plus-lg"></i>
+                <span>Tambah Card</span>
+            </button>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             QUICK ACTIONS
+        =================================================== -->
+
+        <section class="quick-actions">
+
+
+            <!-- BARANG -->
+
+            <button
+                type="button"
+                class="quick-button"
+                onclick="window.location.href='inventaris.html'"
+            >
+
+                <span class="quick-icon">
+                    <i class="bi bi-box-seam"></i>
+                </span>
+
+                <span>
+                    Barang
+                </span>
+
+            </button>
+
+
+
+            <!-- PENGELUARAN -->
+
+            <button
+                type="button"
+                class="quick-button"
+                onclick="window.location.href='keuangan.html'"
+            >
+
+                <span class="quick-icon">
+                    <i class="bi bi-wallet2"></i>
+                </span>
+
+                <span>
+                    Pengeluaran
+                </span>
+
+            </button>
+
+
+
+            <!-- CATATAN -->
+
+            <button
+                type="button"
+                class="quick-button"
+                onclick="window.location.href='catatan.html'"
+            >
+
+                <span class="quick-icon">
+                    <i class="bi bi-journal-text"></i>
+                </span>
+
+                <span>
+                    Catatan
+                </span>
+
+            </button>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             MAIN CARDS
+        =================================================== -->
+
+        <section class="main-cards">
+
+
+            <!-- =================================================
+                 STATUS RINGKASAN SALDO
+            ================================================== -->
+
+            <article
+                class="dashboard-card summary-card"
+                data-widget="statusSaldo"
+            >
+
+                <div class="card-title">
+                    Status Ringkasan Saldo
+                </div>
+
+
+                <div class="summary-gauges-wrapper">
+
+                    <div class="summary-gauges">
+
+
+                        <!-- SALDO -->
+
+                        <div class="gauge-card">
+
+                            <div class="gauge-visual">
+
+                                <svg
+                                    class="gauge-svg"
+                                    viewBox="0 0 100 100"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        class="gauge-arc arc-red"
+                                        d="M20 75 A40 40 0 0 1 35 25"
+                                    />
+
+                                    <path
+                                        class="gauge-arc arc-orange"
+                                        d="M38 22 A40 40 0 0 1 62 22"
+                                    />
+
+                                    <path
+                                        class="gauge-arc arc-green"
+                                        d="M65 25 A40 40 0 0 1 80 75"
+                                    />
+
+
+                                    <line class="gauge-tick" x1="26" y1="70" x2="30" y2="67"/>
+                                    <line class="gauge-tick" x1="22" y1="58" x2="27" y2="57"/>
+                                    <line class="gauge-tick" x1="23" y1="45" x2="28" y2="46"/>
+                                    <line class="gauge-tick" x1="28" y1="34" x2="32" y2="37"/>
+                                    <line class="gauge-tick" x1="38" y1="26" x2="40" y2="30"/>
+                                    <line class="gauge-tick" x1="50" y1="23" x2="50" y2="28"/>
+                                    <line class="gauge-tick" x1="62" y1="26" x2="60" y2="30"/>
+                                    <line class="gauge-tick" x1="72" y1="34" x2="68" y2="37"/>
+                                    <line class="gauge-tick" x1="77" y1="45" x2="72" y2="46"/>
+                                    <line class="gauge-tick" x1="78" y1="58" x2="73" y2="57"/>
+                                    <line class="gauge-tick" x1="74" y1="70" x2="70" y2="67"/>
+
+                                </svg>
+
+
+                                <div class="gauge-needle-group needle-saldo">
+                                    <div class="needle-stem"></div>
+                                    <div class="needle-base"></div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="gauge-icon-box blue">
+                                <i class="bi bi-wallet2"></i>
+                            </div>
+
+
+                            <span class="gauge-label-text">
+                                SALDO
+                            </span>
+
+
+                            <strong
+                                class="gauge-value-text"
+                                id="saldoValue"
+                            >
+                                0
+                            </strong>
+
+
+                            <span class="gauge-unit-text">
+                                Rp
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- ARUS KAS -->
+
+                        <div class="gauge-card">
+
+                            <div class="gauge-visual">
+
+                                <svg
+                                    class="gauge-svg"
+                                    viewBox="0 0 100 100"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        class="gauge-arc arc-red"
+                                        d="M20 75 A40 40 0 0 1 35 25"
+                                    />
+
+                                    <path
+                                        class="gauge-arc arc-orange"
+                                        d="M38 22 A40 40 0 0 1 62 22"
+                                    />
+
+                                    <path
+                                        class="gauge-arc arc-green"
+                                        d="M65 25 A40 40 0 0 1 80 75"
+                                    />
+
+                                    <line class="gauge-tick" x1="26" y1="70" x2="30" y2="67"/>
+                                    <line class="gauge-tick" x1="22" y1="58" x2="27" y2="57"/>
+                                    <line class="gauge-tick" x1="23" y1="45" x2="28" y2="46"/>
+                                    <line class="gauge-tick" x1="28" y1="34" x2="32" y2="37"/>
+                                    <line class="gauge-tick" x1="38" y1="26" x2="40" y2="30"/>
+                                    <line class="gauge-tick" x1="50" y1="23" x2="50" y2="28"/>
+                                    <line class="gauge-tick" x1="62" y1="26" x2="60" y2="30"/>
+                                    <line class="gauge-tick" x1="72" y1="34" x2="68" y2="37"/>
+                                    <line class="gauge-tick" x1="77" y1="45" x2="72" y2="46"/>
+                                    <line class="gauge-tick" x1="78" y1="58" x2="73" y2="57"/>
+                                    <line class="gauge-tick" x1="74" y1="70" x2="70" y2="67"/>
+
+                                </svg>
+
+
+                                <div class="gauge-needle-group needle-arus">
+                                    <div class="needle-stem"></div>
+                                    <div class="needle-base"></div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="gauge-icon-box green">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </div>
+
+
+                            <span class="gauge-label-text">
+                                ARUS KAS
+                            </span>
+
+
+                            <strong
+                                class="gauge-value-text"
+                                id="arusKasValue"
+                            >
+                                0
+                            </strong>
+
+
+                            <span class="gauge-unit-text">
+                                Rp
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- PENGELUARAN -->
+
+                        <div class="gauge-card">
+
+                            <div class="gauge-visual">
+
+                                <svg
+                                    class="gauge-svg"
+                                    viewBox="0 0 100 100"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        class="gauge-arc arc-red"
+                                        d="M20 75 A40 40 0 0 1 35 25"
+                                    />
+
+                                    <path
+                                        class="gauge-arc arc-orange"
+                                        d="M38 22 A40 40 0 0 1 62 22"
+                                    />
+
+                                    <path
+                                        class="gauge-arc arc-green"
+                                        d="M65 25 A40 40 0 0 1 80 75"
+                                    />
+
+                                    <line class="gauge-tick" x1="26" y1="70" x2="30" y2="67"/>
+                                    <line class="gauge-tick" x1="22" y1="58" x2="27" y2="57"/>
+                                    <line class="gauge-tick" x1="23" y1="45" x2="28" y2="46"/>
+                                    <line class="gauge-tick" x1="28" y1="34" x2="32" y2="37"/>
+                                    <line class="gauge-tick" x1="38" y1="26" x2="40" y2="30"/>
+                                    <line class="gauge-tick" x1="50" y1="23" x2="50" y2="28"/>
+                                    <line class="gauge-tick" x1="62" y1="26" x2="60" y2="30"/>
+                                    <line class="gauge-tick" x1="72" y1="34" x2="68" y2="37"/>
+                                    <line class="gauge-tick" x1="77" y1="45" x2="72" y2="46"/>
+                                    <line class="gauge-tick" x1="78" y1="58" x2="73" y2="57"/>
+                                    <line class="gauge-tick" x1="74" y1="70" x2="70" y2="67"/>
+
+                                </svg>
+
+
+                                <div class="gauge-needle-group needle-pengeluaran">
+                                    <div class="needle-stem"></div>
+                                    <div class="needle-base"></div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="gauge-icon-box purple">
+                                <i class="bi bi-cart3"></i>
+                            </div>
+
+
+                            <span class="gauge-label-text">
+                                PENGELUARAN
+                            </span>
+
+
+                            <strong
+                                class="gauge-value-text"
+                                id="pengeluaranValue"
+                            >
+                                0
+                            </strong>
+
+
+                            <span class="gauge-unit-text">
+                                Rp
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- LEGEND -->
+
+                    <div class="gauge-legend">
+
+                        <div class="legend-item">
+                            <span class="legend-dot red"></span>
+                            Tinggi
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-dot orange"></span>
+                            Sedang
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-dot green"></span>
+                            Rendah
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUMMARY FOOTER -->
+
+                <div class="summary-footer-revisi">
+
+                    <span>
+                        Saldo:
+                        <b id="summarySaldo">0</b>
+                    </span>
+
+                    <span>
+                        Anggaran Kos:
+                        <b id="summaryBudget">0</b>
+                    </span>
+
+                    <span>
+                        Proyek Lainnya:
+                        <b id="summaryProject">0</b>
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 TREN SALDO
+            ================================================== -->
+
+            <article
+                class="dashboard-card trend-card"
+                data-widget="trenSaldo"
+            >
+
+                <div class="card-head">
+
+                    <h3>
+                        Tren Saldo &amp; Kebutuhan
+                    </h3>
+
+
+                    <div class="select-badge">
+
+                        <i class="bi bi-calendar3"></i>
+
+                        <select id="periodSelect">
+
+                            <option value="mei-2025">
+                                1 - 31 Mei 2025
+                            </option>
+
+                            <option value="agustus-2026">
+                                1 - 31 Agustus 2026
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="chart-area">
+
+                    <div class="chart-y-axis">
+
+                        <span>Rp 100rb</span>
+                        <span>Rp 50rb</span>
+                        <span>Rp 0</span>
+                        <span>-Rp 50rb</span>
+                        <span>-Rp 100rb</span>
+
+                    </div>
+
+
+                    <div class="chart-content">
+
+                        <svg
+                            class="balance-chart"
+                            viewBox="0 0 500 120"
+                            preserveAspectRatio="none"
+                            aria-label="Grafik tren saldo"
+                        >
+
+                            <line
+                                x1="0"
+                                y1="15"
+                                x2="500"
+                                y2="15"
+                                class="chart-grid-line"
+                            />
+
+                            <line
+                                x1="0"
+                                y1="45"
+                                x2="500"
+                                y2="45"
+                                class="chart-grid-line"
+                            />
+
+                            <line
+                                x1="0"
+                                y1="75"
+                                x2="500"
+                                y2="75"
+                                class="chart-grid-line"
+                            />
+
+                            <line
+                                x1="0"
+                                y1="105"
+                                x2="500"
+                                y2="105"
+                                class="chart-grid-line"
+                            />
+
+
+                            <path
+                                class="chart-line"
+                                d="M0 75 L125 75 L250 75 L375 75 L500 75"
+                            />
+
+
+                            <circle
+                                cx="0"
+                                cy="75"
+                                r="3"
+                                class="chart-point"
+                            />
+
+                            <circle
+                                cx="125"
+                                cy="75"
+                                r="3"
+                                class="chart-point"
+                            />
+
+                            <circle
+                                cx="250"
+                                cy="75"
+                                r="3"
+                                class="chart-point"
+                            />
+
+                            <circle
+                                cx="375"
+                                cy="75"
+                                r="3"
+                                class="chart-point"
+                            />
+
+                            <circle
+                                cx="500"
+                                cy="75"
+                                r="3"
+                                class="chart-point"
+                            />
+
+                        </svg>
+
+
+
+                        <div class="chart-x-axis">
+
+                            <span>1 Mei</span>
+                            <span>8 Mei</span>
+                            <span>15 Mei</span>
+                            <span>22 Mei</span>
+                            <span>31 Mei</span>
+
+                        </div>
+
+
+
+                        <div class="chart-legend">
+
+                            <span class="legend-dot"></span>
+                            Saldo (Rp)
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 STRUKTUR PENGELUARAN
+            ================================================== -->
+
+            <article
+                class="dashboard-card structure-card"
+                data-widget="strukturPengeluaran"
+            >
+
+                <div class="card-head">
+
+                    <h3>
+                        Struktur Pengeluaran
+                    </h3>
+
+
+                    <div class="card-tools">
+
+                        <button
+                            type="button"
+                            aria-label="Tampilan"
+                            title="Tampilan"
+                        >
+                            <i class="bi bi-grid-3x3-gap"></i>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            aria-label="Hapus"
+                            title="Hapus"
+                        >
+                            <i class="bi bi-trash3"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="structure-content">
+
+                    <div class="structure-illustration">
+
+                        <i class="bi bi-receipt"></i>
+
+                    </div>
+
+
+                    <p>
+                        Tidak ada data pada rentang waktu yang dipilih.
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="structure-button"
+                        onclick="window.location.href='keuangan.html'"
+                    >
+                        <i class="bi bi-plus-lg"></i>
+                        Tambah Data Pertama Anda
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             WIDGET TAMBAHAN
+        =================================================== -->
+
+        <section class="additional-section">
+
+
+            <div class="section-heading">
+
+                <h2>
+                    Widget Tambahan
+                </h2>
+
+
+                <button
+                    type="button"
+                    class="add-widget-button"
+                    id="addWidgetButton"
+                    aria-label="Tambah widget"
+                    title="Tambah widget"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+
+            </div>
+
+
+
+            <div class="widget-grid">
+
+
+                <!-- =================================================
+                     TAGIHAN TERDEKAT
+                ================================================== -->
+
+                <article
+                    class="dashboard-card widget-card bill-card"
+                    data-widget="bill"
+                >
+
+                    <div class="widget-head">
+
+                        <div class="widget-title">
+
+                            <span class="widget-icon yellow">
+                                <i class="bi bi-bell"></i>
+                            </span>
+
+                            <strong>
+                                Tagihan Terdekat
+                            </strong>
+
+                        </div>
+
+
+                        <span class="due-badge">
+                            2 hari lagi
+                        </span>
+
+                    </div>
+
+
+                    <div class="bill-content">
+
+                        <div>
+
+                            <strong>
+                                Kost September
+                            </strong>
+
+                            <small>
+                                Jatuh tempo: 5 September 2026
+                            </small>
+
+                        </div>
+
+
+                        <strong class="bill-amount">
+                            Rp500.000
+                        </strong>
+
+                    </div>
+
+
+                    <a
+                        href="keuangan.html"
+                        class="text-button"
+                    >
+                        Lihat Detail
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     AKTIVITAS TERBARU
+                ================================================== -->
+
+                <article
+                    class="dashboard-card widget-card activity-card"
+                    data-widget="activity"
+                >
+
+                    <div class="widget-title">
+
+                        <span class="widget-icon cyan">
+                            <i class="bi bi-clock-history"></i>
+                        </span>
+
+                        <strong>
+                            Aktivitas Terbaru
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="activity-list"
+                        id="activityList"
+                    ></div>
+
+
+                    <a
+                        href="catatan.html"
+                        class="text-button"
+                    >
+                        Lihat Semua
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     INVENTARIS TERBARU
+                ================================================== -->
+
+                <article
+                    class="dashboard-card widget-card inventory-card"
+                    data-widget="inventory"
+                >
+
+                    <div class="widget-title">
+
+                        <span class="widget-icon cyan">
+                            <i class="bi bi-box-seam"></i>
+                        </span>
+
+                        <strong>
+                            Inventaris Terbaru
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="inventory-list"
+                        id="inventoryList"
+                    ></div>
+
+
+                    <a
+                        href="inventaris.html"
+                        class="text-button"
+                    >
+                        Lihat Inventaris
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     PENGELUARAN BULAN INI
+                ================================================== -->
+
+                <article
+                    class="dashboard-card widget-card monthly-expense-card"
+                    data-widget="expense"
+                    onclick="window.location.href='keuangan.html'"
+                    role="button"
+                    tabindex="0"
+                >
+
+                    <div class="widget-title">
+
+                        <span class="widget-icon blue">
+                            <i class="bi bi-wallet2"></i>
+                        </span>
+
+                        <span>
+                            Pengeluaran
+                        </span>
+
+                    </div>
+
+
+                    <div class="monthly-amount">
+                        Rp850.000
+                    </div>
+
+
+                    <small class="period-text">
+                        Periode: Agustus 2026
+                    </small>
+
+
+                    <span class="plan-badge">
+                        <i class="bi bi-check-lg"></i>
+                        Sesuai Rencana
+                    </span>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     PER KATEGORI
+                ================================================== -->
+
+                <article
+                    class="dashboard-card widget-card category-card"
+                    data-widget="category"
+                    onclick="window.location.href='keuangan.html'"
+                    role="button"
+                    tabindex="0"
+                >
+
+                    <div class="category-title">
+                        Per Kategori
+                    </div>
+
+
+
+                    <!-- KOST -->
+
+                    <div class="category-row">
+
+                        <div class="category-info">
+
+                            <span>
+                                Kost
+                            </span>
+
+                            <strong>
+                                Rp500.000
+                            </strong>
+
+                        </div>
+
+
+                        <div class="category-bar">
+
+                            <span
+                                style="width:100%"
+                                class="bar-purple"
+                            ></span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- WIFI -->
+
+                    <div class="category-row">
+
+                        <div class="category-info">
+
+                            <span>
+                                WiFi
+                            </span>
+
+                            <strong>
+                                Rp150.000
+                            </strong>
+
+                        </div>
+
+
+                        <div class="category-bar">
+
+                            <span
+                                style="width:30%"
+                                class="bar-cyan"
+                            ></span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- LISTRIK -->
+
+                    <div class="category-row">
+
+                        <div class="category-info">
+
+                            <span>
+                                Listrik
+                            </span>
+
+                            <strong>
+                                Rp100.000
+                            </strong>
+
+                        </div>
+
+
+                        <div class="category-bar">
+
+                            <span
+                                style="width:20%"
+                                class="bar-orange"
+                            ></span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
     </main>
-  </div>
 
-  <div class="modal hidden" id="cardModal">
-    <div class="modal-box">
-      <div class="modal-head"><h3>Tambah Card / Atur Widget</h3><button id="closeModal">×</button></div>
-      <div class="widget-options" id="widgetOptions">
-        <label><div><b>Tagihan Terdekat</b><small>Pantau pembayaran kost dan iuran sebelum jatuh tempo</small></div><input type="checkbox" data-key="tagihanTerdekat" checked></label>
-        <label><div><b>Tren Saldo & Kebutuhan</b><small>Visualisasi tren pengeluaran dan riwayat saldo</small></div><input type="checkbox" data-key="trenSaldo" checked></label>
-        <label><div><b>Inventaris Terbaru</b><small>Daftar item yang baru ditambahkan</small></div><input type="checkbox" data-key="inventarisTerbaru" checked></label>
-        <label><div><b>Aktivitas Terbaru</b><small>Riwayat perubahan dan kontribusi penghuni</small></div><input type="checkbox" data-key="aktivitasTerbaru" checked></label>
-        <label><div><b>Pengeluaran Bulan Ini</b><small>Total akumulasi anggaran belanja bulan berjalan</small></div><input type="checkbox" data-key="pengeluaranBulanIni" checked></label>
-        <label><div><b>Struktur Pengeluaran</b><small>Visualisasi pembagian kategori pembiayaan kost</small></div><input type="checkbox" data-key="strukturPengeluaran" checked></label>
-      </div>
-      <div class="modal-actions"><button class="btn btn-light" id="cancelModal">Batal</button><button class="btn btn-primary" id="saveModal">Simpan Card</button></div>
+</div>
+
+
+
+<!-- ==========================================================
+     MODAL TAMBAH CARD
+=========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="addCardModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="addCardTitle"
+    >
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-head">
+
+            <div class="modal-title-wrap">
+
+                <span class="modal-plus-badge">
+                    <i class="bi bi-plus-lg"></i>
+                </span>
+
+                <h3 id="addCardTitle">
+                    Tambah Card
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeAddCardModal"
+                aria-label="Tutup"
+            >
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+        </div>
+
+
+
+        <!-- ======================================================
+             WIDGET OPTIONS
+        ======================================================= -->
+
+        <div class="widget-options">
+
+
+            <!-- TAGIHAN -->
+
+            <label
+                class="widget-option"
+                data-card="bill"
+            >
+
+                <div class="opt-check-wrapper">
+
+                    <input
+                        type="checkbox"
+                        value="bill"
+                        id="chk-bill"
+                    >
+
+                    <span class="custom-checkbox">
+                        <i class="bi bi-check-lg"></i>
+                    </span>
+
+                </div>
+
+
+                <div class="opt-icon yellow">
+                    <i class="bi bi-bell"></i>
+                </div>
+
+
+                <div class="opt-text">
+
+                    <b>
+                        Tagihan Terdekat
+                    </b>
+
+                    <small>
+                        Pantau pembayaran kost dan iuran sebelum jatuh tempo
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- INVENTARIS -->
+
+            <label
+                class="widget-option"
+                data-card="inventory"
+            >
+
+                <div class="opt-check-wrapper">
+
+                    <input
+                        type="checkbox"
+                        value="inventory"
+                        id="chk-inventory"
+                    >
+
+                    <span class="custom-checkbox">
+                        <i class="bi bi-check-lg"></i>
+                    </span>
+
+                </div>
+
+
+                <div class="opt-icon cyan">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+
+                <div class="opt-text">
+
+                    <b>
+                        Inventaris Terbaru
+                    </b>
+
+                    <small>
+                        Daftar item bersama atau pribadi yang baru ditambahkan
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- AKTIVITAS -->
+
+            <label
+                class="widget-option"
+                data-card="activity"
+            >
+
+                <div class="opt-check-wrapper">
+
+                    <input
+                        type="checkbox"
+                        value="activity"
+                        id="chk-activity"
+                    >
+
+                    <span class="custom-checkbox">
+                        <i class="bi bi-check-lg"></i>
+                    </span>
+
+                </div>
+
+
+                <div class="opt-icon blue-soft">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+
+                <div class="opt-text">
+
+                    <b>
+                        Aktivitas Terbaru
+                    </b>
+
+                    <small>
+                        Riwayat log perubahan dan kontribusi para penghuni kost
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- PENGELUARAN -->
+
+            <label
+                class="widget-option"
+                data-card="expense"
+            >
+
+                <div class="opt-check-wrapper">
+
+                    <input
+                        type="checkbox"
+                        value="expense"
+                        id="chk-expense"
+                    >
+
+                    <span class="custom-checkbox">
+                        <i class="bi bi-check-lg"></i>
+                    </span>
+
+                </div>
+
+
+                <div class="opt-icon gray">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+
+
+                <div class="opt-text">
+
+                    <b>
+                        Pengeluaran Bulan Ini
+                    </b>
+
+                    <small>
+                        Total akumulasi anggaran belanja bulan berjalan
+                    </small>
+
+                </div>
+
+            </label>
+
+
+
+            <!-- KATEGORI -->
+
+            <label
+                class="widget-option"
+                data-card="category"
+            >
+
+                <div class="opt-check-wrapper">
+
+                    <input
+                        type="checkbox"
+                        value="category"
+                        id="chk-category"
+                    >
+
+                    <span class="custom-checkbox">
+                        <i class="bi bi-check-lg"></i>
+                    </span>
+
+                </div>
+
+
+                <div class="opt-icon gray">
+                    <i class="bi bi-pie-chart"></i>
+                </div>
+
+
+                <div class="opt-text">
+
+                    <b>
+                        Pengeluaran per Kategori
+                    </b>
+
+                    <small>
+                        Visualisasi pembagian kategori pembiayaan kost
+                    </small>
+
+                </div>
+
+            </label>
+
+        </div>
+
+
+
+        <!-- ======================================================
+             MODAL ACTIONS
+        ======================================================= -->
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                id="cancelAddCard"
+            >
+                Batal
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="saveAddCard"
+            >
+                <i class="bi bi-check-lg"></i>
+                Simpan Card
+            </button>
+
+        </div>
+
     </div>
-  </div>
 
-  <div class="toast" id="toast"></div>
-  <script src="dashboard.js"></script>
+</div>
+
+
+
+<!-- ==========================================================
+     TOAST
+=========================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+></div>
+
+
+
+<!-- ==========================================================
+     JAVASCRIPT
+=========================================================== -->
+
+<script src="dashboard.js"></script>
+
 </body>
 </html>
