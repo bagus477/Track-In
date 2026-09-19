@@ -177,10 +177,10 @@ nav a.active {
 /* ================= PAGE HEADER ================= */
 
 .page-header {
+    position: relative; /* Penting untuk acuan posisi tombol tengah */
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 24px;
 }
 
@@ -222,6 +222,13 @@ nav a.active {
 }
 
 
+.header-action-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
 .btn-primary {
     border: none;
 
@@ -250,6 +257,33 @@ nav a.active {
     background: var(--primary-dark);
 
     transform: translateY(-1px);
+}
+
+
+.btn-tagihan-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border: 1.5px solid #08e5c1;
+    color: #00cdb0;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 10px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(8, 229, 193, 0.12);
+    white-space: nowrap;
+}
+
+.btn-tagihan-center:hover {
+    background: #08e5c1;
+    color: #101010;
+    transform: translateX(-50%) translateY(-1px);
 }
 
 
@@ -1135,7 +1169,7 @@ nav a.active {
 }
 
 
-/* ================= MODAL ================= */
+/* ================= MODAL OVERLAY ================= */
 
 .modal-overlay {
     position: fixed;
@@ -1161,7 +1195,7 @@ nav a.active {
 }
 
 
-/* ================= MODAL BOX ================= */
+/* ================= EXPENSE MODAL ================= */
 
 .expense-modal {
     width: 475px;
@@ -1181,21 +1215,16 @@ nav a.active {
 
 
 @keyframes modalShow {
-
     from {
         opacity: 0;
         transform: scale(.97) translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
-
 }
 
-
-/* ================= HEADER ================= */
 
 .modal-header {
     height: 55px;
@@ -1253,14 +1282,10 @@ nav a.active {
 }
 
 
-/* ================= BODY ================= */
-
 .modal-body {
     padding: 22px 23px 8px;
 }
 
-
-/* ================= FORM ================= */
 
 .form-group {
     display: flex;
@@ -1286,8 +1311,6 @@ nav a.active {
     color: #252525;
 }
 
-
-/* INPUT */
 
 .form-group input,
 .form-group select,
@@ -1349,8 +1372,6 @@ nav a.active {
 }
 
 
-/* ================= DUA KOLOM ================= */
-
 .form-row {
     display: grid;
 
@@ -1359,8 +1380,6 @@ nav a.active {
     gap: 12px;
 }
 
-
-/* ================= NOMINAL ================= */
 
 .price-input {
     height: 34px;
@@ -1410,8 +1429,6 @@ nav a.active {
 }
 
 
-/* HILANGKAN SPINNER */
-
 .price-input input::-webkit-inner-spin-button,
 .price-input input::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -1419,8 +1436,6 @@ nav a.active {
     margin: 0;
 }
 
-
-/* ================= TANGGAL ================= */
 
 .date-input {
     position: relative;
@@ -1434,32 +1449,12 @@ nav a.active {
 }
 
 
-.calendar-icon {
-    position: absolute;
-
-    right: 10px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    font-size: 12px;
-
-    color: #777;
-
-    pointer-events: none;
-}
-
-
-/* ================= SELECT ================= */
-
 .form-group select {
     cursor: pointer;
 
     padding-right: 8px;
 }
 
-
-/* ================= FOOTER ================= */
 
 .modal-footer {
     height: 64px;
@@ -1533,164 +1528,563 @@ nav a.active {
 }
 
 
-/* ================= MOBILE ================= */
+/* ================= MODAL TAGIHAN (GAMBAR 2) ================= */
 
-@media (max-width: 550px) {
+.bill-modal-box {
+    width: 440px;
+    max-width: 95%;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    animation: modalShow .2s ease;
+    font-family: "Inter", sans-serif;
+}
 
-    .modal-overlay {
-        padding: 10px;
-    }
+.bill-modal-header {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f8f8;
+}
 
-    .expense-modal {
-        width: 100%;
-    }
+.bill-modal-header h2 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #111111;
+}
 
-    .modal-body {
-        padding-left: 17px;
-        padding-right: 17px;
-    }
+.bill-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #888888;
+    cursor: pointer;
+    line-height: 1;
+}
 
+.bill-modal-close:hover {
+    color: #111111;
+}
+
+.bill-modal-body {
+    padding: 16px 20px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.bill-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.bill-form-group label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #222222;
+}
+
+.bill-form-group input[type="text"],
+.bill-form-group select,
+.bill-form-group textarea {
+    width: 100%;
+    height: 38px;
+    background: #f3f3f5;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 0 14px;
+    font-size: 11px;
+    font-family: inherit;
+    color: #111111;
+    outline: none;
+    transition: all .15s ease;
+}
+
+.bill-form-group textarea {
+    height: 70px;
+    padding: 10px 14px;
+    resize: none;
+}
+
+.bill-form-group input[type="text"]:focus,
+.bill-form-group select:focus,
+.bill-form-group textarea:focus {
+    background: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(8, 229, 193, 0.15);
+}
+
+.bill-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.bill-select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.bill-select-wrapper .select-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 9px;
+    color: #666;
+    pointer-events: none;
+}
+
+.bill-checkbox-list,
+.bill-radio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.bill-checkbox-item,
+.bill-radio-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #333333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.bill-checkbox-item input,
+.bill-radio-item input {
+    display: none;
+}
+
+.custom-check {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s ease;
+}
+
+.bill-checkbox-item input:checked + .custom-check {
+    background: var(--primary);
+}
+
+.bill-checkbox-item input:checked + .custom-check::after {
+    content: "✓";
+    font-size: 10px;
+    font-weight: 900;
+    color: #111111;
+}
+
+.custom-radio {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s ease;
+}
+
+.bill-radio-item input:checked + .custom-radio {
+    background: var(--primary);
+}
+
+.bill-radio-item input:checked + .custom-radio::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.custom-square-check {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: inline-block;
+}
+
+.bill-checkbox-item input:checked + .custom-square-check {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.bill-split-details {
+    margin-top: 8px;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.split-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #555555;
+}
+
+.split-row strong {
+    font-size: 11px;
+    color: #111111;
+}
+
+.split-row input {
+    width: 110px !important;
+    height: 28px !important;
+    text-align: right;
+    padding: 0 8px !important;
+}
+
+.bill-modal-footer {
+    padding: 12px 20px 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background: #f8f8f8;
+}
+
+.btn-bill-cancel {
+    height: 34px;
+    padding: 0 18px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #555555;
+    cursor: pointer;
+}
+
+.btn-bill-submit {
+    height: 34px;
+    padding: 0 22px;
+    background: var(--primary);
+    border: none;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #111111;
+    cursor: pointer;
+}
+
+.btn-bill-submit:hover {
+    background: var(--primary-dark);
 }
 
 
-@media (max-width: 380px) {
+/* ================= DETAIL TRANSAKSI ================= */
 
-    .form-row {
-        grid-template-columns: 1fr;
-    }
+.transaction-detail-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
+}
 
+.transaction-detail-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.transaction-detail-card {
+    width: 100%;
+    max-width: 340px;
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .16);
+    transform: translateY(10px) scale(.98);
+    transition: transform .22s ease;
+}
+
+.transaction-detail-overlay.show .transaction-detail-card {
+    transform: translateY(0) scale(1);
+}
+
+.transaction-detail-header {
+    height: 38px;
+    padding: 0 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.transaction-detail-header h3 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #171717;
+}
+
+.transaction-detail-close {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: #888;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.transaction-detail-close:hover {
+    background: #f2f2f2;
+    color: #333;
+}
+
+.transaction-detail-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px 6px;
+}
+
+.transaction-detail-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f5f4;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.transaction-detail-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.transaction-detail-title strong {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.transaction-detail-title small {
+    font-size: 7.5px;
+    color: #888;
+}
+
+.transaction-total {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 14px 9px;
+}
+
+.transaction-total span {
+    font-size: 8px;
+    color: #858585;
+}
+
+.transaction-total strong {
+    font-size: 18px;
+    line-height: 1.15;
+    color: #111;
+}
+
+.payment-section {
+    padding: 1px 14px 8px;
+}
+
+.payment-section h4 {
+    margin: 0 0 5px;
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.payment-person {
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.person-info {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 8px;
+}
+
+.person-dot {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.person-dot.green { background: #00e5c1; }
+.person-dot.yellow { background: #c8f0e9; }
+.person-dot.orange { background: #fff0a8; }
+
+.person-payment {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 7.5px;
+}
+
+.payment-status {
+    min-height: 15px;
+    padding: 2px 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 6.5px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.payment-status.paid {
+    color: #168d76;
+    background: #dcf9ed;
+}
+
+.payment-status.unpaid {
+    color: #9b7b00;
+    background: #fff2b8;
+}
+
+.payment-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 2px;
+    padding: 8px 14px 9px;
+    border-top: 1px solid #eeeeee;
+}
+
+.payment-summary span {
+    font-size: 7.5px;
+    color: #858585;
+}
+
+.payment-summary strong {
+    font-size: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.transaction-detail-footer {
+    padding: 4px 14px 7px;
+}
+
+.transaction-close-btn {
+    width: 100%;
+    height: 25px;
+    border: none;
+    border-radius: 13px;
+    background: #f0f0f0;
+    color: #333;
+    font-family: inherit;
+    font-size: 8px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.transaction-close-btn:hover {
+    background: #e5e5e5;
+}
+
+body.modal-open {
+    overflow: hidden;
 }
 
 
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 1000px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+    .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .bill-panel, .reminder-card, .mini-summary { margin-bottom: 0; }
+}
 
-    .stats-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
+@media (max-width: 700px) {
+    .navbar { padding: 0 15px; }
+    .nav-left { gap: 10px; }
+    .logo { display: none; }
+    nav { gap: 0; }
+    nav a { padding: 8px; font-size: 9px; }
+    .profile-name { display: none; }
+    .main { width: calc(100% - 24px); padding-top: 20px; }
+    .page-header { align-items: flex-start; gap: 15px; flex-direction: column; }
+    .btn-primary { width: 100%; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .sidebar { grid-template-columns: 1fr; }
+    .toolbar { flex-direction: column; }
+    #paymentFilter { width: 100%; height: 38px; }
+    .expense-bottom { flex-direction: column; gap: 5px; }
+    .form-row { grid-template-columns: 1fr; }
+}
 
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 550px) {
+    .modal-overlay { padding: 10px; }
+    .expense-modal { width: 100%; }
+    .modal-body { padding-left: 17px; padding-right: 17px; }
+}
 
-    .sidebar {
-        display: grid;
+@media (max-width: 480px) {
+    .transaction-detail-overlay { align-items: flex-end; padding: 0; }
+    .transaction-detail-card { max-width: none; width: 100%; border-radius: 17px 17px 0 0; transform: translateY(100%); }
+    .transaction-detail-overlay.show .transaction-detail-card { transform: translateY(0); }
+}
 
-        grid-template-columns:
-            repeat(2, 1fr);
-
+@media (max-width: 430px) {
+    nav a:nth-child(3), nav a:nth-child(4) { display: none; }
+    .page-title h1 { font-size: 19px; }
+    .filters { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+    .filter { flex-shrink: 0; }
+}
+@media (max-width: 850px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
         gap: 12px;
     }
 
-    .bill-panel,
-    .reminder-card,
-    .mini-summary {
-        margin-bottom: 0;
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    .navbar {
-        padding: 0 15px;
-    }
-
-    .nav-left {
-        gap: 10px;
-    }
-
-    .logo {
-        display: none;
-    }
-
-    nav {
-        gap: 0;
-    }
-
-    nav a {
-        padding: 8px;
-
-        font-size: 9px;
-    }
-
-    .profile-name {
-        display: none;
-    }
-
-    .main {
-        width: calc(100% - 24px);
-
-        padding-top: 20px;
-    }
-
-    .page-header {
-        align-items: flex-start;
-
-        gap: 15px;
-
-        flex-direction: column;
-    }
-
-    .btn-primary {
+    .btn-tagihan-center {
+        position: static;
+        transform: none;
         width: 100%;
     }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
+    .btn-tagihan-center:hover {
+        transform: none;
     }
-
-    .sidebar {
-        grid-template-columns: 1fr;
-    }
-
-    .toolbar {
-        flex-direction: column;
-    }
-
-    #paymentFilter {
-        width: 100%;
-
-        height: 38px;
-    }
-
-    .expense-bottom {
-        flex-direction: column;
-
-        gap: 5px;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-@media (max-width: 430px) {
-
-    nav a:nth-child(3),
-    nav a:nth-child(4) {
-        display: none;
-    }
-
-    .page-title h1 {
-        font-size: 19px;
-    }
-
-    .filters {
-        overflow-x: auto;
-
-        flex-wrap: nowrap;
-
-        padding-bottom: 4px;
-    }
-
-    .filter {
-        flex-shrink: 0;
-    }
-
 }
