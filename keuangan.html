@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- 1. Panggil CSS Navbar di sini (di dalam <head>) -->
+    <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="keuangan.css">
 </head>
 
@@ -17,38 +19,8 @@
 
 <div class="app">
 
-    <!-- ================= NAVBAR ================= -->
-    <header class="navbar">
-
-        <div class="nav-left">
-
-            <div class="logo">
-                <span>Track</span> IN
-            </div>
-
-            <nav>
-                <a href="dashboard.html">Dasbor</a>
-                <a href="akun.html">Akun</a>
-                <a href="catatan.html">Catatan</a>
-                <a href="inventaris.html">Inventaris</a>
-                <a href="keuangan.html" class="active">Keuangan</a>
-            </nav>
-
-        </div>
-
-        <div class="profile">
-
-            <div class="profile-name">
-                <strong>yusuf</strong>
-            </div>
-
-            <div class="avatar">
-                Y
-            </div>
-
-        </div>
-
-    </header>
+    <!-- 2. Cukup gunakan div placeholder ini langsung (tanpa dibungkus tag <header>) -->
+    <div id="navbar-placeholder"></div>
 
 
     <!-- ================= MAIN ================= -->
@@ -960,7 +932,8 @@
 
 </div>
 
-
+<!-- 3. Panggil script JS di paling bawah -->
+<script src="navbar.js"></script>
 <script src="keuangan.js"></script>
 
 </body>
