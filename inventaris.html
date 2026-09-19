@@ -7,8 +7,11 @@
 
     <title>Track IN - Inventaris</title>
 
+    <!-- Navbar CSS & Inventaris CSS -->
+    <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="inventaris.css">
 
+    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -16,47 +19,20 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
+
+    <!-- Bootstrap Icons (Untuk konsistensi ikon navbar) -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
 </head>
 
 <body>
 
     <div class="app-shell">
 
-        <!-- ================= NAVBAR ================= -->
-
-        <header class="topbar">
-
-            <div class="brand">
-                TRACK <span>IN</span>
-            </div>
-
-            <nav class="nav">
-
-                <a href="dashboard.html">Dasbor</a>
-
-                <a href="akun.html">Akun</a>
-
-                <a href="catatan.html">Catatan</a>
-
-                <a href="inventaris.html" class="active">
-                    Inventaris
-                </a>
-
-                <a href="keuangan.html">Keuangan</a>
-
-            </nav>
-
-            <div class="profile">
-
-                <strong>yusuf</strong>
-
-                <div class="avatar">
-                    Y
-                </div>
-
-            </div>
-
-        </header>
+        <!-- ================= NAVBAR PLACEHOLDER ================= -->
+        <div id="navbar-placeholder"></div>
 
 
         <!-- ================= CONTENT ================= -->
@@ -287,132 +263,22 @@
     </div>
 
 
-    <!-- ================= MODAL ================= -->
+    <!-- ================= MODAL TAMBAH BARANG ================= -->
 
-   <!-- ================= MODAL TAMBAH BARANG ================= -->
+    <div class="modal-backdrop" id="modal">
 
-<div class="modal-backdrop" id="modal">
+        <div class="modal">
 
-    <div class="modal">
+            <!-- HEADER MODAL -->
+            <div class="modal-header">
 
-        <!-- HEADER MODAL -->
-        <div class="modal-header">
+                <div class="modal-title-wrap">
 
-            <div class="modal-title-wrap">
-
-                <div class="modal-title-icon">
-
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                    </svg>
-
-                </div>
-
-                <h2 id="modalTitle">
-                    Tambah Barang
-                </h2>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="modal-close"
-                id="closeModal"
-                aria-label="Tutup"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <!-- FORM -->
-        <form id="itemForm">
-
-            <input
-                type="hidden"
-                id="itemId"
-            >
-
-
-            <div class="modal-body">
-
-                <!-- ================= NAMA BARANG ================= -->
-
-                <div class="form-field full">
-
-                    <label for="name">
-                        Nama Barang
-                    </label>
-
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="Contoh: Sapu ijuk, Sabun Cuci"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- ================= HARGA ================= -->
-
-                <div class="form-field">
-
-                    <label for="price">
-                        Harga
-                    </label>
-
-                    <div class="price-wrapper">
-
-                        <span class="currency">
-                            Rp
-                        </span>
-
-                        <input
-                            type="number"
-                            id="price"
-                            min="0"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <!-- ================= TANGGAL ================= -->
-
-                <div class="form-field">
-
-                    <label for="date">
-                        Tanggal Pembelian
-                    </label>
-
-                    <div class="date-wrapper">
-
-                        <input
-                            type="date"
-                            id="date"
-                            required
-                        >
+                    <div class="modal-title-icon">
 
                         <svg
-                            class="field-icon"
-                            width="17"
-                            height="17"
+                            width="20"
+                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -420,252 +286,362 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                         >
-                            <rect
-                                x="3"
-                                y="4"
-                                width="18"
-                                height="18"
-                                rx="2"
-                                ry="2"
-                            ></rect>
-
-                            <line
-                                x1="16"
-                                y1="2"
-                                x2="16"
-                                y2="6"
-                            ></line>
-
-                            <line
-                                x1="8"
-                                y1="2"
-                                x2="8"
-                                y2="6"
-                            ></line>
-
-                            <line
-                                x1="3"
-                                y1="10"
-                                x2="21"
-                                y2="10"
-                            ></line>
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
                         </svg>
 
                     </div>
 
-                </div>
-
-
-                <!-- ================= DIBELI OLEH ================= -->
-
-                <div class="form-field">
-
-                    <label for="owner">
-                        Dibeli Oleh
-                    </label>
-
-                    <div class="select-wrapper">
-
-                        <select id="owner" required>
-
-                            <option value="Yusuf">
-                                Yusuf
-                            </option>
-
-                            <option value="Bagus">
-                                Bagus
-                            </option>
-
-                            <option value="Hafidz">
-                                Hafidz
-                            </option>
-
-                        </select>
-
-                        <svg
-                            class="select-arrow"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <polyline
-                                points="6 9 12 15 18 9"
-                            ></polyline>
-                        </svg>
-
-                    </div>
+                    <h2 id="modalTitle">
+                        Tambah Barang
+                    </h2>
 
                 </div>
 
-
-                <!-- ================= KATEGORI ================= -->
-
-                <div class="form-field">
-
-                    <label for="itemCategory">
-                        Kategori
-                    </label>
-
-                    <div class="select-wrapper">
-
-                        <select id="itemCategory">
-
-                            <option value="Kebutuhan Kost">
-                                Kebutuhan Kost
-                            </option>
-
-                            <option value="Elektronik">
-                                Elektronik
-                            </option>
-
-                            <option value="Peralatan">
-                                Peralatan
-                            </option>
-
-                            <option value="Kebersihan">
-                                Kebersihan
-                            </option>
-
-                            <option value="Lainnya">
-                                Lainnya
-                            </option>
-
-                        </select>
-
-                        <svg
-                            class="select-arrow"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <polyline
-                                points="6 9 12 15 18 9"
-                            ></polyline>
-                        </svg>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ================= STATUS KEPEMILIKAN ================= -->
-
-                <div class="form-field full">
-
-                    <label for="ownership">
-                        Status Kepemilikan
-                    </label>
-
-                    <div class="select-wrapper">
-
-                        <select id="ownership">
-
-                            <option value="Barang Bersama">
-                                Barang Bersama
-                            </option>
-
-                            <option value="Barang Pribadi">
-                                Barang Pribadi
-                            </option>
-
-                            <option value="Patungan">
-                                Patungan
-                            </option>
-
-                        </select>
-
-                        <svg
-                            class="select-arrow"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <polyline
-                                points="6 9 12 15 18 9"
-                            ></polyline>
-                        </svg>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ================= CATATAN ================= -->
-
-                <div class="form-field full">
-
-                    <label for="description">
-                        Catatan (Opsional)
-                    </label>
-
-                    <textarea
-                        id="description"
-                        placeholder="Tulis detail atau keterangan tambahan mengenai barang ini..."
-                    ></textarea>
-
-                </div>
-
-
-                <!-- IKON CARD
-                     Disembunyikan dari tampilan modal,
-                     tetapi tetap dipertahankan untuk sistem card.
-                -->
-
-                <input
-                    type="hidden"
-                    id="icon"
-                    value="▣"
-                >
-
-            </div>
-
-
-            <!-- FOOTER -->
-
-            <div class="modal-footer">
 
                 <button
                     type="button"
-                    class="modal-btn cancel"
-                    id="cancelModal"
+                    class="modal-close"
+                    id="closeModal"
+                    aria-label="Tutup"
                 >
-                    Batal
-                </button>
-
-                <button
-                    type="submit"
-                    class="modal-btn save"
-                >
-                    Simpan Barang
+                    ×
                 </button>
 
             </div>
 
-        </form>
+
+            <!-- FORM -->
+            <form id="itemForm">
+
+                <input
+                    type="hidden"
+                    id="itemId"
+                >
+
+
+                <div class="modal-body">
+
+                    <!-- NAMA BARANG -->
+
+                    <div class="form-field full">
+
+                        <label for="name">
+                            Nama Barang
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Contoh: Sapu ijuk, Sabun Cuci"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- HARGA -->
+
+                    <div class="form-field">
+
+                        <label for="price">
+                            Harga
+                        </label>
+
+                        <div class="price-wrapper">
+
+                            <span class="currency">
+                                Rp
+                            </span>
+
+                            <input
+                                type="number"
+                                id="price"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TANGGAL -->
+
+                    <div class="form-field">
+
+                        <label for="date">
+                            Tanggal Pembelian
+                        </label>
+
+                        <div class="date-wrapper">
+
+                            <input
+                                type="date"
+                                id="date"
+                                required
+                            >
+
+                            <svg
+                                class="field-icon"
+                                width="17"
+                                height="17"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <rect
+                                    x="3"
+                                    y="4"
+                                    width="18"
+                                    height="18"
+                                    rx="2"
+                                    ry="2"
+                                ></rect>
+
+                                <line
+                                    x1="16"
+                                    y1="2"
+                                    x2="16"
+                                    y2="6"
+                                ></line>
+
+                                <line
+                                    x1="8"
+                                    y1="2"
+                                    x2="8"
+                                    y2="6"
+                                ></line>
+
+                                <line
+                                    x1="3"
+                                    y1="10"
+                                    x2="21"
+                                    y2="10"
+                                ></line>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DIBELI OLEH -->
+
+                    <div class="form-field">
+
+                        <label for="owner">
+                            Dibeli Oleh
+                        </label>
+
+                        <div class="select-wrapper">
+
+                            <select id="owner" required>
+
+                                <option value="Yusuf">
+                                    Yusuf
+                                </option>
+
+                                <option value="Bagus">
+                                    Bagus
+                                </option>
+
+                                <option value="Hafidz">
+                                    Hafidz
+                                </option>
+
+                            </select>
+
+                            <svg
+                                class="select-arrow"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline
+                                    points="6 9 12 15 18 9"
+                                ></polyline>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- KATEGORI -->
+
+                    <div class="form-field">
+
+                        <label for="itemCategory">
+                            Kategori
+                        </label>
+
+                        <div class="select-wrapper">
+
+                            <select id="itemCategory">
+
+                                <option value="Kebutuhan Kost">
+                                    Kebutuhan Kost
+                                </option>
+
+                                <option value="Elektronik">
+                                    Elektronik
+                                </option>
+
+                                <option value="Peralatan">
+                                    Peralatan
+                                </option>
+
+                                <option value="Kebersihan">
+                                    Kebersihan
+                                </option>
+
+                                <option value="Lainnya">
+                                    Lainnya
+                                </option>
+
+                            </select>
+
+                            <svg
+                                class="select-arrow"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline
+                                    points="6 9 12 15 18 9"
+                                ></polyline>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS KEPEMILIKAN -->
+
+                    <div class="form-field full">
+
+                        <label for="ownership">
+                            Status Kepemilikan
+                        </label>
+
+                        <div class="select-wrapper">
+
+                            <select id="ownership">
+
+                                <option value="Barang Bersama">
+                                    Barang Bersama
+                                </option>
+
+                                <option value="Barang Pribadi">
+                                    Barang Pribadi
+                                </option>
+
+                                <option value="Patungan">
+                                    Patungan
+                                </option>
+
+                            </select>
+
+                            <svg
+                                class="select-arrow"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline
+                                    points="6 9 12 15 18 9"
+                                ></polyline>
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CATATAN -->
+
+                    <div class="form-field full">
+
+                        <label for="description">
+                            Catatan (Opsional)
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="Tulis detail atau keterangan tambahan mengenai barang ini..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <input
+                        type="hidden"
+                        id="icon"
+                        value="▣"
+                    >
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="modal-btn cancel"
+                        id="cancelModal"
+                    >
+                        Batal
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="modal-btn save"
+                    >
+                        Simpan Barang
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
-</div>
+
+    <!-- ================= TOAST ================= -->
+
+    <div
         class="toast"
         id="toast"
     ></div>
 
 
+    <!-- Script Navbar & Inventaris -->
+    <script src="navbar.js"></script>
     <script src="inventaris.js"></script>
 
 </body>
