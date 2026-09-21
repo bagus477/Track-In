@@ -885,6 +885,9 @@ a {
     gap: 9px;
 
     flex: 1;
+   
+   margin-top: 12px; 
+   padding-top: 6px;
 }
 
 .chart-y-axis {
