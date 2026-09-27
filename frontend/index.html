@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track IN - Login</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", Arial, sans-serif;
+            min-height: 100vh;
+            background: #171717;
+            color: #111;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 28px;
+        }
+
+        .login-container {
+            width: min(1400px, 100%);
+            min-height: 680px;
+            background: #fff;
+
+            display: grid;
+            grid-template-columns: 44% 56%;
+
+            overflow: hidden;
+
+            border: 1px solid #149eff;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.35);
+
+            animation: containerShow 0.7s ease;
+        }
+
+
+        /* =====================================================
+           LEFT SIDE
+        ===================================================== */
+
+        .welcome-panel {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #08e6c1 0%,
+                    #08e0bd 50%,
+                    #08d8b8 100%
+                );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+        /*
+            Decorative circles
+        */
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+        }
+
+        .circle-1 {
+            width: 350px;
+            height: 350px;
+            top: -170px;
+            left: -160px;
+        }
+
+        .circle-2 {
+            width: 500px;
+            height: 500px;
+            right: -280px;
+            bottom: -260px;
+        }
+
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            right: 70px;
+            top: 80px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+
+            text-align: center;
+
+            padding: 40px;
+        }
+
+        .brand-logo {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 28px;
+
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.22);
+
+            backdrop-filter: blur(10px);
+
+            font-size: 30px;
+            font-weight: 700;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .welcome-content h1 {
+            font-size: clamp(38px, 4vw, 58px);
+            font-weight: 500;
+            letter-spacing: -2px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-content p {
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+
+        /* =====================================================
+           RIGHT SIDE
+        ===================================================== */
+
+        .form-panel {
+            background: #ffffff;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 50px 70px;
+        }
+
+        .login-form-wrapper {
+            width: 100%;
+            max-width: 430px;
+
+            animation: formShow 0.8s ease 0.1s both;
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .form-header p {
+            color: #171717;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 45px;
+
+            padding: 0 45px 0 15px;
+
+            border: 1px solid transparent;
+            border-radius: 13px;
+
+            background: #f4f4f4;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s ease,
+                border 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .input-wrapper input:hover {
+            background: #eeeeee;
+        }
+
+        .input-wrapper input:focus {
+            background: #fff;
+
+            border-color: #6730ff;
+
+            box-shadow:
+                0 0 0 3px rgba(103,48,255,0.10);
+        }
+
+        .input-icon {
+            position: absolute;
+
+            right: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #888;
+
+            font-size: 15px;
+        }
+
+        .password-toggle {
+            border: none;
+            background: none;
+
+            position: absolute;
+
+            right: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #777;
+
+            font-size: 15px;
+
+            padding: 5px;
+        }
+
+        .password-toggle:hover {
+            color: #6730ff;
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .error-message {
+            display: none;
+
+            margin-top: 7px;
+
+            color: #e53935;
+
+            font-size: 11px;
+        }
+
+        .form-group.error input {
+            border-color: #e53935;
+            background: #fff7f7;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+
+        /* =====================================================
+           FORGOT PASSWORD
+        ===================================================== */
+
+        .forgot-wrapper {
+            display: flex;
+            justify-content: flex-end;
+
+            margin-top: -3px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password {
+            color: #4d24ff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: #3213d9;
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+        ===================================================== */
+
+        .login-button {
+            width: 100%;
+            height: 46px;
+
+            border: none;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #6730ff,
+                    #6427fa
+                );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            box-shadow:
+                0 8px 20px rgba(103,48,255,0.20);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(103,48,255,0.30);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .login-button.loading span {
+            visibility: hidden;
+        }
+
+        .login-button.loading::after {
+            content: "";
+
+            position: absolute;
+
+            width: 17px;
+            height: 17px;
+
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+
+            border-radius: 50%;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            animation: spin 0.7s linear infinite;
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .continue-text {
+            text-align: center;
+
+            font-size: 13px;
+
+            margin: 23px 0;
+        }
+
+
+        /* =====================================================
+           SOCIAL LOGIN
+        ===================================================== */
+
+        .social-login {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .social-button {
+            height: 48px;
+
+            border: none;
+            border-radius: 13px;
+
+            background: #f4f4f4;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+
+            font-size: 13px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .social-button:hover {
+            background: #eaeaea;
+            transform: translateY(-2px);
+        }
+
+        .social-button i {
+            font-size: 20px;
+        }
+
+        .google-icon {
+            color: #4285f4;
+        }
+
+        .apple-icon {
+            color: #000;
+        }
+
+        .email-icon {
+            color: #111;
+        }
+
+
+        /* =====================================================
+           REGISTER
+        ===================================================== */
+
+        .register-text {
+            text-align: center;
+
+            margin-top: 34px;
+
+            font-size: 13px;
+        }
+
+        .register-text a {
+            color: #1d39ff;
+
+            text-decoration: none;
+
+            font-weight: 500;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            background: #222;
+            color: #fff;
+
+            padding: 14px 20px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transform: translateY(20px);
+
+            transition: 0.3s;
+
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes containerShow {
+
+            from {
+                opacity: 0;
+                transform: scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+        }
+
+        @keyframes formShow {
+
+            from {
+                opacity: 0;
+                transform: translateX(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .login-container {
+                grid-template-columns: 40% 60%;
+            }
+
+            .form-panel {
+                padding: 40px;
+            }
+
+            .social-login {
+                gap: 10px;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            body {
+                background: #fff;
+            }
+
+            .login-page {
+                padding: 0;
+                align-items: stretch;
+            }
+
+            .login-container {
+                width: 100%;
+                min-height: 100vh;
+
+                display: flex;
+                flex-direction: column;
+
+                border: none;
+
+                box-shadow: none;
+            }
+
+            .welcome-panel {
+                min-height: 230px;
+
+                flex-shrink: 0;
+            }
+
+            .welcome-content {
+                padding: 30px;
+            }
+
+            .brand-logo {
+                width: 55px;
+                height: 55px;
+
+                margin-bottom: 15px;
+
+                border-radius: 15px;
+
+                font-size: 22px;
+            }
+
+            .welcome-content h1 {
+                font-size: 38px;
+            }
+
+            .welcome-content p {
+                font-size: 13px;
+            }
+
+            .form-panel {
+                flex: 1;
+
+                padding: 45px 25px;
+            }
+
+            .form-header {
+                margin-bottom: 30px;
+            }
+
+            .form-header h2 {
+                font-size: 28px;
+            }
+
+            .social-login {
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+            }
+
+            .social-button {
+                justify-content: center;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 400px) {
+
+            .form-panel {
+                padding: 35px 20px;
+            }
+
+            .form-header h2 {
+                font-size: 25px;
+            }
+
+            .form-header p {
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <!-- =====================================================
+         LOGIN PAGE
+    ===================================================== -->
+
+    <main class="login-page">
+
+        <section class="login-container">
+
+
+            <!-- =================================================
+                 LEFT / WELCOME
+            ================================================= -->
+
+            <div class="welcome-panel">
+
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-3"></div>
+
+                <div class="welcome-content">
+
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <h1>Track IN</h1>
+
+                    <p>
+                        Selamat datang di log in Track IN
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT / FORM
+            ================================================= -->
+
+            <div class="form-panel">
+
+                <div class="login-form-wrapper">
+
+
+                    <!-- HEADER -->
+
+                    <div class="form-header">
+
+                        <h2>selamat datang</h2>
+
+                        <p>
+                            masuk ke akun Track IN kamu
+                            Untuk Melanjutkan
+                        </p>
+
+                    </div>
+
+
+                    <!-- FORM -->
+
+                    <form id="loginForm" novalidate>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group" id="emailGroup">
+
+                            <label for="email">
+                                Email
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder=""
+                                    autocomplete="email"
+                                >
+
+                                <i class="fa-regular fa-envelope input-icon"></i>
+
+                            </div>
+
+                            <div class="error-message">
+                                Masukkan email yang valid.
+                            </div>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="form-group" id="passwordGroup">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    autocomplete="current-password"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    id="togglePassword"
+                                    aria-label="Tampilkan password"
+                                >
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+
+                            </div>
+
+                            <div class="error-message">
+                                Password minimal 6 karakter.
+                            </div>
+
+                        </div>
+
+
+                        <!-- FORGOT PASSWORD -->
+
+                        <div class="forgot-wrapper">
+
+                            <a
+                                href="#"
+                                class="forgot-password"
+                                id="forgotPassword"
+                            >
+                                Lupa kata sandi?
+                            </a>
+
+                        </div>
+
+
+                        <!-- LOGIN -->
+
+                        <button
+                            type="submit"
+                            class="login-button"
+                            id="loginButton"
+                        >
+                            <span>login</span>
+                        </button>
+
+
+                    </form>
+
+
+                    <!-- CONTINUE -->
+
+                    <p class="continue-text">
+                        lanjutkan dengan
+                    </p>
+
+
+                    <!-- SOCIAL -->
+
+                    <div class="social-login">
+
+
+                        <!-- GOOGLE -->
+
+                        <button
+                            type="button"
+                            class="social-button"
+                            data-provider="Google"
+                        >
+
+                            <i class="fa-brands fa-google google-icon"></i>
+
+                            <span>google</span>
+
+                        </button>
+
+
+                        <!-- APPLE -->
+
+                        <button
+                            type="button"
+                            class="social-button"
+                            data-provider="Apple"
+                        >
+
+                            <i class="fa-brands fa-apple apple-icon"></i>
+
+                            <span>Apple</span>
+
+                        </button>
+
+
+                        <!-- EMAIL -->
+
+                        <button
+                            type="button"
+                            class="social-button"
+                            data-provider="Email"
+                        >
+
+                            <i class="fa-regular fa-envelope email-icon"></i>
+
+                            <span>Email</span>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- REGISTER -->
+
+                    <p class="register-text">
+
+                        Belum punya akun?
+
+                        <a
+                            href="#"
+                            id="registerLink"
+                        >
+                            Daftar sekarang
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- TOAST -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const loginForm = document.getElementById("loginForm");
+
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        const emailGroup = document.getElementById("emailGroup");
+        const passwordGroup = document.getElementById("passwordGroup");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const toast =
+            document.getElementById("toast");
+
+
+        /* =====================================================
+           SHOW / HIDE PASSWORD
+        ===================================================== */
+
+        togglePassword.addEventListener("click", () => {
+
+            const icon =
+                togglePassword.querySelector("i");
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    "Sembunyikan password"
+                );
+
+            } else {
+
+                password.type = "password";
+
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    "Tampilkan password"
+                );
+
+            }
+
+        });
+
+
+        /* =====================================================
+           EMAIL VALIDATION
+        ===================================================== */
+
+        function validateEmail() {
+
+            const emailValue =
+                email.value.trim();
+
+            const emailRegex =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (
+                emailValue === "" ||
+                !emailRegex.test(emailValue)
+            ) {
+
+                emailGroup.classList.add("error");
+
+                return false;
+
+            }
+
+            emailGroup.classList.remove("error");
+
+            return true;
+
+        }
+
+
+        /* =====================================================
+           PASSWORD VALIDATION
+        ===================================================== */
+
+        function validatePassword() {
+
+            const passwordValue =
+                password.value;
+
+            if (
+                passwordValue.length < 6
+            ) {
+
+                passwordGroup.classList.add("error");
+
+                return false;
+
+            }
+
+            passwordGroup.classList.remove("error");
+
+            return true;
+
+        }
+
+
+        /* =====================================================
+           LIVE VALIDATION
+        ===================================================== */
+
+        email.addEventListener("input", () => {
+
+            if (email.value.trim() !== "") {
+                validateEmail();
+            }
+
+        });
+
+        password.addEventListener("input", () => {
+
+            if (password.value !== "") {
+                validatePassword();
+            }
+
+        });
+
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
+
+        loginForm.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            const validEmail =
+                validateEmail();
+
+            const validPassword =
+                validatePassword();
+
+
+            if (!validEmail || !validPassword) {
+
+                showToast(
+                    "Silakan periksa email dan password."
+                );
+
+                return;
+
+            }
+
+
+            /*
+                Loading effect
+            */
+
+            loginButton.classList.add("loading");
+
+
+            setTimeout(() => {
+
+                loginButton.classList.remove("loading");
+
+                showToast(
+                    "Login berhasil! Selamat datang."
+                );
+
+                /*
+                    Di sini nantinya bisa diarahkan
+                    ke dashboard:
+
+                    window.location.href =
+                        "dashboard.html";
+                */
+
+            }, 1500);
+
+        });
+
+
+        /* =====================================================
+           SOCIAL LOGIN
+        ===================================================== */
+
+        const socialButtons =
+            document.querySelectorAll(
+                ".social-button"
+            );
+
+        socialButtons.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const provider =
+                    button.dataset.provider;
+
+                showToast(
+                    `Login dengan ${provider} dipilih.`
+                );
+
+            });
+
+        });
+
+
+        /* =====================================================
+           FORGOT PASSWORD
+        ===================================================== */
+
+        document
+            .getElementById("forgotPassword")
+            .addEventListener("click", (event) => {
+
+                event.preventDefault();
+
+                showToast(
+                    "Halaman reset password akan dibuka."
+                );
+
+            });
+
+
+        /* =====================================================
+           REGISTER
+        ===================================================== */
+
+        document
+            .getElementById("registerLink")
+            .addEventListener("click", (event) => {
+
+                event.preventDefault();
+
+                showToast(
+                    "Halaman pendaftaran akan dibuka."
+                );
+
+            });
+
+
+        /* =====================================================
+           TOAST FUNCTION
+        ===================================================== */
+
+        let toastTimer;
+
+        function showToast(message) {
+
+            clearTimeout(toastTimer);
+
+            toast.textContent = message;
+
+            toast.classList.add("show");
+
+            toastTimer = setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 3000);
+
+        }
+
+    </script>
+
+</body>
+</html>
