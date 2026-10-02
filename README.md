@@ -2,7 +2,7 @@
 
 **Track IN** adalah aplikasi berbasis web yang dirancang untuk membantu anak kos mengelola keuangan harian, mencatat pengeluaran bersama, melacak inventaris barang kos, serta menyimpan catatan penting secara rapi.
 
-🚀 **Live Demo:** [Coba Aplikasi Track IN](https://bagus477.github.io/Track-In/)
+🚀 **Live Demo:** [Coba Aplikasi Track IN](https://bagus477.github.io/Track-In/frontend/index.html)
 
 ---
 
