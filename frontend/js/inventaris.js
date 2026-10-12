@@ -1,154 +1,64 @@
-const initialItems = [
+const API_URL = "http://127.0.0.1:8000/api";
 
-    {
-        id: 1,
-        name: "Rice Cooker",
-        category: "Barang Bersama",
-        price: 450000,
-        owner: "Yusuf",
-        date: "2026-08-12",
-        icon: "▣",
-        description:
-            "Dipakai masak nasi harian di dapur utama."
-    },
-
-    {
-        id: 2,
-        name: "Kipas Angin",
-        category: "Barang Bersama",
-        price: 300000,
-        owner: "Bagus",
-        date: "2026-08-15",
-        icon: "",
-        description:
-            "Kipas ruang tengah, harap matikan jika keluar."
-    },
-
-    {
-        id: 3,
-        name: "Galon",
-        category: "Barang Bersama",
-        price: 20000,
-        owner: "Andi",
-        date: "2026-08-18",
-        icon: "⊗",
-        description:
-            "Isi ulang galon minggu ke-3."
-    },
-
-    {
-        id: 4,
-        name: "Headset",
-        category: "Barang Pribadi",
-        price: 300000,
-        owner: "Yusuf",
-        date: "2026-08-20",
-        icon: "♧",
-        description:
-            "Barang pribadi di kamar Yusuf, izin sebelum pakai."
-    },
-
-    {
-        id: 5,
-        name: "Lampu",
-        category: "Barang Bersama",
-        price: 35000,
-        owner: "Bagus",
-        date: "2026-08-22",
-        icon: "♧",
-        description:
-            "Lampu cadangan untuk lorong depan."
-    },
-
-    {
-        id: 6,
-        name: "Meja Lipat",
-        category: "Patungan",
-        price: 275000,
-        owner: "Andi",
-        date: "2026-08-24",
-        icon: "▤",
-        description:
-            "Digunakan bersama saat belajar atau rapat."
-    },
-
-    {
-        id: 7,
-        name: "Dispenser",
-        category: "Barang Bersama",
-        price: 520000,
-        owner: "Yusuf",
-        date: "2026-08-26",
-        icon: "▥",
-        description:
-            "Dispenser air untuk area dapur."
-    },
-
-    {
-        id: 8,
-        name: "Kabel HDMI",
-        category: "Barang Pribadi",
-        price: 85000,
-        owner: "Bagus",
-        date: "2026-08-28",
-        icon: "⌁",
-        description:
-            "Kabel pribadi untuk kebutuhan presentasi."
-    },
-
-    {
-        id: 9,
-        name: "Karpet",
-        category: "Patungan",
-        price: 420000,
-        owner: "Yusuf",
-        date: "2026-08-30",
-        icon: "▦",
-        description:
-            "Karpet ruang tengah hasil patungan."
-    }
-
-];
-
-
-let items =
-    JSON.parse(
-        localStorage.getItem(
-            "trackin_items"
-        )
-    ) || initialItems;
-
-
+let items = [];
 let activeFilter = "Semua";
 
+const $ = selector => document.querySelector(selector);
 
-const $ = selector =>
-    document.querySelector(selector);
+const token = localStorage.getItem("trackin_token");
+const user = JSON.parse(
+    localStorage.getItem("trackin_user") || "null"
+);
 
-
-/* ================= FORMAT RUPIAH ================= */
-
-function rupiah(number) {
-
-    return new Intl.NumberFormat(
-        "id-ID",
-        {
-            style: "currency",
-            currency: "IDR",
-            maximumFractionDigits: 0
-        }
-    ).format(number);
-
+if (!token) {
+    window.location.href = "index.html";
 }
 
+/* ================= API ================= */
 
-/* ================= FORMAT DATE ================= */
+async function api(endpoint, options = {}) {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+        ...options,
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`,
+            ...(options.headers || {})
+        }
+    });
+
+    if (response.status === 401) {
+        localStorage.removeItem("trackin_token");
+        localStorage.removeItem("trackin_user");
+        window.location.href = "index.html";
+        return;
+    }
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message || "Terjadi kesalahan pada server."
+        );
+    }
+
+    return data;
+}
+
+/* ================= FORMAT ================= */
+
+function rupiah(number) {
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0
+    }).format(number || 0);
+}
 
 function formatDate(date) {
+    if (!date) return "-";
 
-    return new Date(
-        date + "T00:00:00"
-    ).toLocaleDateString(
+    return new Date(date + "T00:00:00").toLocaleDateString(
         "id-ID",
         {
             day: "numeric",
@@ -156,222 +66,168 @@ function formatDate(date) {
             year: "numeric"
         }
     );
-
 }
-
-
-/* ================= ESCAPE HTML ================= */
 
 function escapeHtml(value) {
-
-    return String(value)
-        .replace(
-            /[&<>"']/g,
-            char => {
-
-                const entities = {
-
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#039;"
-
-                };
-
-                return entities[char];
-
-            }
-        );
-
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        char => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        })[char]
+    );
 }
 
+/* ================= LOAD DATA ================= */
+
+async function loadItems() {
+    try {
+        const data = await api("/inventory");
+
+        items = Array.isArray(data) ? data : [];
+
+        render();
+
+    } catch (error) {
+        console.error("Inventory error:", error);
+
+        showToast(
+            error.message ||
+            "Gagal mengambil data inventaris."
+        );
+    }
+}
 
 /* ================= RENDER ================= */
 
 function render() {
+    const searchInput = $("#searchInput");
+    const sortSelect = $("#sortSelect");
+    const inventoryGrid = $("#inventoryGrid");
+    const emptyState = $("#emptyState");
 
-    const search =
-        $("#searchInput")
-            .value
+    if (!inventoryGrid) return;
+
+    const search = searchInput
+        ? searchInput.value.toLowerCase().trim()
+        : "";
+
+    let shown = items.filter(item => {
+
+        const filterMatch =
+            activeFilter === "Semua" ||
+            item.category === activeFilter;
+
+        const searchMatch = [
+            item.name,
+            item.category,
+            item.purchased_by,
+            item.description
+        ]
+            .join(" ")
             .toLowerCase()
-            .trim();
+            .includes(search);
 
+        return filterMatch && searchMatch;
+    });
 
-    let shown =
-        items.filter(item => {
-
-            const filterMatch =
-                activeFilter === "Semua" ||
-                item.category === activeFilter;
-
-
-            const searchMatch =
-                [
-                    item.name,
-                    item.owner,
-                    item.category,
-                    item.description
-                ]
-                    .join(" ")
-                    .toLowerCase()
-                    .includes(search);
-
-
-            return filterMatch &&
-                searchMatch;
-
-        });
-
-
-    const sort =
-        $("#sortSelect").value;
-
+    const sort = sortSelect?.value;
 
     if (sort === "priceHigh") {
-
         shown.sort(
             (a, b) =>
-                b.price - a.price
+                Number(b.price || 0) -
+                Number(a.price || 0)
         );
-
     }
-
 
     if (sort === "priceLow") {
-
         shown.sort(
             (a, b) =>
-                a.price - b.price
+                Number(a.price || 0) -
+                Number(b.price || 0)
         );
-
     }
-
 
     if (sort === "name") {
-
         shown.sort(
             (a, b) =>
-                a.name.localeCompare(
-                    b.name
-                )
+                String(a.name || "")
+                    .localeCompare(
+                        String(b.name || "")
+                    )
         );
-
     }
-
 
     if (sort === "newest") {
-
         shown.sort(
             (a, b) =>
-                new Date(b.date) -
-                new Date(a.date)
+                new Date(b.purchase_date || 0) -
+                new Date(a.purchase_date || 0)
         );
-
     }
 
+    inventoryGrid.innerHTML =
+        shown.map(createCard).join("");
 
-    $("#inventoryGrid")
-        .innerHTML =
-        shown.map(createCard)
-            .join("");
-
-
-    $("#emptyState")
-        .hidden =
-        shown.length !== 0;
-
+    if (emptyState) {
+        emptyState.hidden =
+            shown.length !== 0;
+    }
 
     updateStats();
-
 }
 
-
-/* ================= CREATE CARD ================= */
+/* ================= CARD ================= */
 
 function createCard(item) {
 
     let badgeClass = "";
 
-
-    if (
-        item.category ===
-        "Barang Pribadi"
-    ) {
-
+    if (item.category === "Barang Pribadi") {
         badgeClass = "private";
-
     }
 
-
-    if (
-        item.category ===
-        "Patungan"
-    ) {
-
+    if (item.category === "Patungan") {
         badgeClass = "group";
-
     }
-
 
     return `
-
         <article class="item-card">
-
 
             <div class="item-top">
 
-
                 <div class="item-icon">
-
-                    ${escapeHtml(
-                        item.icon || ""
-                    )}
-
+                    ▣
                 </div>
-
 
                 <div class="item-meta">
 
-
-                    <span
-                        class="badge ${badgeClass}"
-                    >
-
+                    <span class="badge ${badgeClass}">
                         ${escapeHtml(
-                            item.category
+                            item.category || "Barang"
                         )}
-
                     </span>
 
-
                     <h3>
-
-                        ${escapeHtml(
-                            item.name
-                        )}
-
+                        ${escapeHtml(item.name)}
                     </h3>
-
 
                 </div>
 
-
             </div>
-
 
             <div class="item-body">
 
-
                 <p class="description">
-
                     ${escapeHtml(
                         item.description ||
                         "Tidak ada deskripsi."
                     )}
-
                 </p>
-
 
                 <div class="price-row">
 
@@ -380,41 +236,28 @@ function createCard(item) {
                     </span>
 
                     <strong class="price">
-
-                        ${rupiah(
-                            item.price
-                        )}
-
+                        ${rupiah(item.price)}
                     </strong>
 
                 </div>
 
-
                 <div class="item-footer">
 
-
                     <span>
-
-                        ♙ Oleh:
+                        ♙ Dibeli Oleh:
                         ${escapeHtml(
-                            item.owner
+                            item.purchased_by || "-"
                         )}
-
                     </span>
 
-
                     <span>
-
                         ▣
                         ${formatDate(
-                            item.date
+                            item.purchase_date
                         )}
-
                     </span>
 
-
                     <div class="actions">
-
 
                         <button
                             class="icon-btn"
@@ -424,7 +267,6 @@ function createCard(item) {
                             ✎
                         </button>
 
-
                         <button
                             class="icon-btn delete"
                             onclick="deleteItem(${item.id})"
@@ -433,24 +275,17 @@ function createCard(item) {
                             ♜
                         </button>
 
-
                     </div>
-
 
                 </div>
 
-
             </div>
 
-
         </article>
-
     `;
-
 }
 
-
-/* ================= UPDATE STATS ================= */
+/* ================= STATISTICS ================= */
 
 function updateStats() {
 
@@ -461,14 +296,12 @@ function updateStats() {
                 "Barang Bersama"
         ).length;
 
-
     const privateItems =
         items.filter(
             item =>
                 item.category ===
                 "Barang Pribadi"
         ).length;
-
 
     const group =
         items.filter(
@@ -477,134 +310,94 @@ function updateStats() {
                 "Patungan"
         ).length;
 
+    if ($("#totalItems")) {
+        $("#totalItems").textContent =
+            `${items.length} Barang`;
+    }
 
-    $("#totalItems")
-        .textContent =
-        `${items.length} Barang`;
+    if ($("#sharedItems")) {
+        $("#sharedItems").textContent =
+            `${shared} Barang`;
+    }
 
+    if ($("#privateItems")) {
+        $("#privateItems").textContent =
+            `${privateItems} Barang`;
+    }
 
-    $("#sharedItems")
-        .textContent =
-        `${shared} Barang`;
-
-
-    $("#privateItems")
-        .textContent =
-        `${privateItems} Barang`;
-
-
-    $("#groupItems")
-        .textContent =
-        `${group} Barang`;
-
+    if ($("#groupItems")) {
+        $("#groupItems").textContent =
+            `${group} Barang`;
+    }
 }
 
-
-/* ================= SAVE ================= */
-
-function save() {
-
-    localStorage.setItem(
-        "trackin_items",
-        JSON.stringify(items)
-    );
-
-    render();
-
-}
-
-
-/* ================= OPEN MODAL ================= */
+/* ================= MODAL ================= */
 
 function showModal(item = null) {
 
-    $("#modal")
-        .classList
-        .add("show");
+    $("#modal")?.classList.add("show");
 
+    if ($("#modalTitle")) {
+        $("#modalTitle").textContent =
+            item
+                ? "Edit Barang"
+                : "Tambah Barang";
+    }
 
-    $("#modalTitle")
-        .textContent =
-        item
-            ? "Edit Barang"
-            : "Tambah Barang";
+    if ($("#itemId")) {
+        $("#itemId").value =
+            item?.id || "";
+    }
 
+    if ($("#name")) {
+        $("#name").value =
+            item?.name || "";
+    }
 
-    $("#itemId")
-        .value =
-        item?.id || "";
+    if ($("#price")) {
+        $("#price").value =
+            item?.price || "";
+    }
 
+    if ($("#owner")) {
+        $("#owner").value =
+            item?.purchased_by || "";
+    }
 
-    $("#name")
-        .value =
-        item?.name || "";
+    if ($("#date")) {
+        $("#date").value =
+            item?.purchase_date ||
+            new Date()
+                .toISOString()
+                .slice(0, 10);
+    }
 
+    if ($("#icon")) {
+        $("#icon").value =
+            item?.icon || "▣";
+    }
 
-    $("#price")
-        .value =
-        item?.price || "";
+    if ($("#description")) {
+        $("#description").value =
+            item?.description || "";
+    }
 
+    if ($("#itemCategory")) {
+        $("#itemCategory").value =
+            item?.itemCategory ||
+            "Kebutuhan Kost";
+    }
 
-    $("#owner")
-        .value =
-        item?.owner || "Yusuf";
-
-
-    $("#date")
-        .value =
-        item?.date ||
-        new Date()
-            .toISOString()
-            .slice(0, 10);
-
-
-    $("#icon")
-        .value =
-        item?.icon || "▣";
-
-
-    $("#description")
-        .value =
-        item?.description || "";
-
-
-    /*
-       Kategori baru.
-       Kalau data lama belum punya itemCategory,
-       gunakan Kebutuhan Kost.
-    */
-
-    $("#itemCategory")
-        .value =
-        item?.itemCategory ||
-        "Kebutuhan Kost";
-
-
-    /*
-       Status kepemilikan.
-       Data lama menggunakan category
-       sebagai status kepemilikan.
-    */
-
-    $("#ownership")
-        .value =
-        item?.ownership ||
-        item?.category ||
-        "Barang Bersama";
-
+    if ($("#ownership")) {
+        $("#ownership").value =
+            item?.category ||
+            "Barang Bersama";
+    }
 }
-
-
-/* ================= CLOSE MODAL ================= */
 
 function closeModal() {
-
-    $("#modal")
-        .classList
-        .remove("show");
-
+    $("#modal")?.classList.remove("show");
 }
-
 
 /* ================= EDIT ================= */
 
@@ -613,360 +406,325 @@ function editItem(id) {
     const item =
         items.find(
             item =>
-                item.id === id
+                Number(item.id) ===
+                Number(id)
         );
-
 
     if (!item) return;
 
-
     showModal(item);
-
 }
-
 
 /* ================= DELETE ================= */
 
-function deleteItem(id) {
+async function deleteItem(id) {
 
     const item =
         items.find(
             item =>
-                item.id === id
+                Number(item.id) ===
+                Number(id)
         );
 
-
     if (!item) return;
-
 
     const confirmation =
         confirm(
             `Hapus "${item.name}" dari inventaris?`
         );
 
-
     if (!confirmation) return;
 
+    try {
 
-    items =
-        items.filter(
-            item =>
-                item.id !== id
+        await api(
+            `/inventory/${id}`,
+            {
+                method: "DELETE"
+            }
         );
 
+        items =
+            items.filter(
+                item =>
+                    Number(item.id) !==
+                    Number(id)
+            );
 
-    save();
+        render();
 
+        showToast(
+            "Barang berhasil dihapus"
+        );
 
-    showToast(
-        "Barang berhasil dihapus"
-    );
+    } catch (error) {
 
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Gagal menghapus barang."
+        );
+    }
 }
-
 
 /* ================= TOAST ================= */
 
 function showToast(message) {
 
-    const toast =
-        $("#toast");
+    const toast = $("#toast");
 
+    if (!toast) return;
 
-    toast.textContent =
-        message;
+    toast.textContent = message;
 
+    toast.classList.add("show");
 
-    toast.classList
-        .add("show");
-
-
-    setTimeout(
-        () => {
-
-            toast.classList
-                .remove("show");
-
-        },
-        2200
-    );
-
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2200);
 }
 
+/* ================= BUTTON ================= */
 
-/* ================= ADD BUTTON ================= */
-
-$("#openAdd")
-    .onclick = () => {
-
+$("#openAdd")?.addEventListener(
+    "click",
+    () => {
         showModal();
+    }
+);
 
-    };
+$("#closeModal")?.addEventListener(
+    "click",
+    closeModal
+);
 
+$("#cancelModal")?.addEventListener(
+    "click",
+    closeModal
+);
 
-/* ================= CLOSE BUTTON ================= */
-
-$("#closeModal")
-    .onclick = closeModal;
-
-
-$("#cancelModal")
-    .onclick = closeModal;
-
-
-/* ================= CLICK OUTSIDE MODAL ================= */
-
-$("#modal")
-    .onclick = event => {
+$("#modal")?.addEventListener(
+    "click",
+    event => {
 
         if (
             event.target.id ===
             "modal"
         ) {
-
             closeModal();
-
         }
 
-    };
-
+    }
+);
 
 /* ================= SEARCH ================= */
 
-$("#searchInput")
-    .oninput = render;
-
+$("#searchInput")?.addEventListener(
+    "input",
+    render
+);
 
 /* ================= SORT ================= */
 
-$("#sortSelect")
-    .onchange = render;
-
+$("#sortSelect")?.addEventListener(
+    "change",
+    render
+);
 
 /* ================= FILTER ================= */
 
-$("#filters")
-    .addEventListener(
-        "click",
-        event => {
+$("#filters")?.addEventListener(
+    "click",
+    event => {
 
-            const button =
-                event.target
-                    .closest(
-                        ".filter"
-                    );
+        const button =
+            event.target.closest(
+                ".filter"
+            );
 
+        if (!button) return;
 
-            if (!button) return;
+        activeFilter =
+            button.dataset.filter;
 
-
-            activeFilter =
-                button.dataset.filter;
-
-
-            document
-                .querySelectorAll(
-                    ".filter"
-                )
-                .forEach(
-                    element => {
-
-                        element.classList
-                            .remove(
-                                "active"
-                            );
-
-                    }
+        document
+            .querySelectorAll(".filter")
+            .forEach(element => {
+                element.classList.remove(
+                    "active"
                 );
+            });
 
+        button.classList.add("active");
 
-            button.classList
-                .add("active");
-
-
-            render();
-
-        }
-    );
-
+        render();
+    }
+);
 
 /* ================= FORM ================= */
 
-$("#itemForm").onsubmit = event => {
+$("#itemForm")?.addEventListener(
+    "submit",
+    async event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const idValue =
-        $("#itemId").value.trim();
+        const idValue =
+            $("#itemId").value.trim();
 
-const data = {
+        const data = {
 
-    id:
-        idValue
-            ? Number(idValue)
-            : Date.now(),
+            name:
+                $("#name")
+                    .value
+                    .trim(),
 
-    name:
-        $("#name")
-            .value
-            .trim(),
+            purchased_by:
+                $("#owner")
+                    .value
+                    .trim(),
 
-    /*
-       Status lama tetap disimpan
-       sebagai category agar filter
-       dan statistik yang sudah ada
-       tetap berjalan.
-    */
+            category:
+                $("#ownership")
+                    .value,
 
-    category:
-        $("#ownership")
-            .value,
+            price:
+                Number(
+                    $("#price").value
+                ) || 0,
 
-    /*
-       Kategori barang baru.
-    */
+            purchase_date:
+                $("#date").value,
 
-    itemCategory:
-        $("#itemCategory")
-            .value,
+            description:
+                $("#description")
+                    .value
+                    .trim()
+        };
 
-    /*
-       Status kepemilikan eksplisit.
-    */
+        /* VALIDASI */
 
-    ownership:
-        $("#ownership")
-            .value,
+        if (!data.name) {
+            alert(
+                "Nama barang wajib diisi."
+            );
 
-    price:
-        Number(
-            $("#price")
-                .value
-        ) || 0,
+            $("#name").focus();
 
-    owner:
-        $("#owner")
-            .value
-            .trim(),
+            return;
+        }
 
-    date:
-        $("#date")
-            .value,
+        if (!data.purchased_by) {
+            alert(
+                "Nama pembeli wajib diisi."
+            );
 
+            $("#owner").focus();
 
-    description:
-        $("#description")
-            .value
-            .trim()
+            return;
+        }
 
-};
+        if (!data.price) {
+            alert(
+                "Harga barang wajib diisi."
+            );
 
+            $("#price").focus();
 
-    /* ================= VALIDASI ================= */
+            return;
+        }
 
-    if (!data.name) {
+        if (!data.purchase_date) {
+            alert(
+                "Tanggal beli wajib diisi."
+            );
 
-        alert(
-            "Nama barang wajib diisi."
-        );
+            $("#date").focus();
 
-        $("#name").focus();
+            return;
+        }
 
-        return;
+        try {
+
+            /* EDIT */
+
+            if (idValue) {
+
+                const result =
+                    await api(
+                        `/inventory/${idValue}`,
+                        {
+                            method: "PUT",
+                            body:
+                                JSON.stringify(
+                                    data
+                                )
+                        }
+                    );
+
+                const updated =
+                    result.data;
+
+                const index =
+                    items.findIndex(
+                        item =>
+                            Number(item.id) ===
+                            Number(idValue)
+                    );
+
+                if (index !== -1) {
+                    items[index] =
+                        updated;
+                }
+
+                showToast(
+                    "Barang berhasil diperbarui"
+                );
+
+            }
+
+            /* TAMBAH */
+
+            else {
+
+                const result =
+                    await api(
+                        "/inventory",
+                        {
+                            method: "POST",
+                            body:
+                                JSON.stringify(
+                                    data
+                                )
+                        }
+                    );
+
+                items.unshift(
+                    result.data
+                );
+
+                showToast(
+                    "Barang berhasil ditambahkan"
+                );
+            }
+
+            render();
+
+            closeModal();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                error.message ||
+                "Gagal menyimpan barang."
+            );
+        }
     }
+);
 
+/* ================= START ================= */
 
-    if (!data.price) {
-
-        alert(
-            "Harga barang wajib diisi."
-        );
-
-        $("#price").focus();
-
-        return;
-    }
-
-
-    if (!data.owner) {
-
-        alert(
-            "Pemilik wajib diisi."
-        );
-
-        $("#owner").focus();
-
-        return;
-    }
-
-
-    if (!data.date) {
-
-        alert(
-            "Tanggal beli wajib diisi."
-        );
-
-        $("#date").focus();
-
-        return;
-    }
-
-
-    /* ================= CEK EDIT ================= */
-
-    const existingIndex =
-        items.findIndex(
-            item =>
-                Number(item.id) ===
-                Number(data.id)
-        );
-
-
-    /* ================= EDIT ================= */
-
-    if (existingIndex !== -1) {
-
-        items[existingIndex] =
-            data;
-
-        showToast(
-            "Barang berhasil diperbarui"
-        );
-
-    }
-
-    /* ================= TAMBAH CARD BARU ================= */
-
-    else {
-
-        items.push(data);
-
-        showToast(
-            "Barang berhasil ditambahkan"
-        );
-
-    }
-
-
-    /* ================= SIMPAN ================= */
-
-    localStorage.setItem(
-        "trackin_items",
-        JSON.stringify(items)
-    );
-
-
-    /* ================= RENDER CARD ================= */
-
-    render();
-
-
-    /* ================= TUTUP MODAL ================= */
-
-    closeModal();
-
-};
-
-/* ================= INITIAL ================= */
-
-render();
+loadItems();
