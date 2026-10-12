@@ -995,281 +995,352 @@
          JAVASCRIPT
     ===================================================== -->
 
-    <script>
+   <script>
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
-        /* =====================================================
-           ELEMENTS
-        ===================================================== */
+    const loginForm = document.getElementById("loginForm");
 
-        const loginForm = document.getElementById("loginForm");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
 
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
+    const emailGroup = document.getElementById("emailGroup");
+    const passwordGroup = document.getElementById("passwordGroup");
 
-        const emailGroup = document.getElementById("emailGroup");
-        const passwordGroup = document.getElementById("passwordGroup");
+    const togglePassword =
+        document.getElementById("togglePassword");
 
-        const togglePassword =
-            document.getElementById("togglePassword");
+    const loginButton =
+        document.getElementById("loginButton");
 
-        const loginButton =
-            document.getElementById("loginButton");
-
-        const toast =
-            document.getElementById("toast");
-
-
-        /* =====================================================
-           SHOW / HIDE PASSWORD
-        ===================================================== */
-
-        togglePassword.addEventListener("click", () => {
-
-            const icon =
-                togglePassword.querySelector("i");
-
-            if (password.type === "password") {
-
-                password.type = "text";
-
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-
-                togglePassword.setAttribute(
-                    "aria-label",
-                    "Sembunyikan password"
-                );
-
-            } else {
-
-                password.type = "password";
-
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-
-                togglePassword.setAttribute(
-                    "aria-label",
-                    "Tampilkan password"
-                );
-
-            }
-
-        });
+    const toast =
+        document.getElementById("toast");
 
 
-        /* =====================================================
-           EMAIL VALIDATION
-        ===================================================== */
+    /* =====================================================
+       SHOW / HIDE PASSWORD
+    ===================================================== */
 
-        function validateEmail() {
+    togglePassword.addEventListener("click", () => {
 
-            const emailValue =
-                email.value.trim();
+        const icon =
+            togglePassword.querySelector("i");
 
-            const emailRegex =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (password.type === "password") {
 
-            if (
-                emailValue === "" ||
-                !emailRegex.test(emailValue)
-            ) {
+            password.type = "text";
 
-                emailGroup.classList.add("error");
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
 
-                return false;
+            togglePassword.setAttribute(
+                "aria-label",
+                "Sembunyikan password"
+            );
 
-            }
+        } else {
 
-            emailGroup.classList.remove("error");
+            password.type = "password";
 
-            return true;
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+
+            togglePassword.setAttribute(
+                "aria-label",
+                "Tampilkan password"
+            );
+
+        }
+
+    });
+
+
+    /* =====================================================
+       EMAIL VALIDATION
+    ===================================================== */
+
+    function validateEmail() {
+
+        const emailValue =
+            email.value.trim();
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (
+            emailValue === "" ||
+            !emailRegex.test(emailValue)
+        ) {
+
+            emailGroup.classList.add("error");
+
+            return false;
+
+        }
+
+        emailGroup.classList.remove("error");
+
+        return true;
+
+    }
+
+
+    /* =====================================================
+       PASSWORD VALIDATION
+    ===================================================== */
+
+    function validatePassword() {
+
+        const passwordValue =
+            password.value;
+
+        if (passwordValue.length < 6) {
+
+            passwordGroup.classList.add("error");
+
+            return false;
+
+        }
+
+        passwordGroup.classList.remove("error");
+
+        return true;
+
+    }
+
+
+    /* =====================================================
+       LIVE VALIDATION
+    ===================================================== */
+
+    email.addEventListener("input", () => {
+
+        if (email.value.trim() !== "") {
+            validateEmail();
+        }
+
+    });
+
+    password.addEventListener("input", () => {
+
+        if (password.value !== "") {
+            validatePassword();
+        }
+
+    });
+
+
+    /* =====================================================
+       LOGIN - LARAVEL API
+    ===================================================== */
+
+    loginForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const validEmail =
+            validateEmail();
+
+        const validPassword =
+            validatePassword();
+
+
+        if (!validEmail || !validPassword) {
+
+            showToast(
+                "Silakan periksa email dan password."
+            );
+
+            return;
 
         }
 
 
-        /* =====================================================
-           PASSWORD VALIDATION
-        ===================================================== */
+        /* Loading */
 
-        function validatePassword() {
-
-            const passwordValue =
-                password.value;
-
-            if (
-                passwordValue.length < 6
-            ) {
-
-                passwordGroup.classList.add("error");
-
-                return false;
-
-            }
-
-            passwordGroup.classList.remove("error");
-
-            return true;
-
-        }
+        loginButton.classList.add("loading");
 
 
-        /* =====================================================
-           LIVE VALIDATION
-        ===================================================== */
+        try {
 
-        email.addEventListener("input", () => {
+            const response = await fetch(
+                "http://127.0.0.1:8000/api/login",
+                {
+                    method: "POST",
 
-            if (email.value.trim() !== "") {
-                validateEmail();
-            }
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
 
-        });
-
-        password.addEventListener("input", () => {
-
-            if (password.value !== "") {
-                validatePassword();
-            }
-
-        });
-
-
-        /* =====================================================
-           LOGIN
-        ===================================================== */
-
-        loginForm.addEventListener("submit", (event) => {
-
-            event.preventDefault();
-
-            const validEmail =
-                validateEmail();
-
-            const validPassword =
-                validatePassword();
+                    body: JSON.stringify({
+                        email: email.value.trim(),
+                        password: password.value
+                    })
+                }
+            );
 
 
-            if (!validEmail || !validPassword) {
+            const data =
+                await response.json();
 
-                showToast(
-                    "Silakan periksa email dan password."
+
+            /* Jika login gagal */
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Email atau password salah."
                 );
 
-                return;
-
             }
 
 
-            /*
-                Loading effect
-            */
+            /* =================================================
+               LOGIN BERHASIL
+            ================================================= */
 
-            loginButton.classList.add("loading");
+            localStorage.setItem(
+                "trackin_token",
+                data.token
+            );
 
+
+            localStorage.setItem(
+                "trackin_user",
+                JSON.stringify(data.user)
+            );
+
+
+            showToast(
+                "Login berhasil! Selamat datang."
+            );
+
+
+            /* Pindah ke dashboard */
 
             setTimeout(() => {
 
-                loginButton.classList.remove("loading");
+                window.location.href =
+                    "dashboard.html";
 
-                showToast(
-                    "Login berhasil! Selamat datang."
-                );
-
-                /*
-                    Di sini nantinya bisa diarahkan
-                    ke dashboard:
-
-                    window.location.href =
-                        "dashboard.html";
-                */
-
-            }, 1500);
-
-        });
+            }, 800);
 
 
-        /* =====================================================
-           SOCIAL LOGIN
-        ===================================================== */
+        } catch (error) {
 
-        const socialButtons =
-            document.querySelectorAll(
-                ".social-button"
+            console.error(
+                "Login error:",
+                error
             );
 
-        socialButtons.forEach(button => {
 
-            button.addEventListener("click", () => {
-
-                const provider =
-                    button.dataset.provider;
-
-                showToast(
-                    `Login dengan ${provider} dipilih.`
-                );
-
-            });
-
-        });
+            showToast(
+                error.message ||
+                "Gagal terhubung ke server."
+            );
 
 
-        /* =====================================================
-           FORGOT PASSWORD
-        ===================================================== */
+        } finally {
 
-        document
-            .getElementById("forgotPassword")
-            .addEventListener("click", (event) => {
-
-                event.preventDefault();
-
-                showToast(
-                    "Halaman reset password akan dibuka."
-                );
-
-            });
-
-
-        /* =====================================================
-           REGISTER
-        ===================================================== */
-
-        document
-            .getElementById("registerLink")
-            .addEventListener("click", (event) => {
-
-                event.preventDefault();
-
-                showToast(
-                    "Halaman pendaftaran akan dibuka."
-                );
-
-            });
-
-
-        /* =====================================================
-           TOAST FUNCTION
-        ===================================================== */
-
-        let toastTimer;
-
-        function showToast(message) {
-
-            clearTimeout(toastTimer);
-
-            toast.textContent = message;
-
-            toast.classList.add("show");
-
-            toastTimer = setTimeout(() => {
-
-                toast.classList.remove("show");
-
-            }, 3000);
+            loginButton.classList.remove(
+                "loading"
+            );
 
         }
 
-    </script>
+    });
 
-</body>
-</html>
+
+    /* =====================================================
+       SOCIAL LOGIN
+    ===================================================== */
+
+    const socialButtons =
+        document.querySelectorAll(
+            ".social-button"
+        );
+
+
+    socialButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const provider =
+                button.dataset.provider;
+
+            showToast(
+                `Login dengan ${provider} dipilih.`
+            );
+
+        });
+
+    });
+
+
+    /* =====================================================
+       FORGOT PASSWORD
+    ===================================================== */
+
+    document
+        .getElementById("forgotPassword")
+        .addEventListener("click", (event) => {
+
+            event.preventDefault();
+
+            showToast(
+                "Halaman reset password akan dibuka."
+            );
+
+        });
+
+
+    /* =====================================================
+       REGISTER
+    ===================================================== */
+
+    document
+        .getElementById("registerLink")
+        .addEventListener("click", (event) => {
+
+            event.preventDefault();
+
+            showToast(
+                "Halaman pendaftaran akan dibuka."
+            );
+
+        });
+
+
+    /* =====================================================
+       TOAST FUNCTION
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        clearTimeout(toastTimer);
+
+        toast.textContent =
+            message;
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        toastTimer = setTimeout(() => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 3000);
+
+    }
+
+</script>
