@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    lucide.createIcons();
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
 
 });
 
@@ -15,38 +17,29 @@ const menuItems =
 const settingsCards =
     document.querySelectorAll(".settings-card");
 
-
 const editButtons =
     document.querySelectorAll(".edit-button");
-
 
 const saveButton =
     document.getElementById("saveButton");
 
-
 const switchAccountButton =
     document.getElementById("switchAccountButton");
-
 
 const changePasswordButton =
     document.getElementById("changePasswordButton");
 
-
 const deleteAccountButton =
     document.getElementById("deleteAccountButton");
-
 
 const logoutButton =
     document.getElementById("logoutButton");
 
-
 const passwordForm =
     document.getElementById("passwordForm");
 
-
 const toast =
     document.getElementById("toast");
-
 
 const toastMessage =
     document.getElementById("toastMessage");
@@ -65,17 +58,16 @@ menuItems.forEach(item => {
 
 
         /* Remove active */
+
         menuItems.forEach(menu => {
-
             menu.classList.remove("active");
-
         });
-
 
         item.classList.add("active");
 
 
-        /* Default sections */
+        /* Sections */
+
         const informasi =
             document.getElementById(
                 "informasiSection"
@@ -103,77 +95,140 @@ menuItems.forEach(item => {
 
 
         /*
-         * Saat Informasi Akun dipilih,
-         * tampilkan desain utama seperti gambar.
+         * INFORMASI AKUN
+         *
+         * Tetap tampil seperti desain asli:
+         * Informasi Akun
+         * Keamanan
+         * Lainnya
          */
 
         if (section === "informasi") {
 
-            informasi.style.display = "";
-            keamanan.style.display = "";
-            lainnya.style.display = "";
+            if (informasi) {
+                informasi.style.display = "";
+            }
 
-            notifikasi.classList.remove("show");
-            bahasa.classList.remove("show");
+            if (keamanan) {
+                keamanan.style.display = "";
+            }
+
+            if (lainnya) {
+                lainnya.style.display = "";
+            }
+
+            if (notifikasi) {
+                notifikasi.classList.remove("show");
+                notifikasi.style.display = "none";
+            }
+
+            if (bahasa) {
+                bahasa.classList.remove("show");
+                bahasa.style.display = "none";
+            }
 
             return;
         }
 
 
         /*
-         * Keamanan
+         * KEAMANAN
          */
 
         if (section === "keamanan") {
 
-            informasi.style.display = "none";
-            lainnya.style.display = "none";
+            if (informasi) {
+                informasi.style.display = "none";
+            }
 
-            keamanan.style.display = "";
+            if (lainnya) {
+                lainnya.style.display = "none";
+            }
 
-            notifikasi.classList.remove("show");
-            bahasa.classList.remove("show");
+            if (keamanan) {
+                keamanan.style.display = "";
+            }
 
-            keamanan.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+            if (notifikasi) {
+                notifikasi.classList.remove("show");
+                notifikasi.style.display = "none";
+            }
+
+            if (bahasa) {
+                bahasa.classList.remove("show");
+                bahasa.style.display = "none";
+            }
+
+            if (keamanan) {
+                keamanan.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
 
             return;
         }
 
 
         /*
-         * Notifikasi
+         * NOTIFIKASI
          */
 
         if (section === "notifikasi") {
 
-            informasi.style.display = "none";
-            keamanan.style.display = "none";
-            lainnya.style.display = "none";
+            if (informasi) {
+                informasi.style.display = "none";
+            }
 
-            notifikasi.classList.add("show");
+            if (keamanan) {
+                keamanan.style.display = "none";
+            }
 
-            bahasa.classList.remove("show");
+            if (lainnya) {
+                lainnya.style.display = "none";
+            }
+
+            if (notifikasi) {
+                notifikasi.style.display = "";
+                notifikasi.classList.add("show");
+            }
+
+            if (bahasa) {
+                bahasa.style.display = "none";
+                bahasa.classList.remove("show");
+            }
 
             return;
         }
 
 
         /*
-         * Bahasa
+         * BAHASA
          */
 
         if (section === "bahasa") {
 
-            informasi.style.display = "none";
-            keamanan.style.display = "none";
-            lainnya.style.display = "none";
+            if (informasi) {
+                informasi.style.display = "none";
+            }
 
-            bahasa.classList.add("show");
+            if (keamanan) {
+                keamanan.style.display = "none";
+            }
 
-            notifikasi.classList.remove("show");
+            if (lainnya) {
+                lainnya.style.display = "none";
+            }
+
+            if (notifikasi) {
+                notifikasi.style.display = "none";
+                notifikasi.classList.remove("show");
+            }
+
+            if (bahasa) {
+                bahasa.style.display = "";
+                bahasa.classList.add("show");
+            }
 
             return;
         }
@@ -194,12 +249,10 @@ editButtons.forEach(button => {
         const field =
             button.dataset.edit;
 
-
         const input =
             document.querySelector(
                 `[data-field="${field}"]`
             );
-
 
         if (!input) {
             return;
@@ -207,8 +260,7 @@ editButtons.forEach(button => {
 
 
         /*
-         * Kalau masih disabled,
-         * aktifkan input.
+         * Aktifkan input
          */
 
         if (input.disabled) {
@@ -219,24 +271,21 @@ editButtons.forEach(button => {
 
             input.focus();
 
-            /*
-             * Select semua text
-             */
-
             input.select();
 
             button.innerHTML =
                 `<i data-lucide="check"></i>`;
 
-            lucide.createIcons();
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
 
             return;
         }
 
 
         /*
-         * Kalau sudah editing,
-         * simpan sementara.
+         * Selesai edit
          */
 
         input.disabled = true;
@@ -246,8 +295,9 @@ editButtons.forEach(button => {
         button.innerHTML =
             `<i data-lucide="square-pen"></i>`;
 
-        lucide.createIcons();
-
+        if (typeof lucide !== "undefined") {
+            lucide.createIcons();
+        }
 
         showToast(
             `${capitalize(field)} berhasil diperbarui.`
@@ -268,7 +318,8 @@ function capitalize(text) {
         return "";
     }
 
-    return text.charAt(0).toUpperCase() + text.slice(1);
+    return text.charAt(0).toUpperCase() +
+        text.slice(1);
 
 }
 
@@ -277,74 +328,83 @@ function capitalize(text) {
    SAVE CHANGES
 ========================================================= */
 
-saveButton.addEventListener("click", () => {
+if (saveButton) {
 
-    const inputs =
-        document.querySelectorAll(".account-input");
+    saveButton.addEventListener("click", () => {
+
+        const inputs =
+            document.querySelectorAll(
+                ".account-input"
+            );
+
+        let changed = false;
 
 
-    let changed = false;
+        inputs.forEach(input => {
+
+            if (!input.disabled) {
+
+                input.disabled = true;
+
+                input.classList.remove(
+                    "editing"
+                );
+
+                changed = true;
+
+            }
+
+        });
 
 
-    inputs.forEach(input => {
+        editButtons.forEach(button => {
 
-        if (!input.disabled) {
+            button.innerHTML =
+                `<i data-lucide="square-pen"></i>`;
 
-            input.disabled = true;
+        });
 
-            input.classList.remove("editing");
 
-            changed = true;
+        if (typeof lucide !== "undefined") {
+            lucide.createIcons();
+        }
+
+
+        if (changed) {
+
+            showToast(
+                "Perubahan akun berhasil disimpan."
+            );
+
+        } else {
+
+            showToast(
+                "Tidak ada perubahan yang perlu disimpan."
+            );
 
         }
 
     });
 
-
-    /*
-     * Kembalikan semua tombol edit
-     */
-
-    editButtons.forEach(button => {
-
-        button.innerHTML =
-            `<i data-lucide="square-pen"></i>`;
-
-    });
-
-
-    lucide.createIcons();
-
-
-    if (changed) {
-
-        showToast(
-            "Perubahan akun berhasil disimpan."
-        );
-
-    } else {
-
-        showToast(
-            "Tidak ada perubahan yang perlu disimpan."
-        );
-
-    }
-
-});
+}
 
 
 /* =========================================================
    SWITCH ACCOUNT
 ========================================================= */
 
-switchAccountButton.addEventListener(
-    "click",
-    () => {
+if (switchAccountButton) {
 
-        openModal("switchModal");
+    switchAccountButton.addEventListener(
+        "click",
+        () => {
 
-    }
-);
+            openModal("switchModal");
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -355,72 +415,91 @@ document
     .querySelectorAll(".account-option")
     .forEach(option => {
 
-        option.addEventListener("click", () => {
+        option.addEventListener(
+            "click",
+            () => {
 
-            document
-                .querySelectorAll(".account-option")
-                .forEach(item => {
+                document
+                    .querySelectorAll(
+                        ".account-option"
+                    )
+                    .forEach(item => {
 
-                    item.classList.remove("active");
+                        item.classList.remove(
+                            "active"
+                        );
 
-                    const check =
-                        item.querySelector("svg");
+                        const check =
+                            item.querySelector(
+                                "svg"
+                            );
 
-                    if (check) {
-                        check.remove();
+                        if (check) {
+                            check.remove();
+                        }
+
+                    });
+
+
+                option.classList.add("active");
+
+
+                const icon =
+                    document.createElement("i");
+
+                icon.setAttribute(
+                    "data-lucide",
+                    "check"
+                );
+
+                option.appendChild(icon);
+
+
+                if (
+                    typeof lucide !== "undefined"
+                ) {
+                    lucide.createIcons();
+                }
+
+
+                const name =
+                    option.querySelector(
+                        ".option-info strong"
+                    )?.textContent;
+
+
+                if (name) {
+
+                    const topName =
+                        document.querySelector(
+                            ".top-name"
+                        );
+
+                    if (topName) {
+
+                        topName.textContent =
+                            name.toLowerCase();
+
                     }
 
-                });
+                }
 
 
-            option.classList.add("active");
+                showToast(
+                    `Beralih ke akun ${name || ""}.`
+                );
 
 
-            /*
-             * Tambahkan ikon check
-             */
+                setTimeout(() => {
 
-            const icon =
-                document.createElement("i");
+                    closeModal(
+                        "switchModal"
+                    );
 
-            icon.setAttribute(
-                "data-lucide",
-                "check"
-            );
-
-            option.appendChild(icon);
-
-            lucide.createIcons();
-
-
-            const name =
-                option.querySelector(
-                    ".option-info strong"
-                )?.textContent;
-
-
-            if (name) {
-
-                document.querySelector(
-                    ".top-name"
-                ).textContent =
-                    name.toLowerCase();
+                }, 500);
 
             }
-
-
-            showToast(
-                `Beralih ke akun ${name || ""}.`
-            );
-
-
-            setTimeout(() => {
-
-                closeModal("switchModal");
-
-            }, 500);
-
-        });
+        );
 
     });
 
@@ -429,116 +508,123 @@ document
    ADD ACCOUNT
 ========================================================= */
 
-document
-    .getElementById("addAccountButton")
-    .addEventListener("click", () => {
+const addAccountButton =
+    document.getElementById(
+        "addAccountButton"
+    );
 
-        showToast(
-            "Fitur tambah akun siap dihubungkan ke sistem login."
-        );
+if (addAccountButton) {
 
-    });
+    addAccountButton.addEventListener(
+        "click",
+        () => {
+
+            showToast(
+                "Fitur tambah akun siap dihubungkan ke sistem login."
+            );
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    CHANGE PASSWORD
 ========================================================= */
 
-changePasswordButton.addEventListener(
-    "click",
-    () => {
+if (changePasswordButton) {
 
-        openModal("passwordModal");
+    changePasswordButton.addEventListener(
+        "click",
+        () => {
 
-    }
-);
+            openModal("passwordModal");
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    PASSWORD FORM
 ========================================================= */
 
-passwordForm.addEventListener(
-    "submit",
-    event => {
+if (passwordForm) {
 
-        event.preventDefault();
+    passwordForm.addEventListener(
+        "submit",
+        event => {
 
-
-        const oldPassword =
-            document.getElementById(
-                "oldPassword"
-            ).value;
+            event.preventDefault();
 
 
-        const newPassword =
-            document.getElementById(
-                "newPassword"
-            ).value;
+            const oldPassword =
+                document.getElementById(
+                    "oldPassword"
+                )?.value || "";
 
 
-        const confirmPassword =
-            document.getElementById(
-                "confirmPassword"
-            ).value;
+            const newPassword =
+                document.getElementById(
+                    "newPassword"
+                )?.value || "";
 
 
-        /*
-         * Password lama
-         */
+            const confirmPassword =
+                document.getElementById(
+                    "confirmPassword"
+                )?.value || "";
 
-        if (!oldPassword) {
 
-            showToast(
-                "Masukkan password saat ini."
+            if (!oldPassword) {
+
+                showToast(
+                    "Masukkan password saat ini."
+                );
+
+                return;
+            }
+
+
+            if (newPassword.length < 8) {
+
+                showToast(
+                    "Password baru minimal 8 karakter."
+                );
+
+                return;
+            }
+
+
+            if (
+                newPassword !==
+                confirmPassword
+            ) {
+
+                showToast(
+                    "Konfirmasi password tidak cocok."
+                );
+
+                return;
+            }
+
+
+            closeModal(
+                "passwordModal"
             );
 
-            return;
-        }
-
-
-        /*
-         * Minimal password
-         */
-
-        if (newPassword.length < 8) {
+            passwordForm.reset();
 
             showToast(
-                "Password baru minimal 8 karakter."
+                "Password berhasil diperbarui."
             );
 
-            return;
         }
+    );
 
-
-        /*
-         * Konfirmasi
-         */
-
-        if (newPassword !== confirmPassword) {
-
-            showToast(
-                "Konfirmasi password tidak cocok."
-            );
-
-            return;
-        }
-
-
-        /*
-         * Berhasil
-         */
-
-        closeModal("passwordModal");
-
-        passwordForm.reset();
-
-        showToast(
-            "Password berhasil diperbarui."
-        );
-
-    }
-);
+}
 
 
 /* =========================================================
@@ -549,43 +635,52 @@ document
     .querySelectorAll(".password-toggle")
     .forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            const targetId =
-                button.dataset.target;
-
-
-            const input =
-                document.getElementById(
-                    targetId
-                );
+                const targetId =
+                    button.dataset.target;
 
 
-            if (!input) {
-                return;
+                const input =
+                    document.getElementById(
+                        targetId
+                    );
+
+
+                if (!input) {
+                    return;
+                }
+
+
+                if (
+                    input.type === "password"
+                ) {
+
+                    input.type = "text";
+
+                    button.innerHTML =
+                        `<i data-lucide="eye-off"></i>`;
+
+                } else {
+
+                    input.type = "password";
+
+                    button.innerHTML =
+                        `<i data-lucide="eye"></i>`;
+
+                }
+
+
+                if (
+                    typeof lucide !== "undefined"
+                ) {
+                    lucide.createIcons();
+                }
+
             }
-
-
-            if (input.type === "password") {
-
-                input.type = "text";
-
-                button.innerHTML =
-                    `<i data-lucide="eye-off"></i>`;
-
-            } else {
-
-                input.type = "password";
-
-                button.innerHTML =
-                    `<i data-lucide="eye"></i>`;
-
-            }
-
-
-            lucide.createIcons();
-
-        });
+        );
 
     });
 
@@ -594,67 +689,78 @@ document
    DELETE ACCOUNT
 ========================================================= */
 
-deleteAccountButton.addEventListener(
-    "click",
-    () => {
+if (deleteAccountButton) {
 
-        openModal("deleteModal");
+    deleteAccountButton.addEventListener(
+        "click",
+        () => {
 
-    }
-);
+            openModal("deleteModal");
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    CONFIRM DELETE
 ========================================================= */
 
-document
-    .getElementById("confirmDeleteButton")
-    .addEventListener("click", () => {
+const confirmDeleteButton =
+    document.getElementById(
+        "confirmDeleteButton"
+    );
 
-        closeModal("deleteModal");
+if (confirmDeleteButton) {
 
+    confirmDeleteButton.addEventListener(
+        "click",
+        () => {
 
-        showToast(
-            "Permintaan penghapusan akun diproses."
-        );
+            closeModal(
+                "deleteModal"
+            );
 
-    });
+            showToast(
+                "Permintaan penghapusan akun diproses."
+            );
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    LOGOUT
 ========================================================= */
 
-logoutButton.addEventListener(
-    "click",
-    () => {
+if (logoutButton) {
 
-        const confirmed =
-            confirm(
-                "Apakah kamu yakin ingin keluar dari akun?"
+    logoutButton.addEventListener(
+        "click",
+        () => {
+
+            const confirmed =
+                confirm(
+                    "Apakah kamu yakin ingin keluar dari akun?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            showToast(
+                "Kamu berhasil keluar dari akun."
             );
 
-
-        if (!confirmed) {
-            return;
         }
+    );
 
-
-        showToast(
-            "Kamu berhasil keluar dari akun."
-        );
-
-
-        /*
-         * Kalau sudah mempunyai login.html,
-         * bagian ini bisa diaktifkan:
-         *
-         * window.location.href = "login.html";
-         */
-
-    }
-);
+}
 
 
 /* =========================================================
@@ -674,7 +780,8 @@ function openModal(id) {
 
     modal.classList.add("show");
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow =
+        "hidden";
 
 }
 
@@ -696,7 +803,8 @@ function closeModal(id) {
 
     modal.classList.remove("show");
 
-    document.body.style.overflow = "";
+    document.body.style.overflow =
+        "";
 
 }
 
@@ -706,17 +814,22 @@ function closeModal(id) {
 ========================================================= */
 
 document
-    .querySelectorAll("[data-close-modal]")
+    .querySelectorAll(
+        "[data-close-modal]"
+    )
     .forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            const modalId =
-                button.dataset.closeModal;
+                const modalId =
+                    button.dataset.closeModal;
 
-            closeModal(modalId);
+                closeModal(modalId);
 
-        });
+            }
+        );
 
     });
 
@@ -768,7 +881,9 @@ document.addEventListener(
             )
             .forEach(modal => {
 
-                closeModal(modal.id);
+                closeModal(
+                    modal.id
+                );
 
             });
 
@@ -784,6 +899,11 @@ let toastTimer;
 
 
 function showToast(message) {
+
+    if (!toast || !toastMessage) {
+        return;
+    }
+
 
     toastMessage.textContent =
         message;
@@ -817,45 +937,243 @@ const languageSelect =
     );
 
 
-languageSelect.addEventListener(
-    "change",
-    () => {
+/*
+ * SEMUA PILIHAN BAHASA
+ */
 
-        const selected =
-            languageSelect.value;
+const languages = {
+
+    id: "Bahasa Indonesia",
+
+    en: "English",
+
+    jv: "Basa Jawa",
+
+    su: "Basa Sunda",
+
+    ms: "Bahasa Melayu",
+
+    zh: "中文 (Chinese)",
+
+    ja: "日本語 (Japanese)",
+
+    ko: "한국어 (Korean)",
+
+    ar: "العربية (Arabic)",
+
+    fr: "Français",
+
+    de: "Deutsch",
+
+    es: "Español",
+
+    it: "Italiano",
+
+    pt: "Português",
+
+    nl: "Nederlands",
+
+    ru: "Русский",
+
+    tr: "Türkçe",
+
+    hi: "हिन्दी",
+
+    th: "ไทย",
+
+    vi: "Tiếng Việt"
+
+};
 
 
-        if (selected === "en") {
+/*
+ * Pesan setelah memilih bahasa
+ */
 
-            showToast(
-                "English dipilih."
+const languageMessages = {
+
+    id:
+        "Bahasa Indonesia dipilih.",
+
+    en:
+        "English selected.",
+
+    jv:
+        "Basa Jawa dipilih.",
+
+    su:
+        "Basa Sunda dipilih.",
+
+    ms:
+        "Bahasa Melayu dipilih.",
+
+    zh:
+        "中文已选择。",
+
+    ja:
+        "日本語が選択されました。",
+
+    ko:
+        "한국어가 선택되었습니다.",
+
+    ar:
+        "تم اختيار اللغة العربية.",
+
+    fr:
+        "Français sélectionné.",
+
+    de:
+        "Deutsch ausgewählt.",
+
+    es:
+        "Español seleccionado.",
+
+    it:
+        "Italiano selezionato.",
+
+    pt:
+        "Português selecionado.",
+
+    nl:
+        "Nederlands geselecteerd.",
+
+    ru:
+        "Русский выбран.",
+
+    tr:
+        "Türkçe seçildi.",
+
+    hi:
+        "हिन्दी चुनी गई।",
+
+    th:
+        "เลือกภาษาไทยแล้ว",
+
+    vi:
+        "Đã chọn Tiếng Việt."
+
+};
+
+
+/*
+ * Isi dropdown bahasa
+ */
+
+if (languageSelect) {
+
+    languageSelect.innerHTML = "";
+
+
+    Object.entries(languages)
+        .forEach(
+            ([code, name]) => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    code;
+
+                option.textContent =
+                    name;
+
+                languageSelect.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+    /*
+     * Ambil bahasa terakhir
+     */
+
+    const savedLanguage =
+        localStorage.getItem(
+            "trackin_language"
+        );
+
+
+    if (
+        savedLanguage &&
+        languages[savedLanguage]
+    ) {
+
+        languageSelect.value =
+            savedLanguage;
+
+    } else {
+
+        languageSelect.value =
+            "id";
+
+    }
+
+
+    /*
+     * Ketika bahasa dipilih
+     */
+
+    languageSelect.addEventListener(
+        "change",
+        () => {
+
+            const selected =
+                languageSelect.value;
+
+
+            /*
+             * Simpan bahasa
+             */
+
+            localStorage.setItem(
+                "trackin_language",
+                selected
             );
 
-        } else {
+
+            /*
+             * Tampilkan pesan
+             */
 
             showToast(
-                "Bahasa Indonesia dipilih."
+                languageMessages[selected] ||
+                `${languages[selected]} dipilih.`
             );
 
         }
+    );
 
-    }
-);
+}
 
 
 /* =========================================================
    TOP PROFILE BUTTON
 ========================================================= */
 
-document
-    .getElementById("profileMenuButton")
-    .addEventListener("click", () => {
+const profileMenuButton =
+    document.getElementById(
+        "profileMenuButton"
+    );
 
-        showToast(
-            "Profil Yusuf sedang aktif."
-        );
 
-    });
+if (profileMenuButton) {
+
+    profileMenuButton.addEventListener(
+        "click",
+        () => {
+
+            showToast(
+                "Profil Yusuf sedang aktif."
+            );
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -869,11 +1187,6 @@ document.addEventListener(
         if (document.hidden) {
             return;
         }
-
-        /*
-         * Bisa digunakan untuk refresh
-         * data akun dari backend nanti.
-         */
 
     }
 );
