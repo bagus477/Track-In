@@ -1,0 +1,105 @@
+Install PHP + extension 
+sudo apt install -y \
+php \
+php-cli \
+php-fpm \
+php-mysql \
+php-mbstring \
+php-xml \
+php-curl \
+php-zip \
+php-gd \
+php-intl \
+php-bcmath \
+php-tokenizer \
+unzip \
+git \
+curl
+
+4. Install Composer
+cd /tmp
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+5. Install MariaDB
+sudo apt install -y mariadb-server mariadb-client
+
+Start:
+sudo service mariadb start
+
+
+Masuk MariaDB:
+sudo mariadb
+
+6. Buat database Laravel
+
+CREATE DATABASE backend;
+
+gawe user:
+CREATE USER 'backend_user'@'localhost' IDENTIFIED BY 'backend123';
+
+ akses:
+GRANT ALL PRIVILEGES ON backend.* TO 'backend_user'@'localhost';
+
+Simpan:
+FLUSH PRIVILEGES;
+
+Keluar:
+EXIT;
+
+7. gawe project Laravel
+cd /var/www
+sudo composer create-project laravel/laravel backend
+
+Masuk:
+cd /var/www/backend
+
+Atur permission:
+sudo chown -R $USER:$USER /var/www/backend
+
+8. Buat .env
+cp .env.example .env
+
+Generate application key:
+php artisan key:generate
+
+9. Atur database
+Buka:
+nano .env
+
+Cari bagian database dan ubah menjadi:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=backend
+DB_USERNAME=backend_user
+DB_PASSWORD=backend123
+
+Simpan
+10. Test koneksi database
+php artisan migrate
+
+11. Jalankan Laravel
+php artisan serve --host=0.0.0.0
+
+kudune metu:
+INFO  Server running on [http://0.0.0.0:8000].
+
+teko windows Windows buka:
+http://localhost:8000
+
+Cek:
+php -v
+composer --version
+
+Start MariaDB:
+sudo service mariadb start
+
+Cek Laravel:
+php artisan --version
+
+Cek database:
+php artisan migrate:status
+
+Lalu jalankan:
+php artisan serve --host=0.0.0.0
